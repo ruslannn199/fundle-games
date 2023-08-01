@@ -1,0 +1,12 @@
+@use '../abstract/mixins';
+
+.wrapper {
+  position: relative;
+  height: 100%;
+  max-width: 145rem;
+  margin: 0 auto;
+
+  &_flex {
+    @include mixins.flex();
+  }
+}

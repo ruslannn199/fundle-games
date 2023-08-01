@@ -1,0 +1,12 @@
+.header {
+  height: 6.5rem;
+  background-color: #fff;
+  box-shadow: 0 .2rem .4rem rgba($color: #000, $alpha: .1);
+
+  .logo {
+    position: absolute;
+    left: 15rem;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
