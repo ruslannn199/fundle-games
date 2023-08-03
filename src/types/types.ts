@@ -1,4 +1,4 @@
 export type WrapperProps = {
-  classes?: string[];
+  className?: string;
   isUnusualWrapper?: boolean;
 }

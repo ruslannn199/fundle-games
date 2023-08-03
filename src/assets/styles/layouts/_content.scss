@@ -1,0 +1,6 @@
+@use '../abstract/mixins';
+
+.content {
+  @include mixins.flex();
+  height: 100%;
+}

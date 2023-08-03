@@ -6,7 +6,7 @@ import PopularGamesImg from '../../assets/images/popular-games.webp';
 
 const Directory: React.FC = () => (
   <div className="directory">
-    <Wrapper classes={["wrapper_flex"]}>
+    <Wrapper className={"wrapper_flex"}>
       <div className="directory__item" style={{backgroundImage: `url(${NewGamesImg})`}}>
         <h2 className="directory__title">Новинки</h2>
         <ConfigProvider theme={btnPrimaryTheme}>

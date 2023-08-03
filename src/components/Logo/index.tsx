@@ -1,9 +1,9 @@
 import LogoImg from '../../assets/images/logo.png';
 
-const Logo = () => (
+const Logo: React.FC = () => (
   <div className="logo">
     <span className="logo__text">Fundle Games</span>
-    <img src={LogoImg} alt="Logo image" className="logo__img" />
+    <img src={LogoImg} alt="Logo" className="logo__img" />
   </div>
 );
 

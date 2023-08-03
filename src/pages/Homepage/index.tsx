@@ -2,7 +2,7 @@ import Directory from '../../components/Directory';
 import Wrapper from '../../components/Wrapper';
 
 const Homepage = () => (
-  <Wrapper classes={['homepage']}>
+  <Wrapper className={'homepage'}>
     <Directory />
   </Wrapper>
 )
