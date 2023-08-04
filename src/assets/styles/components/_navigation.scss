@@ -1,0 +1,28 @@
+@use '../abstract/mixins';
+.nav {
+  &__profile {
+    @include mixins.flex();
+  }
+
+  &__option {
+    @include mixins.flex();
+    gap: 1rem;
+  }
+
+  &__img {
+    width: 6.4rem;
+    height: 6.4rem;
+    border-radius: 50%;
+    margin-right: .4rem;
+  }
+
+  &__icon {
+    transform: border-color .1s .3s;
+  }
+
+  &__link {
+    &-text {
+      text-transform: capitalize;
+    }
+  }
+}

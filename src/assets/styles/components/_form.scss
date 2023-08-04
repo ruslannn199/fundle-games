@@ -1,0 +1,20 @@
+@use '../abstract/mixins';
+
+.form {
+  &__title {
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  &__btn {
+    margin-right: 0.8rem;
+  }
+
+  &__link {
+    color: var(--orange);
+
+    &:hover {
+      color: var(--tan);
+    }
+  }
+}
