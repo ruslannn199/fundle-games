@@ -16,3 +16,17 @@ export type loggedInfo = {
   photo: string | null;
   name: string | null;
 }
+
+export type signProps = {
+  changeActiveFn: (e: React.MouseEvent<HTMLElement>) => void;
+}
+
+export type loginFields = {
+  email: string;
+  password: string;
+}
+
+export type registrationFields = loginFields & {
+  displayName: string;
+  confirmPassword: string;
+}

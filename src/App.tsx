@@ -15,34 +15,49 @@ import RegisterItems from './components/RegisterItems';
 import { auth, handleUserProfile } from './utils/firebase.utils';
 // Themes settings
 import { orangeTheme } from './utils/themes';
+import LoggedInNavItems from './components/LoggedInNavItems';
+import { NavigationItemsLabels } from './types/enums';
 // Types
 import type { User } from 'firebase/auth';
-import LoggedInNavItems from './components/LoggedInNavItems';
 
 const { Header, Content, Footer } = Layout;
 
 const App: React.FC = () => {
-  const [navBar, setNavBar] = useState<string>('');
+  const [navBar, setNavBar] = useState<string[]>([]);
   const [user, setUser] = useState<User>();
+  const [error, setError] = useState<boolean>(false);
+
+  const clearActiveNavItem = (): void => (setNavBar((arr) => arr.filter((val) => !val)));
 
   const changeActiveNavItem: MenuProps['onClick'] = (e): void => {
-    setNavBar(e.key);
+    switch (e.key) {
+      case NavigationItemsLabels.LOGIN:
+      case NavigationItemsLabels.REGISTRATION:
+        setNavBar([e.key]);
+        break;
+      default:
+        clearActiveNavItem();
+    }
   }
 
   useEffect(() => {
-    auth.onAuthStateChanged((userAuth: User | null) => {
-      if (!userAuth) {
-        setUser(undefined);
-      } else {
-        const { uid, displayName, email } = userAuth;
-        handleUserProfile(userAuth, {
-          id: uid,
-          displayName,
-          email,
-        });
-        setUser(userAuth);
-      }
-    })
+    try {
+      auth.onAuthStateChanged(async (userAuth: User | null) => {
+        if (!userAuth) {
+          setUser(undefined);
+        } else {
+          const { uid, displayName, email } = userAuth;
+          await handleUserProfile(userAuth, {
+            id: uid,
+            displayName,
+            email,
+          });
+          setUser(userAuth);
+        }
+      });
+    } catch (err) {
+      setError(true);
+    }
   }, [user]);
 
   return (
@@ -50,14 +65,14 @@ const App: React.FC = () => {
     <Layout style={{height: '100%'}}>
       <Header className="header">
         <Wrapper className="header__wrapper">
-          <Link to="/" onClick={() => setNavBar('')}>
+          <Link to="/">
             <Logo />
           </Link>
           <ConfigProvider theme={orangeTheme}>
             <Menu
               disabledOverflow={true}
               onClick={changeActiveNavItem}
-              selectedKeys={user && [navBar]}
+              selectedKeys={user && navBar}
               mode="horizontal"
               items={user
                 ? LoggedInNavItems({ photo: user.photoURL, name: user.displayName})
@@ -69,9 +84,14 @@ const App: React.FC = () => {
       <Content className="content">
         <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path="/registration" element={<Registration />} />
-          <Route path="/login" element={
-            user ? <Navigate replace to='/' /> :<Login />} />
+          <Route
+            path={`/${NavigationItemsLabels.REGISTRATION}`}
+            element={user ? <Navigate replace to='/' /> : <Registration />}
+          />
+          <Route
+            path={`/${NavigationItemsLabels.LOGIN}`}
+            element={user ? <Navigate replace to='/' /> : <Login />}
+          />
         </Routes>
       </Content>
       <Footer>

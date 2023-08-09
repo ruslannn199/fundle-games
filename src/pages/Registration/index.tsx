@@ -1,7 +1,10 @@
+import SignUp from '../../components/SignUp';
+import Wrapper from '../../components/Wrapper';
+
 const Registration: React.FC = () => (
-  <div>
-    <h1>Registration page</h1>
-  </div>
+  <Wrapper className='wrapper_flex'>
+    <SignUp />
+  </Wrapper>
 )
 
 export default Registration;

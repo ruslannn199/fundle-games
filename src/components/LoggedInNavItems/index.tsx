@@ -1,5 +1,7 @@
-import { LogoutOutlined } from '@ant-design/icons';
 import { NavigationItemsLabels } from '../../types/enums';
+// Images
+import { LogoutOutlined } from '@ant-design/icons';
+import LogoImg from '../../assets/images/logo.png';
 // Firebase
 import { auth } from '../../utils/firebase.utils';
 // Types
@@ -10,8 +12,8 @@ const LoggedInNavItems = ({ photo: photoURL, name: displayName }: loggedInfo): M
   {
     label: (
       <h3 className='nav__profile'>
-        <img src={photoURL || ''} alt='profile-picture' className='nav__img' />
-        {displayName || ''}
+        <img src={photoURL || LogoImg} alt='profile-picture' className='nav__img' />
+        {displayName || 'User'}
       </h3>
     ),
     key: displayName || 'placeholder',

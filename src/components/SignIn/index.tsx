@@ -1,14 +1,28 @@
-import { Form, Input, Button, ConfigProvider, MenuProps } from 'antd';
-import { UserOutlined, LockOutlined, GoogleCircleFilled } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
+import { Form, Input, Button, ConfigProvider } from 'antd';
+import { MailOutlined, LockOutlined, GoogleCircleFilled } from '@ant-design/icons';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { NavigationItemsLabels } from '../../types/enums';
 import { blackTheme, orangeTheme } from '../../utils/themes';
-import { signInWithGoogle } from '../../utils/firebase.utils';
+import { auth, signInWithGoogle } from '../../utils/firebase.utils';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { loginFields } from '../../types/types';
 
 const SignIn: React.FC = () => {
+  const [error, setError] = useState<boolean>(false);
+  const navigate = useNavigate();
 
-  const handleSubmit: MenuProps['onSubmit'] = async (e): Promise<void> => {
-    e.preventDefault();
+  useEffect(() => {
+    if (error) navigate('/error');
+  }, [error]);
+
+  const handleSubmit = async ({ email, password }: loginFields) => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+      if (err instanceof Error) console.log(err.message);
+      setError(true);
+    }
   }
 
   return (
@@ -25,10 +39,14 @@ const SignIn: React.FC = () => {
         <h2>{NavigationItemsLabels.LOGIN}</h2>
       </Form.Item>
       <Form.Item
-        name="username"
+        name="email"
         rules={[{ required: true }]}
       >
-        <Input prefix={<UserOutlined className='form__icon' />} placeholder="Username" />
+        <Input
+          prefix={<MailOutlined className='form__icon' />}
+          placeholder="Email"
+          style={{ width: 300 }}
+        />
       </Form.Item>
 
       <Form.Item
@@ -42,7 +60,7 @@ const SignIn: React.FC = () => {
         />
       </Form.Item>
 
-      <Form.Item>
+      <Form.Item className='wrapper_flex'>
         <ConfigProvider theme={blackTheme}>
           <Button type="primary" htmlType="submit" className='form__btn'>
             Log in
