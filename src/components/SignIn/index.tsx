@@ -1,5 +1,5 @@
-import { Form, Input, Button, ConfigProvider } from 'antd';
-import { MailOutlined, LockOutlined, GoogleCircleFilled } from '@ant-design/icons';
+import { Form, Input, Button, ConfigProvider, Tooltip } from 'antd';
+import { MailOutlined, LockOutlined, GoogleCircleFilled, QuestionCircleFilled } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { NavigationItemsLabels } from '../../types/enums';
@@ -60,7 +60,7 @@ const SignIn: React.FC = () => {
         />
       </Form.Item>
 
-      <Form.Item className='wrapper_flex'>
+      <Form.Item style={{margin: 0}} className='wrapper_flex'>
         <ConfigProvider theme={blackTheme}>
           <Button type="primary" htmlType="submit" className='form__btn'>
             Log in
@@ -73,6 +73,15 @@ const SignIn: React.FC = () => {
             >register now!
           </Link>
         </span>
+      </Form.Item>
+
+      <Form.Item style={{margin: 5}}>
+        <Tooltip title="We'll send you reset E-mail" color='orange'>
+          <QuestionCircleFilled className='form__icon' style={{marginRight: '.5rem'}} />
+        </Tooltip>
+        <Link to='/recovery' className='form__link'>
+          Forgot password?
+        </Link>
       </Form.Item>
 
       <Form.Item className='wrapper_flex'>

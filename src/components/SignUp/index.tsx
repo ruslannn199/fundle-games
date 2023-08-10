@@ -1,13 +1,15 @@
 import { Button, ConfigProvider, Form, Input } from 'antd';
 import { blackTheme, orangeTheme } from '../../utils/themes';
-import { NavigationItemsLabels } from '../../types/enums';
 import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
+// Hooks
 import { useState, useEffect } from 'react';
+// Firebase
 import { auth } from '../../utils/firebase.utils';
 import { updateProfile } from 'firebase/auth';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 // Types
+import { NavigationItemsLabels } from '../../types/enums';
 import type { registrationFields } from '../../types/types';
 import type { UserCredential } from 'firebase/auth';
 

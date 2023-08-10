@@ -19,6 +19,7 @@ import LoggedInNavItems from './components/LoggedInNavItems';
 import { NavigationItemsLabels } from './types/enums';
 // Types
 import type { User } from 'firebase/auth';
+import Recovery from './pages/Recovery';
 
 const { Header, Content, Footer } = Layout;
 
@@ -91,6 +92,10 @@ const App: React.FC = () => {
           <Route
             path={`/${NavigationItemsLabels.LOGIN}`}
             element={user ? <Navigate replace to='/' /> : <Login />}
+          />
+          <Route
+            path='/recovery'
+            element={user ? <Navigate replace to='/' /> : <Recovery />}
           />
         </Routes>
       </Content>
