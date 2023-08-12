@@ -1,5 +1,8 @@
+// Redux
+import { connect } from 'react-redux';
+import { setCurrentUser } from './redux/User/user.actions';
 // Routes
-import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // Pages
 import Homepage from './pages/Homepage';
 import Registration from './pages/Registration';
@@ -7,45 +10,26 @@ import Login from './pages/Login';
 // Hooks
 import { useEffect, useState } from 'react';
 // Components
-import { Layout, Menu, ConfigProvider, MenuProps } from 'antd';
-import Logo from './components/Logo';
-import Wrapper from './components/Wrapper';
-import RegisterItems from './components/RegisterItems';
+import { Layout } from 'antd';
 // Firebase
 import { auth, handleUserProfile } from './utils/firebase.utils';
 // Themes settings
-import { orangeTheme } from './utils/themes';
-import LoggedInNavItems from './components/LoggedInNavItems';
 import { NavigationItemsLabels } from './types/enums';
 // Types
 import type { User } from 'firebase/auth';
 import Recovery from './pages/Recovery';
+import { default as Header } from './components/Header';
 
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 
 const App: React.FC = () => {
-  const [navBar, setNavBar] = useState<string[]>([]);
-  const [user, setUser] = useState<User>();
   const [error, setError] = useState<boolean>(false);
-
-  const clearActiveNavItem = (): void => (setNavBar((arr) => arr.filter((val) => !val)));
-
-  const changeActiveNavItem: MenuProps['onClick'] = (e): void => {
-    switch (e.key) {
-      case NavigationItemsLabels.LOGIN:
-      case NavigationItemsLabels.REGISTRATION:
-        setNavBar([e.key]);
-        break;
-      default:
-        clearActiveNavItem();
-    }
-  }
 
   useEffect(() => {
     try {
       auth.onAuthStateChanged(async (userAuth: User | null) => {
         if (!userAuth) {
-          setUser(undefined);
+          setCurrentUser(null);
         } else {
           const { uid, displayName, email } = userAuth;
           await handleUserProfile(userAuth, {
@@ -53,49 +37,35 @@ const App: React.FC = () => {
             displayName,
             email,
           });
-          setUser(userAuth);
+          setCurrentUser(userAuth);
         }
       });
     } catch (err) {
       setError(true);
     }
-  }, [user]);
+  }, [setCurrentUser]);
+
+  // TODO Implement navigation to main page if there's no user
+  // Like user ? <Navigate replace to='/' />
 
   return (
   <Router>
     <Layout style={{height: '100%'}}>
-      <Header className="header">
-        <Wrapper className="header__wrapper">
-          <Link to="/">
-            <Logo />
-          </Link>
-          <ConfigProvider theme={orangeTheme}>
-            <Menu
-              disabledOverflow={true}
-              onClick={changeActiveNavItem}
-              selectedKeys={user && navBar}
-              mode="horizontal"
-              items={user
-                ? LoggedInNavItems({ photo: user.photoURL, name: user.displayName})
-                : RegisterItems}
-            />
-          </ConfigProvider>
-        </Wrapper>
-      </Header>
+      <Header />
       <Content className="content">
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route
             path={`/${NavigationItemsLabels.REGISTRATION}`}
-            element={user ? <Navigate replace to='/' /> : <Registration />}
+            element={<Registration />}
           />
           <Route
             path={`/${NavigationItemsLabels.LOGIN}`}
-            element={user ? <Navigate replace to='/' /> : <Login />}
+            element={<Login />}
           />
           <Route
             path='/recovery'
-            element={user ? <Navigate replace to='/' /> : <Recovery />}
+            element={<Recovery />}
           />
         </Routes>
       </Content>
@@ -106,4 +76,12 @@ const App: React.FC = () => {
   </Router>
 )};
 
-export default App;
+const mapStateToProps = ({ user }: any) => ({
+  currentUser: user.currentUser,
+});
+
+const mapDispatchToProps = (dispatch: any) => ({
+  setCurrentUser: (user: User) => dispatch(setCurrentUser(user)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -1,14 +1,17 @@
-import {StrictMode} from 'react';
+import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import './assets/styles/global.scss';
 import App from './App';
-import { localConfig } from './utils/firebase.utils';
+import { Provider } from 'react-redux';
+import store from './redux/createStore';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 root.render(
   <StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </StrictMode>,
 );

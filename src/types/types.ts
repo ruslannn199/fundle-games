@@ -1,3 +1,5 @@
+import { UserTypes } from './enums';
+
 export type WrapperProps = {
   className?: string;
   isUnusualWrapper?: boolean;
@@ -29,4 +31,9 @@ export type loginFields = {
 export type registrationFields = loginFields & {
   displayName: string;
   confirmPassword: string;
+}
+
+export type userReducerAction = {
+  type: UserTypes | string;
+  payload: any;
 }
