@@ -2,8 +2,8 @@ import type { ThemeConfig } from 'antd';
 
 const black = '#000000';
 const blackBrown = '#201e20';
-const beige = '#ddc3a5';
-const orange = '#fa0';
+export const beige = '#ddc3a5';
+export const orange = '#ffaa00';
 
 export const blackBrownTheme: ThemeConfig = {
   token: {

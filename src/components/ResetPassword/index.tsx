@@ -1,17 +1,26 @@
+// Components
 import { Button, ConfigProvider, Form, Input } from 'antd';
-import { blackTheme, orangeTheme } from '../../utils/themes';
 import { MailOutlined } from '@ant-design/icons';
+// Themes
+import { blackTheme, orangeTheme } from '../../utils/themes';
 // Hooks
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { useTypedSelector } from '../../hooks';
 // Firebase
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '../../utils/firebase.utils';
 
 const ResetPassword: React.FC = () => {
   const [form] = Form.useForm<Record<'email', string>>();
-  const navigate = useNavigate();
   const [error, setError] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const { currentUser } = useTypedSelector((state) => (state.user));
+
+  useEffect(() => {
+    if (currentUser) navigate('/');
+  }, [currentUser]);
+
 
   const handleSubmit = async ({ email }: Record<'email', string>) => {
     try {
@@ -29,13 +38,13 @@ const ResetPassword: React.FC = () => {
   return (
   <ConfigProvider theme={orangeTheme}>
     <Form
-      name='resetPassword'
+      name="resetPassword"
       form={form}
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 32 }}
       onFinish={handleSubmit}
     >
-      <Form.Item className='form__title'>
+      <Form.Item className="form__title">
         <h2>Reset Password</h2>
       </Form.Item>
 
@@ -43,26 +52,26 @@ const ResetPassword: React.FC = () => {
         name="email"
         rules={[
           {
-            type: 'email',
-            message: 'The input is not valid E-mail!',
+            type: "email",
+            message: "The input is not valid E-mail!",
           },
           { required: true },
           { validator: async (_): Promise<void> => {
-            if (error) throw new Error('This E-mail do not exist!');
+            if (error) throw new Error("This E-mail do not exist!");
           }},
         ]}
       >
         <Input
-          prefix={<MailOutlined className='form__icon' />}
+          prefix={<MailOutlined className="form__icon" />}
           placeholder="Email"
           style={{ width: 300 }}
           onChange={() => setError(false)}
         />
       </Form.Item>
 
-      <Form.Item className='wrapper_flex'>
+      <Form.Item className="wrapper_flex">
         <ConfigProvider theme={blackTheme}>
-          <Button type="primary" htmlType="submit" className='form__btn'>
+          <Button type="primary" htmlType="submit" className="form__btn">
             Send a password reset E-mail
           </Button>
         </ConfigProvider>

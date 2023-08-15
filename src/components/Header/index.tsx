@@ -8,11 +8,20 @@ import Logo from '../Logo';
 import { useState } from 'react';
 import LoggedInNavItems from '../LoggedInNavItems';
 import RegisterItems from '../RegisterItems';
-import type { User } from 'firebase/auth';
 import { connect } from 'react-redux';
+import { userStateToProps } from '../../types/types';
+import { useTypedSelector } from '../../hooks';
 
-const AppHeader = ({ currentUser }: Record<'currentUser', User | undefined>) => {
+// TODO refactor to useTypedSelector
+const mapStateToProps = ({ user }: userStateToProps) => {
+  return {
+    currentUser: user.currentUser
+  }
+};
+
+const AppHeader = () => {
   const [navBar, setNavBar] = useState<string[]>([]);
+  const { currentUser } = useTypedSelector((state) => (state.user));
 
   const clearActiveNavItem = (): void => (setNavBar((arr) => arr.filter((val) => !val)));
 
@@ -39,6 +48,7 @@ const AppHeader = ({ currentUser }: Record<'currentUser', User | undefined>) => 
           onClick={changeActiveNavItem}
           selectedKeys={currentUser && navBar}
           mode="horizontal"
+          className="nav"
           items={currentUser
             ? LoggedInNavItems({ photo: currentUser.photoURL, name: currentUser.displayName})
             : RegisterItems}
@@ -47,12 +57,5 @@ const AppHeader = ({ currentUser }: Record<'currentUser', User | undefined>) => 
     </Wrapper>
   </Header>
 )};
-// @ts-ignore
-const mapStateToProps = (props) => {
-  console.log(props);
-  return {
-    currentUser: props.user.currentUser
-  }
-};
 
 export default connect(mapStateToProps, null)(AppHeader);

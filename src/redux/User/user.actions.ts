@@ -1,8 +1,8 @@
-import { UserTypes } from '../../types/enums';
 import type { User } from 'firebase/auth';
-import type { userReducerAction } from '../../types/types';
+import { UserTypes } from '../../types/enums';
+import type { userMainInfo, userReducerAction } from '../../types/types';
 
-export const setCurrentUser = (user: User | null): userReducerAction => ({
+export const setCurrentUser = (user: userMainInfo | User | undefined): userReducerAction => ({
   type: UserTypes.SET_CURRENT_USER,
   payload: user,
 });

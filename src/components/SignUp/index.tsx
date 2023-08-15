@@ -1,9 +1,13 @@
+// Components
 import { Button, ConfigProvider, Form, Input } from 'antd';
-import { blackTheme, orangeTheme } from '../../utils/themes';
 import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
+// Themes
+import { blackTheme, orangeTheme } from '../../utils/themes';
+// Routes
 import { Link, useNavigate } from 'react-router-dom';
 // Hooks
 import { useState, useEffect } from 'react';
+import { useTypedSelector } from '../../hooks';
 // Firebase
 import { auth } from '../../utils/firebase.utils';
 import { updateProfile } from 'firebase/auth';
@@ -16,6 +20,11 @@ import type { UserCredential } from 'firebase/auth';
 const SignUp: React.FC = () => {
   const [error, setError] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { currentUser } = useTypedSelector((state) => (state.user));
+
+  useEffect(() => {
+    if (currentUser) navigate('/');
+  }, [currentUser]);
 
   useEffect(() => {
     if (error) navigate('/error');
@@ -39,10 +48,10 @@ const SignUp: React.FC = () => {
       initialValues={{ remember: true }}
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 32 }}
-      validateMessages={{ required: 'Please, input your ${name}'}}
+      validateMessages={{ required: "Please, input your ${name}"}}
       onFinish={handleSubmit}
     >
-      <Form.Item className='form__title'>
+      <Form.Item className="form__title">
         <h2>{NavigationItemsLabels.REGISTRATION}</h2>
       </Form.Item>
 
@@ -51,7 +60,7 @@ const SignUp: React.FC = () => {
         rules={[{ required: true }]}
       >
         <Input
-          prefix={<UserOutlined className='form__icon' />}
+          prefix={<UserOutlined className="form__icon" />}
           placeholder="Username"
           style={{ width: 320 }}
         />
@@ -61,13 +70,13 @@ const SignUp: React.FC = () => {
         name="email"
         rules={[
           {
-            type: 'email',
-            message: 'The input is not valid E-mail!'
+            type: "email",
+            message: "The input is not valid E-mail!"
           },
           { required: true },
         ]}
       >
-        <Input prefix={<MailOutlined className='form__icon' />} placeholder="E-mail" />
+        <Input prefix={<MailOutlined className="form__icon" />} placeholder="E-mail" />
       </Form.Item>
 
       <Form.Item
@@ -88,10 +97,10 @@ const SignUp: React.FC = () => {
           { required: true },
           ({ getFieldValue }) => ({
             validator(_, value) {
-              if (!value || getFieldValue('password') === value) {
+              if (!value || getFieldValue("password") === value) {
                 return Promise.resolve();
               }
-              return Promise.reject(new Error('The new password that you entered do not match!'));
+              return Promise.reject(new Error("The new password that you entered do not match!"));
             },
           }),
         ]}
@@ -104,16 +113,16 @@ const SignUp: React.FC = () => {
         />
       </Form.Item>
 
-      <Form.Item className='wrapper_flex'>
+      <Form.Item className="wrapper_flex">
         <ConfigProvider theme={blackTheme}>
-          <Button type="primary" htmlType="submit" className='form__btn'>
+          <Button type="primary" htmlType="submit" className="form__btn">
             Register
           </Button>
         </ConfigProvider>
         <span>
           Or <Link
             to={`/${NavigationItemsLabels.LOGIN}`}
-            className='form__link'
+            className="form__link"
             >log in!
           </Link>
         </span>

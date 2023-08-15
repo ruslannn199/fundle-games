@@ -1,8 +1,11 @@
 @use '../abstract/mixins';
 .nav {
+  @include mixins.flex();
+
   &__profile {
     @include mixins.flex();
     gap: 1rem;
+    margin: 0;
   }
 
   &__option {

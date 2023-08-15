@@ -1,12 +1,14 @@
+import { Link } from 'react-router-dom';
 import { NavigationItemsLabels } from '../../types/enums';
 // Images
-import { LogoutOutlined } from '@ant-design/icons';
+import { DashboardOutlined, LogoutOutlined, EditTwoTone } from '@ant-design/icons';
 import LogoImg from '../../assets/images/logo.png';
 // Firebase
 import { auth } from '../../utils/firebase.utils';
 // Types
 import type { loggedInfo } from '../../types/types';
 import type { MenuProps } from 'antd';
+import { orange } from '../../utils/themes';
 
 const LoggedInNavItems = ({ photo: photoURL, name: displayName }: loggedInfo): MenuProps['items'] => ([
   {
@@ -29,6 +31,15 @@ const LoggedInNavItems = ({ photo: photoURL, name: displayName }: loggedInfo): M
       }
     ]
   },
+  {
+    label: (
+      <Link to={`/${NavigationItemsLabels.DASHBOARD}`} className='nav__link'>
+        <span className='nav__link-text'>My Account</span>
+      </Link>
+    ),
+    key: NavigationItemsLabels.DASHBOARD,
+    icon: <EditTwoTone twoToneColor={orange} className='nav__icon' />,
+  }
 ]);
 
 export default LoggedInNavItems;

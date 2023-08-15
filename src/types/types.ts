@@ -1,4 +1,7 @@
-import { UserTypes } from './enums';
+import type { User } from 'firebase/auth';
+import type { UserTypes } from './enums';
+import type { useLocation, useNavigate } from 'react-router-dom';
+import type reducers from '../redux/rootReducer';
 
 export type WrapperProps = {
   className?: string;
@@ -33,7 +36,30 @@ export type registrationFields = loginFields & {
   confirmPassword: string;
 }
 
-export type userReducerAction = {
-  type: UserTypes | string;
-  payload: any;
+export type userMainInfo = {
+  id: string;
+  email: string;
+  displayName: string;
+  photoURL: string;
 }
+
+export type userReducerAction = {
+  type: UserTypes;
+  payload: userState;
+}
+
+export type userStateToProps = {
+  user: {
+    currentUser: userState;
+  }
+}
+
+export type userState = User | userMainInfo | undefined;
+
+export type withRouterProps = {
+  location: ReturnType<typeof useLocation>;
+  params: Record<string, string>;
+  navigate: ReturnType<typeof useNavigate>;
+}
+
+export type rootState = ReturnType<typeof reducers>

@@ -7,50 +7,56 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Homepage from './pages/Homepage';
 import Registration from './pages/Registration';
 import Login from './pages/Login';
+import Recovery from './pages/Recovery';
 // Hooks
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useUserActions } from './hooks';
+// Hoc
+import WithAuth from './hoc/withAuth';
 // Components
 import { Layout } from 'antd';
+import { default as Header } from './components/Header';
 // Firebase
 import { auth, handleUserProfile } from './utils/firebase.utils';
-// Themes settings
-import { NavigationItemsLabels } from './types/enums';
+import { onSnapshot } from 'firebase/firestore';
 // Types
-import type { User } from 'firebase/auth';
-import Recovery from './pages/Recovery';
-import { default as Header } from './components/Header';
+import { NavigationItemsLabels } from './types/enums';
+import type { Unsubscribe, User } from 'firebase/auth';
+import type { userMainInfo, userStateToProps } from './types/types';
+import Dashboard from './pages/Dashboard';
 
 const { Content, Footer } = Layout;
 
 const App: React.FC = () => {
-  const [error, setError] = useState<boolean>(false);
+  const { setCurrentUser } = useUserActions();
 
   useEffect(() => {
-    try {
-      auth.onAuthStateChanged(async (userAuth: User | null) => {
-        if (!userAuth) {
-          setCurrentUser(null);
-        } else {
-          const { uid, displayName, email } = userAuth;
-          await handleUserProfile(userAuth, {
-            id: uid,
-            displayName,
-            email,
+    const authListener: Unsubscribe = auth.onAuthStateChanged(async (userAuth: User | null) => {
+      if (!userAuth) {
+        setCurrentUser(undefined);
+      } else {
+        const { uid, displayName, email, photoURL } = userAuth;
+        const userRef = await handleUserProfile(userAuth, {
+          id: uid,
+          displayName,
+          email,
+          photoURL,
+        });
+        if (userRef) {
+          onSnapshot(userRef, (snapshot) => {
+            const user = snapshot.data() as userMainInfo;
+            setCurrentUser(user);
           });
-          setCurrentUser(userAuth);
         }
-      });
-    } catch (err) {
-      setError(true);
-    }
+        setCurrentUser(userAuth);
+      }
+    });
+    return () => authListener();
   }, [setCurrentUser]);
-
-  // TODO Implement navigation to main page if there's no user
-  // Like user ? <Navigate replace to='/' />
 
   return (
   <Router>
-    <Layout style={{height: '100%'}}>
+    <Layout style={{height: "100%"}}>
       <Header />
       <Content className="content">
         <Routes>
@@ -64,8 +70,12 @@ const App: React.FC = () => {
             element={<Login />}
           />
           <Route
-            path='/recovery'
+            path="/recovery"
             element={<Recovery />}
+          />
+          <Route
+            path="/dashboard"
+            element={<WithAuth><Dashboard /></WithAuth>}
           />
         </Routes>
       </Content>
@@ -76,12 +86,12 @@ const App: React.FC = () => {
   </Router>
 )};
 
-const mapStateToProps = ({ user }: any) => ({
+const mapStateToProps = ({ user }: userStateToProps) => ({
   currentUser: user.currentUser,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  setCurrentUser: (user: User) => dispatch(setCurrentUser(user)),
+  setCurrentUser: (user: userMainInfo) => dispatch(setCurrentUser(user)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

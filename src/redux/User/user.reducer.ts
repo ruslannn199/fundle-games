@@ -1,11 +1,11 @@
 import { UserTypes } from '../../types/enums';
-import { userReducerAction } from '../../types/types';
+import { userReducerAction, userState } from '../../types/types';
 
 const INITIAL_STATE = {
-  currentUser: null,
+  currentUser: undefined,
 };
 
-const userReducer = (state = INITIAL_STATE, action: userReducerAction) => {
+const userReducer = (state: Record<'currentUser', userState> = INITIAL_STATE, action: userReducerAction) => {
   switch(action.type) {
     case UserTypes.SET_CURRENT_USER:
       return {
