@@ -10,11 +10,11 @@ import type { loggedInfo } from '../../types/types';
 import type { MenuProps } from 'antd';
 import { orange } from '../../utils/themes';
 
-const LoggedInNavItems = ({ photo: photoURL, name: displayName }: loggedInfo): MenuProps['items'] => ([
+const LoggedInNavItems = ({ name: displayName }: loggedInfo): MenuProps['items'] => ([
   {
     label: (
       <h3 className='nav__profile'>
-        <img src={photoURL || LogoImg} alt='profile-picture' className='nav__img' />
+        <img src={LogoImg} alt='profile-picture' className='nav__img' />
         {displayName || 'User'}
       </h3>
     ),

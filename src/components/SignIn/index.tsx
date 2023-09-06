@@ -23,7 +23,6 @@ const SignIn: React.FC = () => {
   const [error, setError] = useState<boolean>(false);
   const navigate = useNavigate();
   const { currentUser } = useTypedSelector((state) => (state.user));
-
   useEffect(() => {
     if (currentUser) navigate('/');
   }, [currentUser]);

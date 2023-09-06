@@ -49,7 +49,7 @@ const AppHeader = () => {
           mode="horizontal"
           className="nav"
           items={currentUser
-            ? LoggedInNavItems({ photo: currentUser.photoURL, name: currentUser.displayName})
+            ? LoggedInNavItems({ name: currentUser.displayName })
             : RegisterItems}
         />
       </ConfigProvider>

@@ -18,7 +18,6 @@ export type firebaseConfig = {
 }
 
 export type loggedInfo = {
-  photo: string | null;
   name: string | null;
 }
 
