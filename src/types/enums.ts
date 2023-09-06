@@ -5,6 +5,11 @@ export enum NavigationItemsLabels {
   DASHBOARD = 'dashboard',
 }
 
-export enum UserTypes {
-  SET_CURRENT_USER = 'SET_CURRENT_USER',
+export enum ActionType {
+  // Start actions
+  EMAIL_SIGN_IN_START = 'EMAIL_SIGN_IN_START',
+  // Success actions
+  SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS',
+  // Error
+  USER_ERROR = 'USER_ERROR',
 }

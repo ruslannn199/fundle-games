@@ -1,8 +1,14 @@
+import { ActionType } from '../../types/enums';
 import type { User } from 'firebase/auth';
-import { UserTypes } from '../../types/enums';
-import type { userMainInfo, userReducerAction } from '../../types/types';
+import type { userMainInfo } from '../../types/types';
+import type { currentUserAction } from './user.action-types';
 
-export const setCurrentUser = (user: userMainInfo | User | undefined): userReducerAction => ({
-  type: UserTypes.SET_CURRENT_USER,
+export const signInUser = (user: userMainInfo | User | undefined): currentUserAction => ({
+  type: ActionType.SIGN_IN_SUCCESS,
   payload: user,
+});
+
+export const userError = (err: string[]) => ({
+  type: ActionType.USER_ERROR,
+  payload: err,
 });

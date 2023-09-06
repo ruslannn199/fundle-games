@@ -1,5 +1,5 @@
 import type { User } from 'firebase/auth';
-import type { UserTypes } from './enums';
+import type { ActionType } from './enums';
 import type { useLocation, useNavigate } from 'react-router-dom';
 import type reducers from '../redux/rootReducer';
 
@@ -43,18 +43,18 @@ export type userMainInfo = {
   photoURL: string;
 }
 
-export type userReducerAction = {
-  type: UserTypes;
-  payload: userState;
-}
-
 export type userStateToProps = {
   user: {
-    currentUser: userState;
+    currentUser: currentUser;
   }
 }
 
-export type userState = User | userMainInfo | undefined;
+export type currentUser = User | userMainInfo | undefined;
+
+export type userState = {
+  currentUser: currentUser | null;
+  userErrors: string[];
+}
 
 export type withRouterProps = {
   location: ReturnType<typeof useLocation>;
@@ -62,4 +62,4 @@ export type withRouterProps = {
   navigate: ReturnType<typeof useNavigate>;
 }
 
-export type rootState = ReturnType<typeof reducers>
+export type rootState = ReturnType<typeof reducers>;

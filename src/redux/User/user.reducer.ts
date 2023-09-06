@@ -1,17 +1,27 @@
-import { UserTypes } from '../../types/enums';
-import { userReducerAction, userState } from '../../types/types';
+import { ActionType } from '../../types/enums';
+import { userState } from '../../types/types';
+import { currentUserAction } from './user.action-types';
 
-const INITIAL_STATE = {
-  currentUser: undefined,
+const INITIAL_STATE: userState = {
+  currentUser: null,
+  userErrors: [],
 };
 
-const userReducer = (state: Record<'currentUser', userState> = INITIAL_STATE, action: userReducerAction) => {
+const userReducer = (
+  state = INITIAL_STATE,
+  action: currentUserAction
+  ): userState => {
   switch(action.type) {
-    case UserTypes.SET_CURRENT_USER:
+    case ActionType.SIGN_IN_SUCCESS:
       return {
         ...state,
-        currentUser: action.payload
-      }
+        currentUser: action.payload,
+      };
+    case ActionType.USER_ERROR:
+      return {
+        ...state,
+        userErrors: action.payload,
+      };
     default:
       return state;
   }

@@ -1,6 +1,10 @@
 // Components
 import { Form, Input, Button, ConfigProvider, Tooltip } from 'antd';
-import { MailOutlined, LockOutlined, GoogleCircleFilled, QuestionCircleFilled } from '@ant-design/icons';
+import {
+  MailOutlined,
+  LockOutlined,
+  GoogleCircleFilled,
+  QuestionCircleFilled } from '@ant-design/icons';
 // Routes
 import { Link, useNavigate } from 'react-router-dom';
 // Hooks

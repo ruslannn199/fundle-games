@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { NavigationItemsLabels } from '../../types/enums';
 // Images
-import { DashboardOutlined, LogoutOutlined, EditTwoTone } from '@ant-design/icons';
+import { LogoutOutlined, EditTwoTone } from '@ant-design/icons';
 import LogoImg from '../../assets/images/logo.png';
 // Firebase
 import { auth } from '../../utils/firebase.utils';
@@ -22,24 +22,24 @@ const LoggedInNavItems = ({ photo: photoURL, name: displayName }: loggedInfo): M
     children: [
       {
         label: (
+          <Link to={`/${NavigationItemsLabels.DASHBOARD}`} className='nav__option'>
+            <EditTwoTone twoToneColor={orange} />
+            <span>My Account</span>
+          </Link>
+        ),
+        key: NavigationItemsLabels.DASHBOARD,
+      },
+      {
+        label: (
           <div className='nav__option' onClick={() => auth.signOut()}>
             <span>{NavigationItemsLabels.LOG_OUT}</span>
             <LogoutOutlined />
           </div>
         ),
         key: NavigationItemsLabels.LOG_OUT,
-      }
+      },
     ]
   },
-  {
-    label: (
-      <Link to={`/${NavigationItemsLabels.DASHBOARD}`} className='nav__link'>
-        <span className='nav__link-text'>My Account</span>
-      </Link>
-    ),
-    key: NavigationItemsLabels.DASHBOARD,
-    icon: <EditTwoTone twoToneColor={orange} className='nav__icon' />,
-  }
 ]);
 
 export default LoggedInNavItems;

@@ -46,7 +46,6 @@ const AppHeader = () => {
         <Menu
           disabledOverflow={true}
           onClick={changeActiveNavItem}
-          selectedKeys={currentUser && navBar}
           mode="horizontal"
           className="nav"
           items={currentUser

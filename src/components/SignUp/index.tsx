@@ -57,7 +57,9 @@ const SignUp: React.FC = () => {
 
       <Form.Item
         name="displayName"
-        rules={[{ required: true }]}
+        rules={[
+          { required: true },
+        ]}
       >
         <Input
           prefix={<UserOutlined className="form__icon" />}
