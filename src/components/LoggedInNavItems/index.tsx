@@ -3,14 +3,14 @@ import { NavigationItemsLabels } from '../../types/enums';
 // Images
 import { LogoutOutlined, EditTwoTone } from '@ant-design/icons';
 import LogoImg from '../../assets/images/logo.png';
-// Firebase
-import { auth } from '../../utils/firebase.utils';
 // Types
 import type { loggedInfo } from '../../types/types';
 import type { MenuProps } from 'antd';
 import { orange } from '../../utils/themes';
+import { emailSignOutStart } from '../../redux/User/user.action-creators';
+import { CurrentUserAction } from '../../redux/User/user.actions';
 
-const LoggedInNavItems = ({ name: displayName }: loggedInfo): MenuProps['items'] => ([
+const LoggedInNavItems = ({ name: displayName }: loggedInfo, callback: () => CurrentUserAction): MenuProps['items'] => ([
   {
     label: (
       <h3 className='nav__profile'>
@@ -31,7 +31,7 @@ const LoggedInNavItems = ({ name: displayName }: loggedInfo): MenuProps['items']
       },
       {
         label: (
-          <div className='nav__option' onClick={() => auth.signOut()}>
+          <div className='nav__option' onClick={callback}>
             <span>{NavigationItemsLabels.LOG_OUT}</span>
             <LogoutOutlined />
           </div>

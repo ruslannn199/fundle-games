@@ -19,7 +19,6 @@ import { default as Header } from './components/Header';
 import { NavigationItemsLabels } from './types/enums';
 import type { userMainInfo, userStateToProps } from './types/types';
 import Dashboard from './pages/Dashboard';
-import { checkUserSession } from './redux/User/user.action-creators';
 
 const { Content, Footer } = Layout;
 
@@ -70,4 +69,4 @@ const App: React.FC = () => {
 //   setCurrentUser: (user: userMainInfo) => dispatch(signInUser(user)),
 // });
 
-export default connect(mapState, checkUserSession)(App);
+export default connect(mapState)(App);

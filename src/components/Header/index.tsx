@@ -10,7 +10,7 @@ import LoggedInNavItems from '../LoggedInNavItems';
 import RegisterItems from '../RegisterItems';
 import { connect } from 'react-redux';
 import { userStateToProps } from '../../types/types';
-import { useTypedSelector } from '../../hooks';
+import { useTypedSelector, useUserActions } from '../../hooks';
 
 // TODO refactor to useTypedSelector
 const mapStateToProps = ({ user }: userStateToProps) => {
@@ -22,6 +22,7 @@ const mapStateToProps = ({ user }: userStateToProps) => {
 const AppHeader = () => {
   const [navBar, setNavBar] = useState<string[]>([]);
   const { currentUser } = useTypedSelector((state) => (state.user));
+  const { emailSignOutStart } = useUserActions();
 
   const clearActiveNavItem = (): void => (setNavBar((arr) => arr.filter((val) => !val)));
 
@@ -49,7 +50,7 @@ const AppHeader = () => {
           mode="horizontal"
           className="nav"
           items={currentUser
-            ? LoggedInNavItems({ name: currentUser.displayName })
+            ? LoggedInNavItems({ name: currentUser.displayName }, emailSignOutStart)
             : RegisterItems}
         />
       </ConfigProvider>

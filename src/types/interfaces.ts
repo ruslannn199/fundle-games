@@ -14,6 +14,7 @@ export interface EmailPassword {
 
 export interface HandleUser {
   userAuth: User | null;
+  moreData?: object;
 }
 
 export interface UserCredentials {

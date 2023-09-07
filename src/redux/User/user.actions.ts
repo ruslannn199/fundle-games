@@ -1,7 +1,5 @@
 import { ActionType } from '../../types/enums';
 import { CurrentUser, EmailPassword, UserCredentials } from '../../types/interfaces';
-import { currentUser } from '../../types/types';
-
 
 export type CurrentUserAction =
   EmailSignInStartAction

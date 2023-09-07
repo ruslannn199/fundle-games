@@ -12,31 +12,42 @@ import { useState, useEffect } from 'react';
 // Themes
 import { blackTheme, orangeTheme } from '../../utils/themes';
 // Firebase
-import { auth, signInWithGoogle } from '../../utils/firebase.utils';
+import { auth } from '../../utils/firebase.utils';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 // Types
 import type { loginFields } from '../../types/types';
 import { NavigationItemsLabels } from '../../types/enums';
-import { useTypedSelector } from '../../hooks';
+import { useTypedSelector, useUserActions } from '../../hooks';
 
 const SignIn: React.FC = () => {
-  const [error, setError] = useState<boolean>(false);
+  const [errors, setErrors] = useState<string[]>([]);
   const navigate = useNavigate();
-  const { currentUser } = useTypedSelector((state) => (state.user));
-  useEffect(() => {
-    if (currentUser) navigate('/');
-  }, [currentUser]);
+  const { currentUser, userErrors } = useTypedSelector((state) => (state.user));
+  const {
+    emailSignInStart,
+    googleSignInStart,
+    resetUserState
+  } = useUserActions();
 
   useEffect(() => {
-    if (error) navigate('/error');
-  }, [error]);
+    if (currentUser) {
+      navigate('/');
+    } else {
+      setErrors(userErrors);
+    }
+  }, [currentUser, userErrors]);
+
+  useEffect(() => {
+    resetUserState();
+  }, [resetUserState]);
 
   const handleSubmit = async ({ email, password }: loginFields) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      emailSignInStart({ email, password });
     } catch (err) {
       if (err instanceof Error) console.log(err.message);
-      setError(true);
+      setErrors(userErrors);
     }
   }
 
@@ -101,7 +112,7 @@ const SignIn: React.FC = () => {
 
       <Form.Item className="wrapper_flex">
         <ConfigProvider theme={blackTheme}>
-          <Button type="default" onClick={signInWithGoogle}>
+          <Button type="default" onClick={() => googleSignInStart()}>
             Sign in with Google <GoogleCircleFilled />
           </Button>
         </ConfigProvider>

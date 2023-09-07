@@ -7,7 +7,7 @@ import { blackTheme, orangeTheme } from '../../utils/themes';
 import { Link, useNavigate } from 'react-router-dom';
 // Hooks
 import { useState, useEffect } from 'react';
-import { useTypedSelector } from '../../hooks';
+import { useTypedSelector, useUserActions } from '../../hooks';
 // Firebase
 import { auth } from '../../utils/firebase.utils';
 import { updateProfile } from 'firebase/auth';
@@ -21,20 +21,23 @@ const SignUp: React.FC = () => {
   const [error, setError] = useState<boolean>(false);
   const navigate = useNavigate();
   const { currentUser } = useTypedSelector((state) => (state.user));
+  const {resetUserState, emailSignUpStart} = useUserActions();
 
   useEffect(() => {
     if (currentUser) navigate('/');
   }, [currentUser]);
 
   useEffect(() => {
+    resetUserState();
+  }, [resetUserState]);
+
+  useEffect(() => {
     if (error) navigate('/error');
   }, [error]);
 
-  const handleSubmit = async ({ displayName, email, password }: registrationFields) => {
+  const handleSubmit = async ({ displayName, email, password, confirmPassword }: registrationFields) => {
     try {
-      const { user }: UserCredential =
-        await createUserWithEmailAndPassword(auth, email, password);
-      await updateProfile(user, { displayName });
+      emailSignUpStart({ displayName, email, password, confirmPassword });
     } catch (err) {
       if (err instanceof Error) console.log(err.message);
       setError(true);

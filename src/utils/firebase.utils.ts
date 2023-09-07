@@ -1,10 +1,11 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, doc, setDoc } from "firebase/firestore";
+import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 // Types
-import type { firebaseConfig } from '../types/types';
-import type { Auth, UserCredential, OAuthCredential, User } from 'firebase/auth';
+import type { firebaseConfig, userMainInfo } from '../types/types';
+import type { Auth } from 'firebase/auth';
 import type { Firestore, DocumentReference } from 'firebase/firestore';
+import { HandleUser } from '../types/interfaces';
 
 export const localConfig: firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -15,35 +16,51 @@ export const localConfig: firebaseConfig = {
   appId: process.env.REACT_APP_APP_ID,
 }
 
-const firebaseApp = initializeApp(localConfig);
+initializeApp(localConfig);
 
 export const auth: Auth = getAuth();
 export const db: Firestore = getFirestore();
 
-const GoogleProvider = new GoogleAuthProvider();
-GoogleProvider.setCustomParameters({
-  prompt: 'select_account'
-});
-export const signInWithGoogle = async () => {
-  try {
-    const result: UserCredential = await signInWithPopup(auth, GoogleProvider);
-    const credential: OAuthCredential | null = GoogleAuthProvider.credentialFromResult(result);
-    const user: User = result.user;
-  } catch (err) {
-    throw err;
-  }
+export const GoogleProvider = new GoogleAuthProvider();
+GoogleProvider.setCustomParameters({ prompt: 'select_account' });
+
+// !
+// export const signInWithGoogle = async () => {
+//   try {
+//     const result: UserCredential = await signInWithPopup(auth, GoogleProvider);
+//     googleSignInStart();
+//     const credential: OAuthCredential | null = GoogleAuthProvider.credentialFromResult(result);
+//     const user: User = result.user;
+//   } catch (err) {
+//     throw err;
+//   }
+// }
+
+export const handleUserProfile = async ({ userAuth, moreData }: HandleUser): Promise<DocumentReference | null> => {
+  if (userAuth) {
+    const { uid, displayName, email } = userAuth;
+    const timeStamp = new Date();
+    const userRoles = ['user'];
+    const userRef: DocumentReference = doc(db, 'users', uid);
+    const userData = await getDoc(userRef);
+    if (!userData.exists) {
+      try {
+        await setDoc(userRef, {
+          email, displayName, createdDate: timeStamp, userRoles, ...moreData
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    return userRef;
+  } else return null;
 }
 
-export const handleUserProfile = async (
-  userAuth: User | null,
-  additionalData: object): Promise<DocumentReference | undefined> => {
-  try {
-    if (!userAuth) return;
-    const { uid } = userAuth;
-    const userRef: DocumentReference = doc(db, 'users', uid);
-    await setDoc(userRef, additionalData);
-    return userRef;
-  } catch (err) {
-    throw err;
-  }
+// TODO add types
+export const getCurrentUser = async () => {
+  const { currentUser } = auth;
+  if (currentUser) {
+    const { displayName, email, uid, photoURL } = currentUser;
+    return { displayName, email, id: uid, photoURL };
+  } else return null;
 }
