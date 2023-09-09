@@ -39,10 +39,3 @@ export type userData = DocumentSnapshot<DocumentData>;
 export type userAuth = User | null;
 
 export type currentUserCredentials = Promise<Record<keyof userMainInfo, string | null> | null>;
-
-// ! Deprecated
-export type userStateToProps = {
-  user: {
-    currentUser: userAuth;
-  }
-}

@@ -1,5 +1,3 @@
-// Redux
-import { connect } from 'react-redux';
 // Routes
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // Pages
@@ -17,14 +15,9 @@ import { Layout } from 'antd';
 import { default as Header } from './components/Header';
 // Types
 import { NavigationItemsLabels } from './types/enums';
-import type { userStateToProps } from './types/types';
 import Dashboard from './pages/Dashboard';
 
 const { Content, Footer } = Layout;
-
-const mapState = ({ user }: userStateToProps) => ({
-  currentUser: user.currentUser,
-});
 
 const App: React.FC = () => {
   const { checkUserSession } = useUserActions();
@@ -65,4 +58,4 @@ const App: React.FC = () => {
   </Router>
 )};
 
-export default connect(mapState)(App);
+export default App;

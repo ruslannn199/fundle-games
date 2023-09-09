@@ -1,6 +1,6 @@
-const Dashboard = () => {
+const Dashboard: React.FC = () => {
   return (
-    <h1>Your logged in</h1>
+    <h1>You are logged in</h1>
   );
 };
 

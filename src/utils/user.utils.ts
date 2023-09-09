@@ -3,7 +3,7 @@ import { signInSuccess } from '../redux/User/user.action-creators';
 import { userAuth, userRefType, userData } from '../types/types';
 import { auth, handleUserProfile } from './firebase.utils';
 import { getDoc } from 'firebase/firestore';
-import { sendPasswordResetEmail } from 'firebase/auth';
+import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
 
 // Save user to db helper
 export function* getSnapshotFromUserAuth(user: userAuth, moreData?: object) {

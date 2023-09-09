@@ -25,6 +25,7 @@ export const db: Firestore = getFirestore();
 export const GoogleProvider = new GoogleAuthProvider();
 GoogleProvider.setCustomParameters({ prompt: 'select_account' });
 
+// TODO add photoURL
 export const handleUserProfile = async ({ userAuth, moreData }: HandleUser): Promise<DocumentReference | null> => {
   if (userAuth) {
     const { uid, displayName, email } = userAuth;
@@ -32,7 +33,7 @@ export const handleUserProfile = async ({ userAuth, moreData }: HandleUser): Pro
     const userRoles = ['user'];
     const userRef: DocumentReference = doc(db, 'users', uid);
     const userData = await getDoc(userRef);
-    if (!userData.exists) {
+    if (!userData.exists()) {
       try {
         await setDoc(userRef, {
           email, displayName, createdDate: timeStamp, userRoles, ...moreData

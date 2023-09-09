@@ -1,5 +1,3 @@
-// Redux
-import { connect } from 'react-redux';
 // Hooks
 import { useState } from 'react';
 import { useTypedSelector, useUserActions } from '../../hooks';
@@ -14,7 +12,6 @@ import Wrapper from '../Wrapper';
 import LoggedInNavItems from '../LoggedInNavItems';
 import RegisterItems from '../RegisterItems';
 // Types
-import type { userStateToProps } from '../../types/types';
 import { NavigationItemsLabels } from '../../types/enums';
 
 const AppHeader = () => {
@@ -56,6 +53,4 @@ const AppHeader = () => {
   </Header>
 )};
 
-const mapStateToProps = ({ user }: userStateToProps) => ({ currentUser: user.currentUser });
-
-export default connect(mapStateToProps)(AppHeader);
+export default AppHeader;

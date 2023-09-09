@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
-import userReducer from './User/user.reducer';
+import userReducer, { type UserState } from './User/user.reducer';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './saga';
 
@@ -22,3 +22,5 @@ export default store;
 export type RootState = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
+
+export const mapStateToProps = ({ currentUser }: UserState) => ({ currentUser });
