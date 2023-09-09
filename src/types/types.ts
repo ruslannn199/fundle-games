@@ -1,5 +1,4 @@
 import type { User } from 'firebase/auth';
-import type { useLocation, useNavigate } from 'react-router-dom';
 import type { DocumentData, DocumentReference, DocumentSnapshot } from 'firebase/firestore';
 
 export type WrapperProps = {
@@ -14,14 +13,6 @@ export type firebaseConfig = {
   storageBucket?: string;
   messagingSenderId?: string;
   appId?: string;
-}
-
-export type loggedInfo = {
-  name: string | null;
-}
-
-export type signProps = {
-  changeActiveFn: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
 export type loginFields = {
@@ -47,17 +38,11 @@ export type userData = DocumentSnapshot<DocumentData>;
 
 export type userAuth = User | null;
 
+export type currentUserCredentials = Promise<Record<keyof userMainInfo, string | null> | null>;
+
 // ! Deprecated
 export type userStateToProps = {
   user: {
-    currentUser: currentUser;
+    currentUser: userAuth;
   }
-}
-
-export type currentUser = User | userMainInfo | undefined;
-
-export type withRouterProps = {
-  location: ReturnType<typeof useLocation>;
-  params: Record<string, string>;
-  navigate: ReturnType<typeof useNavigate>;
 }

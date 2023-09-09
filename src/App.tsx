@@ -17,7 +17,7 @@ import { Layout } from 'antd';
 import { default as Header } from './components/Header';
 // Types
 import { NavigationItemsLabels } from './types/enums';
-import type { userMainInfo, userStateToProps } from './types/types';
+import type { userStateToProps } from './types/types';
 import Dashboard from './pages/Dashboard';
 
 const { Content, Footer } = Layout;
@@ -64,9 +64,5 @@ const App: React.FC = () => {
     </Layout>
   </Router>
 )};
-
-// const mapDispatchToProps = (dispatch: any) => ({
-//   setCurrentUser: (user: userMainInfo) => dispatch(signInUser(user)),
-// });
 
 export default connect(mapState)(App);

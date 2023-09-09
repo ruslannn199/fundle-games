@@ -20,7 +20,7 @@ import { NavigationItemsLabels } from '../../types/enums';
 import { useTypedSelector, useUserActions } from '../../hooks';
 
 const SignIn: React.FC = () => {
-  const [errors, setErrors] = useState<string[]>([]);
+  const [, setErrors] = useState<string[]>([]);
   const navigate = useNavigate();
   const { currentUser, userErrors } = useTypedSelector((state) => (state.user));
   const {
@@ -46,7 +46,6 @@ const SignIn: React.FC = () => {
       await signInWithEmailAndPassword(auth, email, password);
       emailSignInStart({ email, password });
     } catch (err) {
-      if (err instanceof Error) console.log(err.message);
       setErrors(userErrors);
     }
   }

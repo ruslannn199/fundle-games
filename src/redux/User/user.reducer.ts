@@ -2,14 +2,14 @@ import { ActionType } from '../../types/enums';
 import { CurrentUser } from '../../types/interfaces';
 import { CurrentUserAction } from './user.actions';
 
-// state interface
+// State interface
 export interface UserState {
   currentUser: CurrentUser | null;
   userErrors: string[];
   recoverPasswordSuccess: boolean;
 }
 
-// initial state
+// Initial state
 const initialState: UserState = {
   currentUser: null,
   userErrors: [],

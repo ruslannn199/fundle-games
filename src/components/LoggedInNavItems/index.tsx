@@ -1,20 +1,19 @@
 import { Link } from 'react-router-dom';
-import { NavigationItemsLabels } from '../../types/enums';
 // Images
 import { LogoutOutlined, EditTwoTone } from '@ant-design/icons';
 import LogoImg from '../../assets/images/logo.png';
 // Types
-import type { loggedInfo } from '../../types/types';
+import { NavigationItemsLabels } from '../../types/enums';
 import type { MenuProps } from 'antd';
+import type { CurrentUserAction } from '../../redux/User/user.actions';
+// Themes
 import { orange } from '../../utils/themes';
-import { emailSignOutStart } from '../../redux/User/user.action-creators';
-import { CurrentUserAction } from '../../redux/User/user.actions';
 
-const LoggedInNavItems = ({ name: displayName }: loggedInfo, callback: () => CurrentUserAction): MenuProps['items'] => ([
+const LoggedInNavItems = (displayName: string, callback: () => CurrentUserAction): MenuProps['items'] => ([
   {
     label: (
       <h3 className='nav__profile'>
-        <img src={LogoImg} alt='profile-picture' className='nav__img' />
+        <img src={LogoImg} alt='profile avatar' className='nav__img' />
         {displayName || 'User'}
       </h3>
     ),

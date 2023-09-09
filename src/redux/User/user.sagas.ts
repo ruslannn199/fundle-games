@@ -1,17 +1,16 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
-import { EmailSignInStartAction, EmailSignUpStartAction } from './user.actions';
+import { EmailSignInStartAction, EmailSignUpStartAction, PasswordRecoveryStartAction } from './user.actions';
 import { GoogleProvider, auth, getCurrentUser } from '../../utils/firebase.utils';
 import { put, all, call, takeLatest } from 'redux-saga/effects';
-import { signOutSuccess, userError } from './user.action-creators';
+import { recoverPasswordSuccess, signOutSuccess, userError } from './user.action-creators';
 import { ActionType } from '../../types/enums';
-import { getSnapshotFromUserAuth } from '../../utils/user.utils';
+import { getSnapshotFromUserAuth, handleResetPasswordAPI } from '../../utils/user.utils';
 import { userAuth } from '../../types/types';
 
 // Worker sagas
 export function* emailSignIn({
   payload: { email, password }
 }: EmailSignInStartAction) {
-  // Signing in user
   try {
     const { user } = yield signInWithEmailAndPassword(auth, email, password);
     yield getSnapshotFromUserAuth(user);
@@ -21,7 +20,6 @@ export function* emailSignIn({
 }
 
 export function* emailSignOut() {
-  // Signing out user
   try {
     yield signOut(auth);
     yield put(signOutSuccess());
@@ -52,7 +50,14 @@ export function* isUserAuthenticated() {
   }
 }
 
-// TODO implement recoverPasswordAPI & function
+export function* recoverPassword({ payload }: PasswordRecoveryStartAction) {
+  try {
+    yield call(handleResetPasswordAPI, payload);
+    yield put(recoverPasswordSuccess());
+  } catch (err) {
+    if (err instanceof Error) yield put(userError([err.message]));
+  }
+}
 
 export function* googleSignIn() {
   try {
@@ -80,6 +85,10 @@ export function* onEmailSignUpStart() {
   yield takeLatest(ActionType.EMAIL_SIGN_UP_START, emailSignUp);
 }
 
+export function* onRecoverPasswordStart() {
+  yield takeLatest(ActionType.PASSWORD_RECOVERY_START, recoverPassword);
+}
+
 export function* onGoogleSignInStart() {
   yield takeLatest(ActionType.GOOGLE_SIGN_IN_START, googleSignIn);
 }
@@ -91,6 +100,7 @@ export default function* userSagas() {
     call(onEmailSignInStart),
     call(onEmailSignOutStart),
     call(onEmailSignUpStart),
+    call(onRecoverPasswordStart),
     call(onGoogleSignInStart),
   ]);
 }

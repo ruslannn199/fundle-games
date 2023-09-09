@@ -1,26 +1,24 @@
+// Redux
+import { connect } from 'react-redux';
+// Hooks
+import { useState } from 'react';
+import { useTypedSelector, useUserActions } from '../../hooks';
+// Router
+import { Link } from 'react-router-dom';
+// Components
 import { Header } from 'antd/es/layout/layout';
 import { ConfigProvider, Menu, type MenuProps } from 'antd';
-import { NavigationItemsLabels } from '../../types/enums';
 import { orangeTheme } from '../../utils/themes';
-import { Link } from 'react-router-dom';
-import Wrapper from '../Wrapper';
 import Logo from '../Logo';
-import { useState } from 'react';
+import Wrapper from '../Wrapper';
 import LoggedInNavItems from '../LoggedInNavItems';
 import RegisterItems from '../RegisterItems';
-import { connect } from 'react-redux';
-import { userStateToProps } from '../../types/types';
-import { useTypedSelector, useUserActions } from '../../hooks';
-
-// TODO refactor to useTypedSelector
-const mapStateToProps = ({ user }: userStateToProps) => {
-  return {
-    currentUser: user.currentUser
-  }
-};
+// Types
+import type { userStateToProps } from '../../types/types';
+import { NavigationItemsLabels } from '../../types/enums';
 
 const AppHeader = () => {
-  const [navBar, setNavBar] = useState<string[]>([]);
+  const [, setNavBar] = useState<string[]>([]);
   const { currentUser } = useTypedSelector((state) => (state.user));
   const { emailSignOutStart } = useUserActions();
 
@@ -50,7 +48,7 @@ const AppHeader = () => {
           mode="horizontal"
           className="nav"
           items={currentUser
-            ? LoggedInNavItems({ name: currentUser.displayName }, emailSignOutStart)
+            ? LoggedInNavItems(currentUser.displayName, emailSignOutStart)
             : RegisterItems}
         />
       </ConfigProvider>
@@ -58,4 +56,6 @@ const AppHeader = () => {
   </Header>
 )};
 
-export default connect(mapStateToProps, null)(AppHeader);
+const mapStateToProps = ({ user }: userStateToProps) => ({ currentUser: user.currentUser });
+
+export default connect(mapStateToProps)(AppHeader);

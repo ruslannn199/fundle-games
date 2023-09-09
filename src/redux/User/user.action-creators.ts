@@ -1,6 +1,6 @@
 import { ActionType } from '../../types/enums';
-import { CurrentUser, EmailPassword, UserCredentials } from '../../types/interfaces';
-import { CurrentUserAction } from './user.actions';
+import type { CurrentUser, EmailPassword, UserCredentials } from '../../types/interfaces';
+import type { CurrentUserAction } from './user.actions';
 
 // Start action creators
 export const emailSignInStart = (

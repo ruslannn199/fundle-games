@@ -19,7 +19,7 @@ const ResetPassword: React.FC = () => {
 
   useEffect(() => {
     if (currentUser) navigate('/');
-  }, [currentUser]);
+  }, [currentUser, navigate]);
 
 
   const handleSubmit = async ({ email }: Record<'email', string>) => {
@@ -33,7 +33,7 @@ const ResetPassword: React.FC = () => {
 
   useEffect(() => {
     form.validateFields();
-  }, [error]);
+  }, [error, form]);
 
   return (
   <ConfigProvider theme={orangeTheme}>

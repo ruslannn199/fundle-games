@@ -8,24 +8,19 @@ import { Link, useNavigate } from 'react-router-dom';
 // Hooks
 import { useState, useEffect } from 'react';
 import { useTypedSelector, useUserActions } from '../../hooks';
-// Firebase
-import { auth } from '../../utils/firebase.utils';
-import { updateProfile } from 'firebase/auth';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
 // Types
 import { NavigationItemsLabels } from '../../types/enums';
 import type { registrationFields } from '../../types/types';
-import type { UserCredential } from 'firebase/auth';
 
 const SignUp: React.FC = () => {
   const [error, setError] = useState<boolean>(false);
   const navigate = useNavigate();
   const { currentUser } = useTypedSelector((state) => (state.user));
-  const {resetUserState, emailSignUpStart} = useUserActions();
+  const { resetUserState, emailSignUpStart } = useUserActions();
 
   useEffect(() => {
     if (currentUser) navigate('/');
-  }, [currentUser]);
+  }, [currentUser, navigate]);
 
   useEffect(() => {
     resetUserState();
@@ -33,7 +28,7 @@ const SignUp: React.FC = () => {
 
   useEffect(() => {
     if (error) navigate('/error');
-  }, [error]);
+  }, [error, navigate]);
 
   const handleSubmit = async ({ displayName, email, password, confirmPassword }: registrationFields) => {
     try {

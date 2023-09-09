@@ -1,11 +1,12 @@
+// Firebase
 import { initializeApp } from 'firebase/app';
-import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
+import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 // Types
-import type { firebaseConfig, userMainInfo } from '../types/types';
+import type { currentUserCredentials, firebaseConfig } from '../types/types';
 import type { Auth } from 'firebase/auth';
 import type { Firestore, DocumentReference } from 'firebase/firestore';
-import { HandleUser } from '../types/interfaces';
+import type { HandleUser } from '../types/interfaces';
 
 export const localConfig: firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -23,18 +24,6 @@ export const db: Firestore = getFirestore();
 
 export const GoogleProvider = new GoogleAuthProvider();
 GoogleProvider.setCustomParameters({ prompt: 'select_account' });
-
-// !
-// export const signInWithGoogle = async () => {
-//   try {
-//     const result: UserCredential = await signInWithPopup(auth, GoogleProvider);
-//     googleSignInStart();
-//     const credential: OAuthCredential | null = GoogleAuthProvider.credentialFromResult(result);
-//     const user: User = result.user;
-//   } catch (err) {
-//     throw err;
-//   }
-// }
 
 export const handleUserProfile = async ({ userAuth, moreData }: HandleUser): Promise<DocumentReference | null> => {
   if (userAuth) {
@@ -56,8 +45,7 @@ export const handleUserProfile = async ({ userAuth, moreData }: HandleUser): Pro
   } else return null;
 }
 
-// TODO add types
-export const getCurrentUser = async () => {
+export const getCurrentUser = async (): currentUserCredentials => {
   const { currentUser } = auth;
   if (currentUser) {
     const { displayName, email, uid, photoURL } = currentUser;
