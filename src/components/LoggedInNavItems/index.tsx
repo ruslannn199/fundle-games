@@ -8,12 +8,13 @@ import type { MenuProps } from 'antd';
 import type { CurrentUserAction } from '../../redux/User/user.actions';
 // Themes
 import { orange } from '../../utils/themes';
+import { CurrentUser } from '../../types/interfaces';
 
-const LoggedInNavItems = (displayName: string, callback: () => CurrentUserAction): MenuProps['items'] => ([
+const LoggedInNavItems = ({ displayName, photoURL }: CurrentUser, signOutAction: () => CurrentUserAction): MenuProps['items'] => ([
   {
     label: (
       <h3 className='nav__profile'>
-        <img src={LogoImg} alt='profile avatar' className='nav__img' />
+        <img src={photoURL || LogoImg} alt='profile avatar' className='nav__img' />
         {displayName || 'User'}
       </h3>
     ),
@@ -30,7 +31,7 @@ const LoggedInNavItems = (displayName: string, callback: () => CurrentUserAction
       },
       {
         label: (
-          <div className='nav__option' onClick={callback}>
+          <div className='nav__option' onClick={signOutAction}>
             <span>{NavigationItemsLabels.LOG_OUT}</span>
             <LogoutOutlined />
           </div>

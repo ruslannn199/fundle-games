@@ -34,8 +34,6 @@ export type userMainInfo = {
 
 export type userRefType = DocumentReference<DocumentData>;
 
-export type userData = DocumentSnapshot<DocumentData>;
+export type userDocumentDataType = DocumentSnapshot<DocumentData>;
 
 export type userAuth = User | null;
-
-export type currentUserCredentials = Promise<Record<keyof userMainInfo, string | null> | null>;

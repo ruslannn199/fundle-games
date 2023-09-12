@@ -1,10 +1,10 @@
 // Firebase
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
-import { getAuth, GoogleAuthProvider } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, onAuthStateChanged } from 'firebase/auth';
 // Types
-import type { currentUserCredentials, firebaseConfig } from '../types/types';
-import type { Auth } from 'firebase/auth';
+import type { firebaseConfig } from '../types/types';
+import type { Auth, User } from 'firebase/auth';
 import type { Firestore, DocumentReference } from 'firebase/firestore';
 import type { HandleUser } from '../types/interfaces';
 
@@ -25,7 +25,6 @@ export const db: Firestore = getFirestore();
 export const GoogleProvider = new GoogleAuthProvider();
 GoogleProvider.setCustomParameters({ prompt: 'select_account' });
 
-// TODO add photoURL
 export const handleUserProfile = async ({ userAuth, moreData }: HandleUser): Promise<DocumentReference | null> => {
   if (userAuth) {
     const { uid, displayName, email } = userAuth;
@@ -36,7 +35,11 @@ export const handleUserProfile = async ({ userAuth, moreData }: HandleUser): Pro
     if (!userData.exists()) {
       try {
         await setDoc(userRef, {
-          email, displayName, createdDate: timeStamp, userRoles, ...moreData
+          email,
+          displayName,
+          createdDate: timeStamp,
+          userRoles,
+          ...moreData
         });
       } catch (err) {
         console.error(err);
@@ -46,10 +49,11 @@ export const handleUserProfile = async ({ userAuth, moreData }: HandleUser): Pro
   } else return null;
 }
 
-export const getCurrentUser = async (): currentUserCredentials => {
-  const { currentUser } = auth;
-  if (currentUser) {
-    const { displayName, email, uid, photoURL } = currentUser;
-    return { displayName, email, id: uid, photoURL };
-  } else return null;
+export const getCurrentUser = (): Promise<User | null> => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(auth, (userAuth) => {
+      unsubscribe();
+      resolve(userAuth);
+    }, reject);
+  });
 }

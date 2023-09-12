@@ -1,9 +1,9 @@
 import { call, put } from 'redux-saga/effects';
 import { signInSuccess } from '../redux/User/user.action-creators';
-import { userAuth, userRefType, userData } from '../types/types';
+import { userAuth, userRefType, userDocumentDataType } from '../types/types';
 import { auth, handleUserProfile } from './firebase.utils';
 import { getDoc } from 'firebase/firestore';
-import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
+import { sendPasswordResetEmail } from 'firebase/auth';
 
 // Save user to db helper
 export function* getSnapshotFromUserAuth(user: userAuth, moreData?: object) {
@@ -13,14 +13,15 @@ export function* getSnapshotFromUserAuth(user: userAuth, moreData?: object) {
       moreData,
     });
 
-    const userData: userData = yield getDoc(userRef);
+    const userDocumentData: userDocumentDataType = yield getDoc(userRef);
     // Updating state when user changes
     yield put(
       signInSuccess({
-        id: userData.id,
-        email: userData.data()?.email,
-        displayName: userData.data()?.displayName,
-        userRoles: userData.data()?.userRoles,
+        id: userDocumentData.id,
+        email: userDocumentData.data()?.email,
+        displayName: userDocumentData.data()?.displayName,
+        photoURL: userDocumentData.data()?.photoURL || null,
+        userRoles: userDocumentData.data()?.userRoles,
       })
     );
   } catch (err) {

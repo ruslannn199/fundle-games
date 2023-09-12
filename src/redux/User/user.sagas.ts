@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
 import { EmailSignInStartAction, EmailSignUpStartAction, PasswordRecoveryStartAction } from './user.actions';
 import { GoogleProvider, auth, getCurrentUser } from '../../utils/firebase.utils';
 import { put, all, call, takeLatest } from 'redux-saga/effects';
@@ -44,7 +44,7 @@ export function* isUserAuthenticated() {
     const userAuth: userAuth = yield getCurrentUser();
     if (userAuth) {
       yield getSnapshotFromUserAuth(userAuth);
-    } else return undefined;
+    } else yield undefined;
   } catch (err) {
     console.error(err);
   }
