@@ -42,9 +42,8 @@ export function* emailSignUp({
 export function* isUserAuthenticated() {
   try {
     const userAuth: userAuth = yield getCurrentUser();
-    if (userAuth) {
-      yield getSnapshotFromUserAuth(userAuth);
-    } else yield undefined;
+    if (userAuth) yield getSnapshotFromUserAuth(userAuth);
+    return;
   } catch (err) {
     console.error(err);
   }

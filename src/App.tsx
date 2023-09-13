@@ -5,17 +5,20 @@ import Homepage from './pages/Homepage';
 import Registration from './pages/Registration';
 import Login from './pages/Login';
 import Recovery from './pages/Recovery';
+import Dashboard from './pages/Dashboard';
+import Admin from './pages/Admin';
 // Hooks
 import { useEffect } from 'react';
 import { useUserActions } from './hooks';
 // Hoc
 import WithAuth from './hoc/withAuth';
+import WithAdminAuth from './hoc/withAdminAuth';
 // Components
 import { Layout } from 'antd';
-import { default as Header } from './components/Header';
+import Header from './components/Header';
+import AdminToolbar from './components/AdminToolbar';
 // Types
 import { NavigationItemsLabels } from './types/enums';
-import Dashboard from './pages/Dashboard';
 
 const { Content, Footer } = Layout;
 
@@ -29,6 +32,7 @@ const App: React.FC = () => {
   return (
   <Router>
     <Layout style={{height: "100%"}}>
+      <AdminToolbar />
       <Header />
       <Content className="content">
         <Routes>
@@ -47,7 +51,19 @@ const App: React.FC = () => {
           />
           <Route
             path="/dashboard"
-            element={<WithAuth><Dashboard /></WithAuth>}
+            element={
+            <WithAuth>
+              <Dashboard />
+            </WithAuth>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+            <WithAdminAuth>
+              <Admin />
+            </WithAdminAuth>
+            }
           />
         </Routes>
       </Content>

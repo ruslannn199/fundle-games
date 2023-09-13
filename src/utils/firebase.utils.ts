@@ -3,7 +3,7 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
 import { getAuth, GoogleAuthProvider, onAuthStateChanged } from 'firebase/auth';
 // Types
-import type { firebaseConfig } from '../types/types';
+import type { firebaseConfig, userDocumentDataType, userRefType } from '../types/types';
 import type { Auth, User } from 'firebase/auth';
 import type { Firestore, DocumentReference } from 'firebase/firestore';
 import type { HandleUser } from '../types/interfaces';
@@ -30,8 +30,8 @@ export const handleUserProfile = async ({ userAuth, moreData }: HandleUser): Pro
     const { uid, displayName, email } = userAuth;
     const timeStamp = new Date();
     const userRoles = ['user'];
-    const userRef: DocumentReference = doc(db, 'users', uid);
-    const userData = await getDoc(userRef);
+    const userRef: userRefType = doc(db, 'users', uid);
+    const userData: userDocumentDataType = await getDoc(userRef);
     if (!userData.exists()) {
       try {
         await setDoc(userRef, {
@@ -46,7 +46,8 @@ export const handleUserProfile = async ({ userAuth, moreData }: HandleUser): Pro
       }
     }
     return userRef;
-  } else return null;
+  }
+  return null;
 }
 
 export const getCurrentUser = (): Promise<User | null> => {
