@@ -10,7 +10,7 @@ import type { CurrentUserAction } from '../../redux/User/user.actions';
 import { orange } from '../../utils/themes';
 import { CurrentUser } from '../../types/interfaces';
 
-const LoggedInNavItems = ({ displayName, photoURL }: CurrentUser, signOutAction: () => CurrentUserAction): MenuProps['items'] => ([
+const LoggedInNavItems = ({ displayName, photoURL }: CurrentUser): MenuProps['items'] => ([
   {
     label: (
       <h3 className='nav__profile'>
@@ -31,7 +31,7 @@ const LoggedInNavItems = ({ displayName, photoURL }: CurrentUser, signOutAction:
       },
       {
         label: (
-          <div className='nav__option' onClick={signOutAction}>
+          <div className='nav__option'>
             <span>{NavigationItemsLabels.LOG_OUT}</span>
             <LogoutOutlined />
           </div>

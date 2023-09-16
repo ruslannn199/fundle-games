@@ -11,9 +11,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 // Themes
 import { blackTheme, orangeTheme } from '../../utils/themes';
-// Firebase
-import { auth } from '../../utils/firebase.utils';
-import { signInWithEmailAndPassword } from 'firebase/auth';
 // Types
 import type { loginFields } from '../../types/types';
 import { NavigationItemsLabels } from '../../types/enums';
@@ -35,7 +32,7 @@ const SignIn: React.FC = () => {
     } else {
       setErrors(userErrors);
     }
-  }, [currentUser, userErrors]);
+  }, [currentUser, userErrors, navigate]);
 
   useEffect(() => {
     resetUserState();
@@ -43,7 +40,6 @@ const SignIn: React.FC = () => {
 
   const handleSubmit = async ({ email, password }: loginFields) => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
       emailSignInStart({ email, password });
     } catch (err) {
       setErrors(userErrors);

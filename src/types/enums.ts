@@ -5,6 +5,25 @@ export enum NavigationItemsLabels {
   DASHBOARD = 'dashboard',
 }
 
+export enum AdminItemsLabels {
+  INFO = 'Info',
+  HOME = 'Home',
+  SIGN_OUT = 'Sign Out',
+}
+
+export enum ProductFormFields {
+  FORM_NAME = 'productForm',
+  PRODUCT_NAME = 'productName',
+  CATEGORY = 'productCategory',
+  MAIN_IMAGE_URL = 'mainImageURL',
+  PRICE = 'price',
+}
+
+export enum ProductCategories {
+  NEW_PRODUCTS = 'New Products',
+  POPULAR = 'Popular',
+}
+
 export enum ActionType {
   // Start actions
   EMAIL_SIGN_IN_START = 'EMAIL_SIGN_IN_START',
