@@ -34,7 +34,7 @@ const SignUp: React.FC = () => {
     try {
       emailSignUpStart({ displayName, email, password, confirmPassword });
     } catch (err) {
-      if (err instanceof Error) console.log(err.message);
+      if (err instanceof Error) console.error(err.message);
       setError(true);
     }
   }

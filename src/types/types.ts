@@ -25,8 +25,8 @@ export type registrationFields = loginFields & {
   confirmPassword: string;
 }
 
-export type userRefType = DocumentReference<DocumentData>;
+export type docRefType = DocumentReference<DocumentData>;
 
-export type userDocumentDataType = DocumentSnapshot<DocumentData>;
+export type docSnapshotDataType = DocumentSnapshot<DocumentData>;
 
 export type userAuth = User | null;

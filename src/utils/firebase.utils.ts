@@ -1,9 +1,9 @@
 // Firebase
 import { initializeApp } from 'firebase/app';
-import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
+import { getFirestore, doc, setDoc, getDoc, collection } from 'firebase/firestore';
 import { getAuth, GoogleAuthProvider, onAuthStateChanged } from 'firebase/auth';
 // Types
-import type { firebaseConfig, userDocumentDataType, userRefType } from '../types/types';
+import type { firebaseConfig, docSnapshotDataType, docRefType } from '../types/types';
 import type { Auth, User } from 'firebase/auth';
 import type { Firestore, DocumentReference } from 'firebase/firestore';
 import type { HandleUser } from '../types/interfaces';
@@ -30,8 +30,8 @@ export const handleUserProfile = async ({ userAuth, moreData }: HandleUser): Pro
     const { uid, displayName, email } = userAuth;
     const timeStamp = new Date();
     const userRoles = ['user'];
-    const userRef: userRefType = doc(db, 'users', uid);
-    const userData: userDocumentDataType = await getDoc(userRef);
+    const userRef: docRefType = doc(db, 'users', uid);
+    const userData: docSnapshotDataType = await getDoc(userRef);
     if (!userData.exists()) {
       try {
         await setDoc(userRef, {
@@ -57,4 +57,8 @@ export const getCurrentUser = (): Promise<User | null> => {
       resolve(userAuth);
     }, reject);
   });
+}
+
+export const getCollectionByName = (collectionName: string) => {
+  return collection(db, collectionName);
 }

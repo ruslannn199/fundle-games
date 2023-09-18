@@ -3,7 +3,7 @@ import { useTypedSelector } from '../../hooks';
 import { checkUserIsAdmin } from '../../utils';
 
 const AdminToolbar: React.FC = () => {
-  const { currentUser } = useTypedSelector((state) => state.user);
+  const { currentUser } = useTypedSelector((state) => (state.user));
   const location = useLocation();
   const isAdminPage = location.pathname.includes('admin');
 

@@ -1,4 +1,5 @@
 import type { User } from 'firebase/auth';
+import { ProductFormFields } from './enums';
 
 export interface CurrentUser {
   email: string;
@@ -23,4 +24,29 @@ export interface UserCredentials {
   email: string;
   password: string;
   confirmPassword: string;
+}
+
+export interface Products {
+  data: ProductData[];
+  isLastPage: boolean;
+}
+
+export interface ProductData {
+  category: string[];
+  name: string;
+  description: string;
+  thumbnail: string;
+  price: number;
+  quantity: number;
+  documentId?: string;
+  productAdminUserUID?: string;
+  createdDate?: Date;
+}
+
+export interface ProductFormData {
+  productCategory: string[];
+  productName: string;
+  productPrice: string;
+  productThumbnail: string;
+  productDescription: string;
 }

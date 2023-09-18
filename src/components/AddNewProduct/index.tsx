@@ -1,12 +1,17 @@
 import { useState } from 'react';
 import { Button, ConfigProvider, Modal, Form, Input, Select, SelectProps } from 'antd';
 import { blackTheme, orangeTheme } from '../../utils/themes';
-import { useForm } from 'antd/es/form/Form';
 import { ProductCategories, ProductFormFields } from '../../types/enums';
+import { ProductFormData } from '../../types/interfaces';
+import { useProductsActions } from '../../hooks';
 
 const AddNewProduct: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
+  const { addProductStart } = useProductsActions();
+  const { useForm } = Form;
   const [form] = useForm();
+
+  const { TextArea } = Input;
 
   const options: SelectProps['options'] = [
     {
@@ -27,9 +32,24 @@ const AddNewProduct: React.FC = () => {
     setOpen(false);
   }
 
-  const handleSubmit = (values: Record<ProductFormFields, string>) => {
+  const handleSubmit = ({
+    productCategory,
+    productName,
+    productPrice,
+    productThumbnail,
+    productDescription,
+  }: ProductFormData): void => {
     hideModal();
-    (console.log(values));
+    addProductStart({
+      category: productCategory,
+      name: productName,
+      price: parseFloat(productPrice),
+      thumbnail: productThumbnail,
+      description: productDescription,
+      quantity: 1,
+    });
+
+    form.resetFields();
   }
 
   return (
@@ -38,14 +58,23 @@ const AddNewProduct: React.FC = () => {
       <Modal
         title="ADD NEW PRODUCT"
         open={open}
+        onCancel={hideModal}
         footer={[
+          <Button
+            form={ProductFormFields.FORM_NAME}
+            key="reset"
+            htmlType="reset"
+          >
+            Reset
+          </Button>,
           <Button
             form={ProductFormFields.FORM_NAME}
             key="submit"
             htmlType="submit"
+            type="primary"
           >
             Submit
-          </Button>
+          </Button>,
         ]}
       >
         <Form
@@ -84,18 +113,18 @@ const AddNewProduct: React.FC = () => {
             rules={[{ required: true }]}
           >
             <Input
-              placeholder="Insert name"
+              placeholder="Enter name"
               style={{ width: 300 }}
               type="text"
             />
           </Form.Item>
 
           <Form.Item
-            name={ProductFormFields.MAIN_IMAGE_URL}
+            name={ProductFormFields.THUMBNAIL}
             rules={[{ required: true }]}
           >
             <Input
-              placeholder="Insert URL"
+              placeholder="Enter image URL"
               style={{ width: 300 }}
               type="url"
             />
@@ -106,11 +135,25 @@ const AddNewProduct: React.FC = () => {
             rules={[{ required: true }]}
           >
             <Input
-              placeholder="Insert price"
+              placeholder="Enter price"
               style={{ width: 300 }}
               type="number"
               min={0}
+              step={0.01}
               max={1000000}
+            />
+          </Form.Item>
+
+          <Form.Item
+            name={ProductFormFields.DESCRIPTION}
+            rules={[{ required: true }]}
+          >
+            <TextArea
+              placeholder="Enter description"
+              style={{ width: 300 }}
+              showCount
+              maxLength={1024}
+              autoSize={{ minRows: 2, maxRows: 6 }}
             />
           </Form.Item>
 
