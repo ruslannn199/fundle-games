@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import Recovery from './pages/Recovery';
 import Dashboard from './pages/Dashboard';
 import Admin from './pages/Admin';
+import Search from './pages/Search';
 // Hooks
 import { useEffect } from 'react';
 import { useUserActions } from './hooks';
@@ -31,12 +32,13 @@ const App: React.FC = () => {
 
   return (
   <Router>
-    <Layout style={{height: "100%"}}>
+    <Layout style={{ minHeight: '100vh' }}>
       <AdminToolbar />
       <Header />
-      <Content className="content">
+      <Content>
         <Routes>
           <Route path="/" element={<Homepage />} />
+          <Route path="/search" element={<Search />} />
           <Route
             path={`/${NavigationItemsLabels.REGISTRATION}`}
             element={<Registration />}

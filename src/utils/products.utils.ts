@@ -1,4 +1,4 @@
-import { deleteDoc, doc, getDocs, setDoc } from 'firebase/firestore';
+import { deleteDoc, doc, getDocs, orderBy, query, setDoc } from 'firebase/firestore';
 import { getCollectionByName } from './firebase.utils';
 import type { ProductData } from '../types/interfaces';
 
@@ -14,7 +14,9 @@ export const handleAddProduct = async (product: ProductData) => {
 export const handleFetchProducts = async () => {
   try {
     const productsCollection = getCollectionByName('products');
-    const productsSnapshotArray = await getDocs(productsCollection);
+    const productsSnapshotArray = await getDocs(
+      query(productsCollection, orderBy('createdDate'))
+    );
     return productsSnapshotArray.docs.map((doc) => ({
       ...doc.data(),
       documentId: doc.id,

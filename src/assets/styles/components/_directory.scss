@@ -14,11 +14,11 @@
   }
 
   &__item {
-    @include mixins.flex($flex-dir: column);
     position: relative;
     color: #fff;
     width: 50%;
-    height: 100%;
+    height: 75vh;
+    @include mixins.flex($flex-dir: column);
     @include mixins.background($position: center, $repeat: no-repeat, $size: cover);
 
     &::after {

@@ -1,12 +1,12 @@
 // Hooks
 import { useTypedSelector, useUserActions } from '../../hooks';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 // Router
 import { Link } from 'react-router-dom';
 // Components
 import { Header } from 'antd/es/layout/layout';
-import { ConfigProvider, Menu } from 'antd';
-import { orangeTheme } from '../../utils/themes';
+import { ConfigProvider, Menu, Input } from 'antd';
+import { blackTheme, orangeTheme } from '../../utils/themes';
 import Logo from '../Logo';
 import Wrapper from '../Wrapper';
 import LoggedInNavItems from '../LoggedInNavItems';
@@ -19,6 +19,13 @@ const AppHeader: React.FC = () => {
   const { currentUser } = useTypedSelector((state) => (state.user));
   const { emailSignOutStart } = useUserActions();
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const { Search } = Input;
+
+  const handleSearch = () => {
+    navigate('/search');
+  }
 
   const menuSignOutAction = ({ key }: MenuInfo): void => {
     if (key === NavigationItemsLabels.LOG_OUT) emailSignOutStart();
@@ -31,6 +38,9 @@ const AppHeader: React.FC = () => {
           <Link to="/">
             <Logo />
           </Link>
+          <ConfigProvider theme={blackTheme}>
+            <Search style={{ width: 304 }} enterButton onSearch={handleSearch} />
+          </ConfigProvider>
           <ConfigProvider theme={orangeTheme}>
             <Menu
               disabledOverflow={true}
