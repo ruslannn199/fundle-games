@@ -1,3 +1,5 @@
+// Abstract
+@use 'abstract/mixins';
 // Base
 @use 'base/base';
 // Components
@@ -9,3 +11,7 @@
 // Layouts
 @use 'layouts/header';
 @use 'layouts/wrapper';
+
+.product__col {
+  @include mixins.flex();
+}

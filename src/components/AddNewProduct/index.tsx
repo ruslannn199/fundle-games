@@ -1,28 +1,29 @@
 import { useState } from 'react';
 import { Button, ConfigProvider, Modal, Form, Input, Select, SelectProps } from 'antd';
 import { blackTheme, orangeTheme } from '../../utils/themes';
-import { ProductCategories, ProductFormFields } from '../../types/enums';
-import { ProductFormData } from '../../types/interfaces';
+import { ProductFormFields } from '../../types/enums';
+import type { ProductFormData } from '../../types/interfaces';
 import { useProductsActions } from '../../hooks';
+import { getCollectionByName } from '../../utils/firebase.utils';
+import { getDocs } from 'firebase/firestore';
 
 const AddNewProduct: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
+  const [options, setOptions] = useState<any>([]);
   const { addProductStart } = useProductsActions();
   const { useForm } = Form;
   const [form] = useForm();
 
   const { TextArea } = Input;
 
-  const options: SelectProps['options'] = [
-    {
-      label: ProductCategories.NEW_PRODUCTS,
-      value: ProductCategories.NEW_PRODUCTS,
-    },
-    {
-      label: ProductCategories.POPULAR,
-      value: ProductCategories.POPULAR,
-    }
-  ]
+  const fetchOptions = async () => {
+    const categoriesCollection = getCollectionByName('category');
+    setOptions((await getDocs(categoriesCollection)).docs.map(
+      (doc) => ({ label: doc.data().category, value: doc.data().category })
+    ));
+  }
+
+  fetchOptions();
 
   const showModal = () => {
     setOpen(true);

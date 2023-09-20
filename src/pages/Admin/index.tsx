@@ -36,8 +36,8 @@ const Admin: React.FC = () => {
         />
       </ConfigProvider>
       <div className="admin__dashboard">
-        <ProductsTable products={products} />
         <AddNewProduct />
+        <ProductsTable products={products} />
       </div>
     </Wrapper>
   );

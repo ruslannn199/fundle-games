@@ -18,19 +18,19 @@ const Product: React.FC<ProductElementProps> =
   return (!(thumbnail || name || typeof price !== 'undefined'))
     ? null
     : (
-      <Col span={6}>
-        <ConfigProvider theme={blackTheme}>
-          <Card
-            hoverable
-            style={{ width: 240 }}
-            cover={<Image alt={name} src={thumbnail} />}
-            actions={[
+      <Col xl={6} md={8} sm={12} xs={24} className="product__col">
+        <Card
+          hoverable
+          style={{ width: 240 }}
+          cover={<Image alt={name} src={thumbnail} />}
+          actions={[
+            <ConfigProvider theme={blackTheme}>
               <Button type="primary">Add to Cart</Button>
-            ]}
-          >
-            <Meta title={name} description={`${price}₽`} />
-          </Card>
-        </ConfigProvider>
+            </ConfigProvider>
+          ]}
+        >
+          <Meta title={name} description={`${price}₽`} />
+        </Card>
       </Col>
     );
 }

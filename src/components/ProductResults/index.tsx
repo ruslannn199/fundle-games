@@ -15,27 +15,24 @@ const ProductResults: React.FC = () => {
 
   if (!Array.isArray(products.data)) return null;
 
-  const colsPerRow = 4;
-  const rowsAmount = Math.ceil(products.data.length / colsPerRow);
-  const productResultArr: JSX.Element[] = [...new Array(rowsAmount)];
-
-  const productResultsCols = products.data.map(({ thumbnail, name, price, documentId }: ProductData, position) => {
-    return (
-      <Product
-        productConfig={{ thumbnail, name, price }}
-        position={position}
-        key={documentId}
-      />);
-  });
-
   return (
     <>
       <h1>{isProductsDataEmpty ? 'No search results' : 'Browse products'}</h1>
-      {productResultArr.map((el, i) => (
-        <Row style={{ marginBottom: 32 }} key={i}>
-          {productResultsCols.slice(i * colsPerRow, (i * colsPerRow) + colsPerRow)}
+      {
+        <Row gutter={[, 32]} justify='center' align='middle'>
+          {
+            products
+              .data
+              .map(({ thumbnail, name, price, documentId }: ProductData, position) => ((
+                <Product
+                  productConfig={{ thumbnail, name, price }}
+                  position={position}
+                  key={documentId}
+                />
+              )))
+          }
         </Row>
-      ))}
+      }
     </>
   );
 }
