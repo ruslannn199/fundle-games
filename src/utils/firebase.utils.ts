@@ -1,6 +1,6 @@
 // Firebase
 import { FirebaseApp, initializeApp } from 'firebase/app';
-import { getFirestore, doc, setDoc, getDoc, collection, initializeFirestore, persistentLocalCache, CACHE_SIZE_UNLIMITED, disableNetwork, getDocFromCache, getDocsFromCache, getDocs, query, orderBy } from 'firebase/firestore';
+import { doc, setDoc, getDoc, collection, initializeFirestore, persistentLocalCache, CACHE_SIZE_UNLIMITED, getDocsFromCache, getDocs, query, orderBy } from 'firebase/firestore';
 import { getAuth, GoogleAuthProvider, onAuthStateChanged } from 'firebase/auth';
 // Types
 import type { firebaseConfig, docSnapshotDataType, docRefType } from '../types/types';
@@ -76,18 +76,6 @@ export const getDocumentsByOrder = async (collectionName: string, order: string)
       return !(!cachedDocs.docs || cachedDocs.docs.length)
         ? (await getDocs(query(collection, orderBy(order))))
         : cachedDocs;
-  } catch (err) {
-    console.error(err);
-  }
-}
-
-export const getDocuments = async (collectionName: string) => {
-  try {
-    const collection = getCollectionByName(collectionName);
-    const cachedDocs = await getDocsFromCache(collection);
-    return !(!cachedDocs.docs || cachedDocs.docs.length)
-      ? (await getDocs(collection))
-      : cachedDocs;
   } catch (err) {
     console.error(err);
   }

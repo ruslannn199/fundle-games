@@ -3,7 +3,6 @@ import { useProductsActions, useTypedSelector } from '../../hooks';
 import { ProductData } from '../../types/interfaces';
 import Product from './Product';
 import { ConfigProvider, Row, Select } from 'antd';
-import { getDocuments } from '../../utils/firebase.utils';
 import { orangeTheme } from '../../utils/themes';
 import { DefaultOptionType } from 'antd/es/select';
 import { FilterFunc } from 'rc-select/lib/Select';
@@ -22,9 +21,9 @@ const ProductResults: React.FC = () => {
 
   const fetchOptions = async () => {
     try {
-      setOptions((await getDocuments('products'))?.docs.map(
-        ({ data }) => ({ label: data().category, value: data().category })
-      ));
+      // setOptions((await getDocuments('products'))?.docs.map(
+      //   ({ data }) => ({ label: data().category, value: data().category })
+      // ));
     } catch (err) {
       console.error(err);
     }

@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, ConfigProvider, Modal, Form, Input, Select, SelectProps } from 'antd';
 import { blackTheme, orangeTheme } from '../../utils/themes';
 import { ProductFormFields } from '../../types/enums';
 import type { ProductFormData } from '../../types/interfaces';
 import { useProductsActions } from '../../hooks';
-import { getDocuments } from '../../utils/firebase.utils';
+import { getCategories } from '../../utils/products.utils';
 
 
 const AddNewProduct: React.FC = () => {
@@ -16,17 +16,12 @@ const AddNewProduct: React.FC = () => {
 
   const { TextArea } = Input;
 
-  const fetchOptions = async () => {
-    try {
-      setOptions((await getDocuments('products'))?.docs.map(
-        (doc) => ({ label: doc.data().category, value: doc.data().category })
-      ));
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  fetchOptions();
+  useEffect(() => {
+    getCategories()
+      .then((categories) => {
+        setOptions(categories?.map(({ category }) => ({ label: category, value: category })))
+      });
+  }, []);
 
   const showModal = () => {
     setOpen(true);

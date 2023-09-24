@@ -1,6 +1,6 @@
 import { PayloadAction, createReducer } from '@reduxjs/toolkit';
 import { ProductData, Products } from '../../types/interfaces'
-import { addProductStart, deleteProductStart, setMultipleProducts } from './products.action-creators';
+import { addProductStart, setMultipleProducts } from './products.action-creators';
 
 export interface ProductsState {
   products: Products;

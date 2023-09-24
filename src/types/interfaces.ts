@@ -1,6 +1,5 @@
 import type { User } from 'firebase/auth';
-import { ProductCategories, ProductCategoriesTypes, ProductFormFields } from './enums';
-import { DocumentData } from 'firebase/firestore';
+import { ProductCategories, ProductCategoriesTypes } from './enums';
 
 export interface CurrentUser {
   email: string;
@@ -52,7 +51,12 @@ export interface ProductFormData {
   productDescription: string;
 }
 
-export interface CategoryDocument {
+export interface CategoryData {
+  id: number;
   category: ProductCategories;
   type: ProductCategoriesTypes;
+}
+
+export interface ApiResponse<T> {
+  records: T;
 }
