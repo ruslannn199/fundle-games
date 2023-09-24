@@ -18,7 +18,9 @@ const Product: React.FC<ProductElementProps> =
   return (!(thumbnail || name || typeof price !== 'undefined'))
     ? null
     : (
-      <Col xl={6} md={8} sm={12} xs={24} className="product__col">
+      <Col
+        xl={6} md={8} sm={12} xs={24}
+        style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Card
           hoverable
           style={{ width: 240 }}

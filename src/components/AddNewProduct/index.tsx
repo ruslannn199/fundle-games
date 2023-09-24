@@ -4,8 +4,8 @@ import { blackTheme, orangeTheme } from '../../utils/themes';
 import { ProductFormFields } from '../../types/enums';
 import type { ProductFormData } from '../../types/interfaces';
 import { useProductsActions } from '../../hooks';
-import { getCollectionByName } from '../../utils/firebase.utils';
-import { getDocs } from 'firebase/firestore';
+import { getDocuments } from '../../utils/firebase.utils';
+
 
 const AddNewProduct: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -17,10 +17,13 @@ const AddNewProduct: React.FC = () => {
   const { TextArea } = Input;
 
   const fetchOptions = async () => {
-    const categoriesCollection = getCollectionByName('category');
-    setOptions((await getDocs(categoriesCollection)).docs.map(
-      (doc) => ({ label: doc.data().category, value: doc.data().category })
-    ));
+    try {
+      setOptions((await getDocuments('products'))?.docs.map(
+        (doc) => ({ label: doc.data().category, value: doc.data().category })
+      ));
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   fetchOptions();

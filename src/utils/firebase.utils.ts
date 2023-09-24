@@ -1,6 +1,6 @@
 // Firebase
-import { initializeApp } from 'firebase/app';
-import { getFirestore, doc, setDoc, getDoc, collection } from 'firebase/firestore';
+import { FirebaseApp, initializeApp } from 'firebase/app';
+import { getFirestore, doc, setDoc, getDoc, collection, initializeFirestore, persistentLocalCache, CACHE_SIZE_UNLIMITED, disableNetwork, getDocFromCache, getDocsFromCache, getDocs, query, orderBy } from 'firebase/firestore';
 import { getAuth, GoogleAuthProvider, onAuthStateChanged } from 'firebase/auth';
 // Types
 import type { firebaseConfig, docSnapshotDataType, docRefType } from '../types/types';
@@ -17,10 +17,14 @@ export const localConfig: firebaseConfig = {
   appId: process.env.REACT_APP_APP_ID,
 }
 
-initializeApp(localConfig);
+const app: FirebaseApp = initializeApp(localConfig);
 
 export const auth: Auth = getAuth();
-export const db: Firestore = getFirestore();
+export const db: Firestore = initializeFirestore(app, {
+  localCache: persistentLocalCache({
+    cacheSizeBytes: CACHE_SIZE_UNLIMITED,
+  }),
+});
 
 export const GoogleProvider = new GoogleAuthProvider();
 GoogleProvider.setCustomParameters({ prompt: 'select_account' });
@@ -39,7 +43,7 @@ export const handleUserProfile = async ({ userAuth, moreData }: HandleUser): Pro
           displayName,
           createdDate: timeStamp,
           userRoles,
-          ...moreData
+          ...moreData,
         });
       } catch (err) {
         console.error(err);
@@ -59,6 +63,32 @@ export const getCurrentUser = (): Promise<User | null> => {
   });
 }
 
-export const getCollectionByName = (collectionName: string) => {
+const getCollectionByName = (collectionName: string) => {
   return collection(db, collectionName);
+}
+
+export const productsCollection = getCollectionByName('products');
+
+export const getDocumentsByOrder = async (collectionName: string, order: string) => {
+  try {
+    const collection = getCollectionByName(collectionName);
+      const cachedDocs = await getDocsFromCache(query(collection, orderBy(order)));
+      return !(!cachedDocs.docs || cachedDocs.docs.length)
+        ? (await getDocs(query(collection, orderBy(order))))
+        : cachedDocs;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export const getDocuments = async (collectionName: string) => {
+  try {
+    const collection = getCollectionByName(collectionName);
+    const cachedDocs = await getDocsFromCache(collection);
+    return !(!cachedDocs.docs || cachedDocs.docs.length)
+      ? (await getDocs(collection))
+      : cachedDocs;
+  } catch (err) {
+    console.error(err);
+  }
 }

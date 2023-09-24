@@ -11,6 +11,7 @@ import Search from './pages/Search';
 // Hooks
 import { useEffect } from 'react';
 import { useUserActions } from './hooks';
+import { useParams } from 'react-router-dom';
 // Hoc
 import WithAuth from './hoc/withAuth';
 import WithAdminAuth from './hoc/withAdminAuth';
@@ -25,6 +26,7 @@ const { Content, Footer } = Layout;
 
 const App: React.FC = () => {
   const { checkUserSession } = useUserActions();
+  const { filterType } = useParams();
 
   useEffect(() => {
     checkUserSession();
@@ -39,6 +41,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/search:filterType" element={<Search />} />
           <Route
             path={`/${NavigationItemsLabels.REGISTRATION}`}
             element={<Registration />}
