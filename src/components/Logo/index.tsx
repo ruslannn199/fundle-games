@@ -1,3 +1,4 @@
+// Images
 import LogoImg from '../../assets/images/logo.png';
 
 const Logo: React.FC = () => (

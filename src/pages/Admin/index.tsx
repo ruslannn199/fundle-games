@@ -1,14 +1,17 @@
-import { Menu } from 'antd';
+// Components
+import { Menu, ConfigProvider } from 'antd';
 import AdminNavItems from '../../components/AdminNavItems';
-import { ConfigProvider } from 'antd';
-import { orangeTheme } from '../../utils/themes';
 import Wrapper from '../../components/Wrapper';
-import { AdminItemsLabels } from '../../types/enums';
-import { useUserActions, useTypedSelector, useProductsActions } from '../../hooks';
-import type { MenuInfo } from 'rc-menu/lib/interface';
 import AddNewProduct from '../../components/AddNewProduct';
-import { useEffect } from 'react';
 import ProductsTable from '../../components/ProductsTable';
+// Hooks
+import { useUserActions, useTypedSelector, useProductsActions } from '../../hooks';
+import { useEffect } from 'react';
+// Themes
+import { orangeTheme } from '../../utils/themes';
+// Types
+import { AdminItemsLabels } from '../../types/enums';
+import type { MenuInfo } from 'rc-menu/lib/interface';
 
 const Admin: React.FC = () => {
   const { currentUser } = useTypedSelector((state) => (state.user));

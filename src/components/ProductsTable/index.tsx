@@ -1,8 +1,12 @@
-import { ConfigProvider, Image, Table, Tag } from 'antd'
-import { Products } from '../../types/interfaces';
-import { ColumnsType } from 'antd/es/table';
-import { blackTheme } from '../../utils/themes';
+// Components
+import { ConfigProvider, Image, Table, Tag } from 'antd';
+// Hooks
 import { useProductsActions } from '../../hooks';
+// Themes
+import { blackTheme } from '../../utils/themes';
+// Types
+import type { Products } from '../../types/interfaces';
+import type { ColumnsType } from 'antd/es/table';
 
 export interface ProductTableColumns {
   key: string;
@@ -61,7 +65,7 @@ const ProductsTable: React.FC<Record<'products', Products>> = ({ products }) => 
   ];
 
   const dataSource = products.data.map((
-    { name, quantity, price, category, thumbnail, documentId }, index) => ({
+    { name, quantity, price, category, thumbnail, id: documentId }, index) => ({
       key: documentId || `${index}`,
       name,
       quantity,

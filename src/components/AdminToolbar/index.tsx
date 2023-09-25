@@ -1,5 +1,9 @@
-import { Link, useLocation } from 'react-router-dom';
+// Components
+import { Link } from 'react-router-dom';
+// Hooks
+import { useLocation } from 'react-router-dom';
 import { useTypedSelector } from '../../hooks';
+// Utils
 import { checkUserIsAdmin } from '../../utils';
 
 const AdminToolbar: React.FC = () => {
@@ -12,8 +16,8 @@ const AdminToolbar: React.FC = () => {
     <div className="admin__toolbar">
       <Link
         className="admin__link"
-        to={isAdminPage ? '/' : '/admin'}>
-        {isAdminPage ? 'Main page' : 'My admin'}
+        to={isAdminPage ? "/" : "/admin"}>
+        {isAdminPage ? "Main page" : "My admin"}
       </Link>
     </div>
     )

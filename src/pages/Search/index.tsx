@@ -1,3 +1,4 @@
+// Components
 import ProductResults from '../../components/ProductResults';
 import Wrapper from '../../components/Wrapper';
 

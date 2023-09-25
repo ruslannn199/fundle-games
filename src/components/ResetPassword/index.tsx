@@ -1,15 +1,15 @@
 // Components
 import { Button, ConfigProvider, Form, Input } from 'antd';
 import { MailOutlined } from '@ant-design/icons';
-// Themes
-import { blackTheme, orangeTheme } from '../../utils/themes';
+// Firebase
+import { sendPasswordResetEmail } from 'firebase/auth';
+import { auth } from '../../utils/firebase.utils';
 // Hooks
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useTypedSelector } from '../../hooks';
-// Firebase
-import { sendPasswordResetEmail } from 'firebase/auth';
-import { auth } from '../../utils/firebase.utils';
+// Themes
+import { blackTheme, orangeTheme } from '../../utils/themes';
 
 const ResetPassword: React.FC = () => {
   const [form] = Form.useForm<Record<'email', string>>();

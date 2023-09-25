@@ -1,3 +1,4 @@
+// Components
 import ResetPassword from '../../components/ResetPassword';
 import Wrapper from '../../components/Wrapper';
 

@@ -5,16 +5,16 @@ import {
   LockOutlined,
   GoogleCircleFilled,
   QuestionCircleFilled } from '@ant-design/icons';
-// Routes
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 // Hooks
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { useTypedSelector, useUserActions } from '../../hooks';
 // Themes
 import { blackTheme, orangeTheme } from '../../utils/themes';
 // Types
 import type { loginFields } from '../../types/types';
 import { NavigationItemsLabels } from '../../types/enums';
-import { useTypedSelector, useUserActions } from '../../hooks';
 
 const SignIn: React.FC = () => {
   const [, setErrors] = useState<string[]>([]);

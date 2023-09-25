@@ -1,5 +1,5 @@
 import { CurrentUser } from '../types/interfaces';
-import { handleFetchProducts, handleAddProduct, handleDeleteProducts } from './products.utils';
+import { handleFetchProducts, handleAddProduct, handleDeleteProducts, getCategories } from './products.utils';
 
 const checkUserIsAdmin = (currentUser: CurrentUser | null): boolean => {
   return !!(currentUser && Array.isArray(currentUser.userRoles)
@@ -16,4 +16,5 @@ export {
   handleFetchProducts,
   handleDeleteProducts,
   handleAddProduct,
+  getCategories,
 };

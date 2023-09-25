@@ -1,15 +1,21 @@
-import { useEffect, useState } from 'react';
-import { useProductsActions, useTypedSelector } from '../../hooks';
-import { ProductData } from '../../types/interfaces';
+// Components
 import Product from './Product';
 import { ConfigProvider, Row, Select } from 'antd';
+// Hooks
+import { useEffect, useState } from 'react';
+import { useProductsActions, useTypedSelector } from '../../hooks';
+// Themes
 import { orangeTheme } from '../../utils/themes';
-import { DefaultOptionType } from 'antd/es/select';
-import { FilterFunc } from 'rc-select/lib/Select';
+// Types
+import type { ProductData } from '../../types/interfaces';
+import type { DefaultOptionType, SelectProps } from 'antd/es/select';
+import type { FilterFunc } from 'rc-select/lib/Select';
+// Utils
+import { getCategories } from '../../utils';
 
 const ProductResults: React.FC = () => {
   const { fetchProductsStart } = useProductsActions();
-  const [options, setOptions] = useState<any>([]);
+  const [options, setOptions] = useState<SelectProps['options']>([]);
   const { products } = useTypedSelector((state) => (state.productsData));
   const isProductsDataEmpty = !products.data.length;
   
@@ -19,17 +25,12 @@ const ProductResults: React.FC = () => {
 
   if (!Array.isArray(products.data)) return null;
 
-  const fetchOptions = async () => {
-    try {
-      // setOptions((await getDocuments('products'))?.docs.map(
-      //   ({ data }) => ({ label: data().category, value: data().category })
-      // ));
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  fetchOptions();
+  useEffect(() => {
+    getCategories()
+      .then((categories) => {
+        setOptions(categories?.map(({ category }) => ({ label: category, value: category })))
+      });
+  }, []);
 
   const filterOption: FilterFunc<DefaultOptionType> = (input: string, option?: DefaultOptionType) => {
     return (typeof option?.label === 'string' && (option.label.includes(input)
@@ -58,11 +59,11 @@ const ProductResults: React.FC = () => {
           {
             products
               .data
-              .map(({ thumbnail, name, price, documentId }: ProductData, position) => ((
+              .map(({ thumbnail, name, price, id }: ProductData, position) => ((
                 <Product
                   productConfig={{ thumbnail, name, price }}
                   position={position}
-                  key={documentId}
+                  key={id}
                 />
               )))
           }

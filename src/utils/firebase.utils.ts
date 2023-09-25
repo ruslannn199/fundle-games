@@ -62,21 +62,3 @@ export const getCurrentUser = (): Promise<User | null> => {
     }, reject);
   });
 }
-
-const getCollectionByName = (collectionName: string) => {
-  return collection(db, collectionName);
-}
-
-export const productsCollection = getCollectionByName('products');
-
-export const getDocumentsByOrder = async (collectionName: string, order: string) => {
-  try {
-    const collection = getCollectionByName(collectionName);
-      const cachedDocs = await getDocsFromCache(query(collection, orderBy(order)));
-      return !(!cachedDocs.docs || cachedDocs.docs.length)
-        ? (await getDocs(query(collection, orderBy(order))))
-        : cachedDocs;
-  } catch (err) {
-    console.error(err);
-  }
-}

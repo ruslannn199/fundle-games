@@ -1,8 +1,10 @@
-import { MenuProps } from 'antd';
-import { AdminItemsLabels } from '../../types/enums';
-import { CurrentUser } from '../../types/interfaces';
+// Components
 import { Link } from 'react-router-dom';
 import { HomeOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
+// Types
+import type { MenuProps } from 'antd';
+import { AdminItemsLabels } from '../../types/enums';
+import type { CurrentUser } from '../../types/interfaces';
 
 const AdminNavItems = ({ displayName }: CurrentUser): MenuProps['items'] => ([
   {

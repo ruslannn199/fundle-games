@@ -15,9 +15,9 @@ export const handleAddProduct = async (product: ProductData) => {
   }
 }
 
-export const handleFetchProducts = async (): Promise<ProductData | undefined> => {
+export const handleFetchProducts = async (): Promise<ProductData[] | undefined> => {
   try {
-    const { records }: ApiResponse<ProductData> = (await (await fetch(makeFetchURL('products?order=createdDate,desc'), {
+    const { records }: ApiResponse<ProductData[]> = (await (await fetch(makeFetchURL('products?order=createdDate,desc'), {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

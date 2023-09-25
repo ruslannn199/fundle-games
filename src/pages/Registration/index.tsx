@@ -1,3 +1,4 @@
+// Components
 import SignUp from '../../components/SignUp';
 import Wrapper from '../../components/Wrapper';
 

@@ -1,8 +1,11 @@
+// Components
 import { Button, ConfigProvider } from 'antd';
 import Wrapper from '../Wrapper';
-import { blackTheme } from '../../utils/themes';
+// Images
 import NewGamesImg from '../../assets/images/new-games.jpg';
 import PopularGamesImg from '../../assets/images/popular-games.webp';
+// Themes
+import { blackTheme } from '../../utils/themes';
 
 const Directory: React.FC = () => (
   <div className="directory">

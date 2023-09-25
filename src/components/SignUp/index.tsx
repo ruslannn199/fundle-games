@@ -1,13 +1,13 @@
 // Components
 import { Button, ConfigProvider, Form, Input } from 'antd';
 import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
-// Themes
-import { blackTheme, orangeTheme } from '../../utils/themes';
-// Routes
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 // Hooks
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useTypedSelector, useUserActions } from '../../hooks';
+// Themes
+import { blackTheme, orangeTheme } from '../../utils/themes';
 // Types
 import { NavigationItemsLabels } from '../../types/enums';
 import type { registrationFields } from '../../types/types';

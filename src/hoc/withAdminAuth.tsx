@@ -1,3 +1,4 @@
+// Hooks
 import { useAdminAuth } from '../hooks';
 
 const WithAdminAuth: React.FC<React.PropsWithChildren> = ({ children }) => {

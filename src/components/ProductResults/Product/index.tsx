@@ -1,6 +1,9 @@
+// Components
 import { Button, Card, Col, ConfigProvider, Image } from 'antd';
-import type { ProductData } from '../../../types/interfaces';
+// Themes
 import { blackTheme } from '../../../utils/themes';
+// Types
+import type { ProductData } from '../../../types/interfaces';
 
 type ProductElementPropsFromData = Record<'productConfig', Pick<ProductData, 'thumbnail' | 'price' | 'name'>>;
 

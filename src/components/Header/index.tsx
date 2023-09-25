@@ -1,16 +1,16 @@
 // Hooks
 import { useTypedSelector, useUserActions } from '../../hooks';
 import { useLocation, useNavigate } from 'react-router-dom';
-// Router
-import { Link } from 'react-router-dom';
 // Components
+import { Link } from 'react-router-dom';
 import { Header } from 'antd/es/layout/layout';
 import { ConfigProvider, Menu, Input } from 'antd';
-import { blackTheme, orangeTheme } from '../../utils/themes';
 import Logo from '../Logo';
 import Wrapper from '../Wrapper';
 import LoggedInNavItems from '../LoggedInNavItems';
 import RegisterItems from '../RegisterItems';
+// Themes
+import { blackTheme, orangeTheme } from '../../utils/themes';
 // Types
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import { NavigationItemsLabels } from '../../types/enums';

@@ -1,3 +1,4 @@
+// Types
 import type { WrapperProps } from '../../types/types';
 
 const Wrapper: React.FC<React.PropsWithChildren<WrapperProps>> = ({

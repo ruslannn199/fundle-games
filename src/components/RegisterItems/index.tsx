@@ -1,6 +1,8 @@
+// Components
 import { UserAddOutlined, UserOutlined } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
 import { Link } from 'react-router-dom';
+// Types
+import type { MenuProps } from 'antd';
 import { NavigationItemsLabels } from '../../types/enums';
 
 const RegisterItems: MenuProps['items'] = [
