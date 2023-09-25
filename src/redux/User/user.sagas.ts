@@ -22,7 +22,7 @@ export function* emailSignIn({
 export function* emailSignOut() {
   try {
     yield signOut(auth);
-    yield put(signOutSuccess());
+    yield put(signOutSuccess(null));
   } catch (err) {
     if (err instanceof Error) yield put(userError([err.message]));
   }
@@ -52,7 +52,7 @@ export function* isUserAuthenticated() {
 export function* recoverPassword({ payload }: PasswordRecoveryStartAction) {
   try {
     yield call(handleResetPasswordAPI, payload);
-    yield put(recoverPasswordSuccess());
+    yield put(recoverPasswordSuccess(true));
   } catch (err) {
     if (err instanceof Error) yield put(userError([err.message]));
   }

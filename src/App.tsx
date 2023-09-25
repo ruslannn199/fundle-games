@@ -14,6 +14,7 @@ import { useUserActions } from './hooks';
 import { useParams } from 'react-router-dom';
 // Hoc
 import WithAuth from './hoc/withAuth';
+// Hoc
 import WithAdminAuth from './hoc/withAdminAuth';
 // Components
 import { Layout } from 'antd';
