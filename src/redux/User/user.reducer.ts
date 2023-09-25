@@ -1,7 +1,7 @@
 import { PayloadAction, createReducer } from '@reduxjs/toolkit';
-import { ActionType } from '../../types/enums';
+import { ActionType } from './user.actions';
 import { CurrentUser } from '../../types/interfaces';
-import { recoverPasswordSuccess, signInSuccess, userError } from './user.action-creators';
+import { signInSuccess, recoverPasswordSuccess, userError } from './user.actions';
 
 // State interface
 export interface UserState {

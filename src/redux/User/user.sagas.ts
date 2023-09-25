@@ -2,10 +2,10 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithP
 import { EmailSignInStartAction, EmailSignUpStartAction, PasswordRecoveryStartAction } from './user.actions';
 import { GoogleProvider, auth, getCurrentUser } from '../../utils/firebase.utils';
 import { put, all, call, takeLatest } from 'redux-saga/effects';
-import { recoverPasswordSuccess, signOutSuccess, userError } from './user.action-creators';
-import { ActionType } from '../../types/enums';
+import { ActionType } from './user.actions';
 import { getSnapshotFromUserAuth, handleResetPasswordAPI } from '../../utils/user.utils';
 import { userAuth } from '../../types/types';
+import { signOutSuccess, recoverPasswordSuccess, userError } from './user.actions';
 
 // Worker sagas
 export function* emailSignIn({

@@ -1,9 +1,9 @@
 import { call, put } from 'redux-saga/effects';
-import { signInSuccess } from '../redux/User/user.action-creators';
 import { userAuth, docRefType, docSnapshotDataType } from '../types/types';
 import { auth, handleUserProfile } from './firebase.utils';
 import { getDoc } from 'firebase/firestore';
 import { sendPasswordResetEmail } from 'firebase/auth';
+import { signInSuccess } from '../redux/User/user.actions';
 
 // Save user to db helper
 export function* getSnapshotFromUserAuth(user: userAuth, moreData?: object) {
