@@ -1,5 +1,13 @@
-import type { ProductData } from '../../types/interfaces';
-import type { ActionType } from './products.action-types';
+import { createAction } from '@reduxjs/toolkit';
+import type { ProductData, Products } from '../../types/interfaces';
+
+export enum ActionType {
+  ADD_NEW_PRODUCT_START = 'ADD_NEW_PRODUCT_START',
+  FETCH_PRODUCTS_START = 'FETCH_PRODUCTS_START',
+  SET_MULTIPLE_PRODUCTS = 'SET_MULTIPLE_PRODUCTS',
+  SET_PRODUCT = 'SET_PRODUCT',
+  DELETE_PRODUCT_START = 'DELETE_PRODUCT_START',
+}
 
 export interface AddProductStartAction {
   type: ActionType.ADD_NEW_PRODUCT_START;
@@ -10,3 +18,11 @@ export interface DeleteProductStartAction {
   type: ActionType.DELETE_PRODUCT_START,
   payload: string;
 }
+
+export const addProductStart = createAction<ProductData>(ActionType.ADD_NEW_PRODUCT_START);
+
+export const setMultipleProducts = createAction<Products>(ActionType.SET_MULTIPLE_PRODUCTS);
+
+export const fetchProductsStart = createAction(ActionType.FETCH_PRODUCTS_START);
+
+export const deleteProductStart = createAction<string>(ActionType.DELETE_PRODUCT_START);
