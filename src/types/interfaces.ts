@@ -33,14 +33,14 @@ export interface Products {
 
 export interface ProductData {
   category: string[];
-  name: string;
+  productName: string;
   description: string;
   thumbnail: string;
   price: number;
   quantity: number;
   id?: string;
-  productAdminUserUID?: string;
-  createdDate?: Date;
+  productAdminUserID?: string;
+  createdDate?: string;
 }
 
 export interface ProductFormData {

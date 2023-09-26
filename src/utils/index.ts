@@ -10,6 +10,10 @@ const makeFetchURL = (str: string): string => (
   `http://localhost/fundle-games/api/records/${str}`
 );
 
+const convertToMySQLDateTime = (date: Date): string => (
+  date.toISOString().slice(0, 19).replace('T', ' ')
+);
+
 export {
   checkUserIsAdmin,
   makeFetchURL,
@@ -17,4 +21,5 @@ export {
   handleDeleteProducts,
   handleAddProduct,
   getCategories,
+  convertToMySQLDateTime,
 };

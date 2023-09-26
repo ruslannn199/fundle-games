@@ -3,7 +3,6 @@ import { makeFetchURL } from '.';
 
 export const handleAddProduct = async (product: ProductData) => {
   try {
-    console.log('PRODUCT ITSELF', product);
     const response = await fetch(makeFetchURL('products'), {
       method: 'POST',
       headers: {
@@ -11,7 +10,6 @@ export const handleAddProduct = async (product: ProductData) => {
       },
       body: JSON.stringify(product),
     });
-    console.log(response);
     response.headers.forEach((header) => (console.log(header)));
     console.log(await response.json());
   } catch (err) {

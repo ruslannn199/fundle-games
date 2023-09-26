@@ -47,7 +47,7 @@ const AddNewProduct: React.FC = () => {
     hideModal();
     addProductStart({
       category: productCategory,
-      name: productName,
+      productName: productName,
       price: parseFloat(productPrice),
       thumbnail: productThumbnail,
       description: productDescription,

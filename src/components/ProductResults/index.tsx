@@ -59,9 +59,9 @@ const ProductResults: React.FC = () => {
           {
             products
               .data
-              .map(({ thumbnail, name, price, id }: ProductData, position) => ((
+              .map(({ thumbnail, productName, price, id }: ProductData, position) => ((
                 <Product
-                  productConfig={{ thumbnail, name, price }}
+                  productConfig={{ thumbnail, productName, price }}
                   position={position}
                   key={id}
                 />

@@ -5,16 +5,17 @@ import type { ProductData } from '../../types/interfaces';
 import { handleAddProduct, handleDeleteProducts, handleFetchProducts } from '../../utils';
 import ProductsActionCreators from './products.actions';
 import { ActionType } from './products.actions';
+import { convertToMySQLDateTime } from '../../utils';
 
 const { fetchProductsStart, setMultipleProducts } = ProductsActionCreators;
 
 export function* addProduct({ payload }: AddProductStartAction) {
   try {
-    const timeStamp = new Date();
+    const timeStamp = convertToMySQLDateTime(new Date());
     if (auth.currentUser) {
       yield handleAddProduct({
         ...payload,
-        productAdminUserUID: auth.currentUser.uid,
+        productAdminUserID: auth.currentUser.uid,
         createdDate: timeStamp,
       });
 

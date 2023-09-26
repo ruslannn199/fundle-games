@@ -5,7 +5,7 @@ import { blackTheme } from '../../../utils/themes';
 // Types
 import type { ProductData } from '../../../types/interfaces';
 
-type ProductElementPropsFromData = Record<'productConfig', Pick<ProductData, 'thumbnail' | 'price' | 'name'>>;
+type ProductElementPropsFromData = Record<'productConfig', Pick<ProductData, 'thumbnail' | 'price' | 'productName'>>;
 
 interface ProductElementProps extends ProductElementPropsFromData {
   position: number;
@@ -13,12 +13,12 @@ interface ProductElementProps extends ProductElementPropsFromData {
 
 const Product: React.FC<ProductElementProps> =
   ({
-    productConfig: { thumbnail, price, name },
+    productConfig: { thumbnail, price, productName },
   }) => {
 
   const { Meta } = Card;
 
-  return (!(thumbnail || name || typeof price !== 'undefined'))
+  return (!(thumbnail || productName || typeof price !== 'undefined'))
     ? null
     : (
       <Col
@@ -27,14 +27,14 @@ const Product: React.FC<ProductElementProps> =
         <Card
           hoverable
           style={{ width: 240 }}
-          cover={<Image alt={name} src={thumbnail} />}
+          cover={<Image alt={productName} src={thumbnail} />}
           actions={[
             <ConfigProvider theme={blackTheme}>
               <Button type="primary">Add to Cart</Button>
             </ConfigProvider>
           ]}
         >
-          <Meta title={name} description={`${price}₽`} />
+          <Meta title={productName} description={`${price}₽`} />
         </Card>
       </Col>
     );

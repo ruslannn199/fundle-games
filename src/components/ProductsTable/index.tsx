@@ -66,7 +66,7 @@ const ProductsTable: React.FC<Record<'products', Products>> = ({ products }) => 
   ];
 
   const dataSource = products.data.map((
-    { name, quantity, price, category, thumbnail, id: documentId }, index) => ({
+    { productName: name, quantity, price, category, thumbnail, id: documentId }, index) => ({
       key: documentId || `${index}`,
       name,
       quantity,
