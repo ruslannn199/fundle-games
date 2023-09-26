@@ -59,7 +59,7 @@ const ProductResults: React.FC = () => {
           {
             products
               .data
-              .map(({ thumbnail, productName, price, id }: ProductData, position) => ((
+              .map(({ thumbnail, productName, price, id }: ProductData, position: number) => ((
                 <Product
                   productConfig={{ thumbnail, productName, price }}
                   position={position}

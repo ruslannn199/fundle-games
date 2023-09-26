@@ -18,7 +18,6 @@ export interface ProductTableColumns {
 };
 
 const ProductsTable: React.FC<Record<'products', Products>> = ({ products }) => {
-  console.log(products);
   const { deleteProductStart } = useProductsActions();
   const columns: ColumnsType<ProductTableColumns> = [
     {
@@ -66,8 +65,8 @@ const ProductsTable: React.FC<Record<'products', Products>> = ({ products }) => 
   ];
 
   const dataSource = products.data.map((
-    { productName: name, quantity, price, category, thumbnail, id: documentId }, index) => ({
-      key: documentId || `${index}`,
+    { productName: name, quantity, price, category, thumbnail, id }, index) => ({
+      key: id || `${index}`,
       name,
       quantity,
       price,

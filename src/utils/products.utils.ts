@@ -3,15 +3,13 @@ import { makeFetchURL } from '.';
 
 export const handleAddProduct = async (product: ProductData) => {
   try {
-    const response = await fetch(makeFetchURL('products'), {
+    await fetch(makeFetchURL('products'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: JSON.stringify(product),
     });
-    response.headers.forEach((header) => (console.log(header)));
-    console.log(await response.json());
   } catch (err) {
     console.error(err);
   }
@@ -38,7 +36,7 @@ export const handleDeleteProducts = async (documentId: string): Promise<void> =>
       headers: {
         'Content-Type': 'application/json',
       },
-    })
+    });
   } catch (err) {
     console.error(err);
   }
