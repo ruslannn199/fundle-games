@@ -20,20 +20,6 @@ export enum ProductFormFields {
   DESCRIPTION = 'productDescription',
 }
 
-export enum ProductCategories {
-  NEW_PRODUCTS = 'New products',
-  POPULAR = 'Popular',
-  PARTY_GAMES = 'Party games',
-  FAMILY_FRIENDLY = 'Family-friendly',
-  HARDCORE = 'Hardcore',
-  CARD_GAMES = 'Card games',
-  DETECTIVE = 'Detective',
-  ECONOMIC = 'Economic',
-  CLASSIC = 'Classic',
-  ADVENTURE = 'Adventure',
-  STRATEGY = 'Strategy',
-}
-
 export enum ProductCategoriesTypes {
   PRIMARY = 'primary',
   SECONDARY = 'secondary',

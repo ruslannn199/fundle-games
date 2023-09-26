@@ -30,3 +30,5 @@ export type docRefType = DocumentReference<DocumentData>;
 export type docSnapshotDataType = DocumentSnapshot<DocumentData>;
 
 export type userAuth = User | null;
+
+export type ApiResponse<T> = Record<'records', T>;

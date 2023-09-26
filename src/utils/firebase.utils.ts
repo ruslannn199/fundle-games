@@ -1,6 +1,6 @@
 // Firebase
 import { FirebaseApp, initializeApp } from 'firebase/app';
-import { doc, setDoc, getDoc, collection, initializeFirestore, persistentLocalCache, CACHE_SIZE_UNLIMITED, getDocsFromCache, getDocs, query, orderBy } from 'firebase/firestore';
+import { doc, setDoc, getDoc, initializeFirestore, persistentLocalCache, CACHE_SIZE_UNLIMITED } from 'firebase/firestore';
 import { getAuth, GoogleAuthProvider, onAuthStateChanged } from 'firebase/auth';
 // Types
 import type { firebaseConfig, docSnapshotDataType, docRefType } from '../types/types';

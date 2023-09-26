@@ -1,5 +1,5 @@
 import type { User } from 'firebase/auth';
-import type { ProductCategories, ProductCategoriesTypes } from './enums';
+import type { ProductCategoriesTypes } from './enums';
 
 export interface CurrentUser {
   email: string;
@@ -53,10 +53,6 @@ export interface ProductFormData {
 
 export interface CategoryData {
   id: number;
-  category: ProductCategories;
+  category: string;
   type: ProductCategoriesTypes;
-}
-
-export interface ApiResponse<T> {
-  records: T;
 }

@@ -1,5 +1,6 @@
-import type { ApiResponse, CategoryData, ProductData } from '../types/interfaces';
+import type { CategoryData, ProductData } from '../types/interfaces';
 import { makeFetchURL } from '.';
+import { ApiResponse } from '../types/types';
 
 export const handleAddProduct = async (product: ProductData) => {
   try {
