@@ -3,13 +3,17 @@ import { makeFetchURL } from '.';
 
 export const handleAddProduct = async (product: ProductData) => {
   try {
-    console.log(await (await fetch(makeFetchURL('products'), {
+    console.log('PRODUCT ITSELF', product);
+    const response = await fetch(makeFetchURL('products'), {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json; charset=UTF-8',
       },
       body: JSON.stringify(product),
-    })).json());
+    });
+    console.log(response);
+    response.headers.forEach((header) => (console.log(header)));
+    console.log(await response.json());
   } catch (err) {
     console.error(err);
   }

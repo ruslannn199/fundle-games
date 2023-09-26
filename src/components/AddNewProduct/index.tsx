@@ -15,7 +15,7 @@ import { getCategories } from '../../utils';
 
 const AddNewProduct: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
-  const [options, setOptions] = useState<SelectProps['options']>([]);
+  const [options, setOptions] = useState<SelectProps["options"]>([]);
   const { addProductStart } = useProductsActions();
   const { useForm } = Form;
   const [form] = useForm();

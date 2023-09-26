@@ -5,7 +5,9 @@ import { put, all, call, takeLatest } from 'redux-saga/effects';
 import { ActionType } from './user.actions';
 import { getSnapshotFromUserAuth, handleResetPasswordAPI } from '../../utils/user.utils';
 import { userAuth } from '../../types/types';
-import { signOutSuccess, recoverPasswordSuccess, userError } from './user.actions';
+import UserActionsCreators from './user.actions';
+
+const { userError, signOutSuccess, recoverPasswordSuccess } = UserActionsCreators;
 
 // Worker sagas
 export function* emailSignIn({

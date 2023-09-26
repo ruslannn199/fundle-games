@@ -2,8 +2,11 @@ import { takeLatest, put, all, call } from 'redux-saga/effects';
 import { AddProductStartAction, DeleteProductStartAction } from './products.actions';
 import { auth } from '../../utils/firebase.utils';
 import type { ProductData } from '../../types/interfaces';
-import { setMultipleProducts, fetchProductsStart, ActionType } from './products.actions';
 import { handleAddProduct, handleDeleteProducts, handleFetchProducts } from '../../utils';
+import ProductsActionCreators from './products.actions';
+import { ActionType } from './products.actions';
+
+const { fetchProductsStart, setMultipleProducts } = ProductsActionCreators;
 
 export function* addProduct({ payload }: AddProductStartAction) {
   try {

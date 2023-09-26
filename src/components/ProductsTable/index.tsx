@@ -18,6 +18,7 @@ export interface ProductTableColumns {
 };
 
 const ProductsTable: React.FC<Record<'products', Products>> = ({ products }) => {
+  console.log(products);
   const { deleteProductStart } = useProductsActions();
   const columns: ColumnsType<ProductTableColumns> = [
     {

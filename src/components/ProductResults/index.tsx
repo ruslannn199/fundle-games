@@ -23,14 +23,14 @@ const ProductResults: React.FC = () => {
     fetchProductsStart();
   }, [fetchProductsStart]);
 
-  if (!Array.isArray(products.data)) return null;
-
   useEffect(() => {
     getCategories()
       .then((categories) => {
         setOptions(categories?.map(({ category }) => ({ label: category, value: category })))
       });
   }, []);
+
+  if (!Array.isArray(products.data)) return null;
 
   const filterOption: FilterFunc<DefaultOptionType> = (input: string, option?: DefaultOptionType) => {
     return (typeof option?.label === 'string' && (option.label.includes(input)

@@ -8,7 +8,7 @@ const checkUserIsAdmin = (currentUser: CurrentUser | null): boolean => {
 
 const makeFetchURL = (str: string): string => (
   `http://localhost/fundle-games/api/records/${str}`
-)
+);
 
 export {
   checkUserIsAdmin,
