@@ -19,10 +19,15 @@ export interface DeleteProductStartAction {
   payload: string;
 }
 
+export interface FetchProductStartAction {
+  type: ActionType.FETCH_PRODUCTS_START,
+  payload: string,
+}
+
 const ProductsActionCreators = {
   addProductStart: createAction<ProductData>(ActionType.ADD_NEW_PRODUCT_START),
   setMultipleProducts: createAction<Products>(ActionType.SET_MULTIPLE_PRODUCTS),
-  fetchProductsStart: createAction(ActionType.FETCH_PRODUCTS_START),
+  fetchProductsStart: createAction<string>(ActionType.FETCH_PRODUCTS_START),
   deleteProductStart: createAction<string>(ActionType.DELETE_PRODUCT_START),
 }
 
