@@ -24,7 +24,7 @@ const Admin: React.FC = () => {
   }
 
   useEffect(() => {
-    fetchProductsStart('');
+    fetchProductsStart();
   }, [fetchProductsStart]);
 
   return (

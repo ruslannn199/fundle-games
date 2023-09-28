@@ -4,7 +4,6 @@ import { ConfigProvider, Row, Select } from 'antd';
 // Hooks
 import { useEffect, useState } from 'react';
 import { useProductsActions, useTypedSelector } from '../../hooks';
-import { useSearchParams } from 'react-router-dom';
 // Themes
 import { orangeTheme } from '../../utils/themes';
 // Types
@@ -15,26 +14,21 @@ import type { FilterFunc, SelectHandler } from 'rc-select/lib/Select';
 import { getCategories } from '../../utils';
 
 const ProductResults: React.FC = () => {
+  const defaultOptionName = 'Show all';
+
   const initialOptions: SelectProps['options'] = [{
-    label: 'Show all',
-    value: 'Show all',
+    label: defaultOptionName,
+    value: defaultOptionName,
   }];
 
   const { fetchProductsStart } = useProductsActions();
   const [options, setOptions] = useState<SelectProps['options']>(initialOptions);
   const { products } = useTypedSelector((state) => (state.productsData));
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [selectedOption, setSelectedOption] = useState<string>('Show all');
+  const [selectedOption, setSelectedOption] = useState<string>('');
   
   useEffect(() => {
-    const isDefaultSelect = selectedOption === 'Show all';
-    setSearchParams(
-      isDefaultSelect
-        ? ''
-        : { category: selectedOption.toLowerCase().replaceAll(' ', '-') }
-    );
-    fetchProductsStart(isDefaultSelect ? '' : selectedOption);
-  }, [selectedOption]);
+    fetchProductsStart();
+  }, [fetchProductsStart]);
 
   useEffect(() => {
     getCategories()
@@ -53,42 +47,47 @@ const ProductResults: React.FC = () => {
   if (!Array.isArray(products.data)) return null;
 
   const handleFilter: SelectHandler<string> = (value) => {
-    setSelectedOption(value);
+    setSelectedOption(value === defaultOptionName ? '' : value);
   }
 
-  const filterOption: FilterFunc<DefaultOptionType> = (input: string, option?: DefaultOptionType) => {
-    return (typeof option?.label === 'string' && (option.label.includes(input)
-    || option.label.toLowerCase().includes(input)));
+  const filterOption: FilterFunc<DefaultOptionType> = (input: string, option?: DefaultOptionType) => (
+    (typeof option?.label === 'string' && (option.label.includes(input)
+    || option.label.toLowerCase().includes(input)))
+  )
+
+  const filterSort = (optionA: DefaultOptionType, optionB: DefaultOptionType): number => {
+    if (optionA.label === defaultOptionName)
+      return -1;
+    if (optionB.label === defaultOptionName)
+      return 1;
+    if (typeof optionA.label === "string" && typeof optionB.label === "string")
+      return optionA.label.toLowerCase().localeCompare((optionB.label).toLowerCase());
+    return -1;
   }
 
   return (
     <>
-      <h1>{!products.data.length ? 'No search results' : 'Browse products'}</h1>
+      <h1>{!products.data.length ? "No search results" : "Browse products"}</h1>
       <ConfigProvider theme={orangeTheme}>
         <Select
           showSearch
           style={{ width: 300, marginBottom: 32 }}
           placeholder="Choose category"
           filterOption={filterOption}
-          filterSort={(optionA, optionB): number => {
-            if (optionA.label === 'Show all')
-              return -1;
-            if (optionB.label === 'Show all')
-              return 1;
-            if (typeof optionA.label === 'string' && typeof optionB.label === 'string')
-              return optionA.label.toLowerCase().localeCompare((optionB.label).toLowerCase());
-            return -1;
-          }}
+          filterSort={filterSort}
           options={options}
-          defaultValue="Show all"
+          defaultValue={defaultOptionName}
           onSelect={handleFilter}
         />
       </ConfigProvider>
       {
-        <Row gutter={[0, 32]} align='middle'>
+        <Row gutter={[0, 32]} align="middle">
           {
             products
               .data
+              .filter((product: ProductData) => (
+                !selectedOption || product.category.includes(selectedOption)
+              ))
               .map(({ thumbnail, productName, price, id }: ProductData, position: number) => ((
                 <Product
                   productConfig={{ thumbnail, productName, price }}

@@ -1,5 +1,5 @@
 import { takeLatest, put, all, call } from 'redux-saga/effects';
-import { AddProductStartAction, DeleteProductStartAction, FetchProductStartAction } from './products.actions';
+import { AddProductStartAction, DeleteProductStartAction } from './products.actions';
 import { auth } from '../../utils/firebase.utils';
 import type { ProductData } from '../../types/interfaces';
 import { handleAddProduct, handleDeleteProducts, handleFetchProducts } from '../../utils';
@@ -19,16 +19,16 @@ export function* addProduct({ payload }: AddProductStartAction) {
         createdDate: timeStamp,
       });
 
-      yield put(fetchProductsStart(''));
+      yield put(fetchProductsStart());
     }
   } catch (err) {
     if (err instanceof Error) console.error(err.message);
   }
 }
 
-export function* fetchProducts({ payload }: FetchProductStartAction) {
+export function* fetchProducts() {
   try {
-    const productDataArr: ProductData[] = yield handleFetchProducts(payload);
+    const productDataArr: ProductData[] = yield handleFetchProducts();
     yield put(setMultipleProducts({
       data: productDataArr,
       isLastPage: false,
@@ -42,7 +42,7 @@ export function* deleteProduct({ payload }: DeleteProductStartAction) {
   try {
     if (payload) {
       yield handleDeleteProducts(payload);
-      yield put(fetchProductsStart(''));
+      yield put(fetchProductsStart());
     }
   } catch (err) {
     if (err instanceof Error) console.error(err.message);

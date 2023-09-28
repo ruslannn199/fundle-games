@@ -1,7 +1,11 @@
+// Axios
+import axios from 'axios';
+// Types
 import type { CategoryData, ProductData } from '../types/interfaces';
+import type { ApiResponse } from '../types/types';
+import type { AxiosResponse } from 'axios';
+// Utils
 import { makeFetchURL } from '.';
-import axios, { AxiosResponse } from 'axios';
-import { ApiResponse } from '../types/types';
 
 export const handleAddProduct = async (product: ProductData) => {
   try {
@@ -14,14 +18,11 @@ export const handleAddProduct = async (product: ProductData) => {
   }
 }
 
-export const handleFetchProducts = async (filters: string): Promise<ProductData[] | undefined> => {
+export const handleFetchProducts = async (): Promise<ProductData[] | undefined> => {
   try {
-    // TODO implement search by text not JSON
-    const url = makeFetchURL(`products?order=createdDate,desc`);
+    const url: string = makeFetchURL(`products?order=createdDate,desc`);
     const { data: { records } }: AxiosResponse<ApiResponse<ProductData[]>> = await axios.get(url);
-    return !filters
-      ? records
-      : records.filter((record) => (record.category.includes(filters)));
+    return records;
   } catch (err) {
     console.error(err);
   }

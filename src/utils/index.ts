@@ -1,4 +1,6 @@
-import { CurrentUser } from '../types/interfaces';
+// Types
+import type { CurrentUser } from '../types/interfaces';
+// Utils
 import { handleFetchProducts, handleAddProduct, handleDeleteProducts, getCategories } from './products.utils';
 
 const checkUserIsAdmin = (currentUser: CurrentUser | null): boolean => {
