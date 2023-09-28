@@ -1,8 +1,10 @@
 import { PayloadAction, createReducer } from '@reduxjs/toolkit';
 import { ProductData, Products } from '../../types/interfaces'
 import ProductsActionCreators from './products.actions';
+import LoadingActionCreators from '../Loading/loading.actions';
 
 const { addProductStart, setMultipleProducts } = ProductsActionCreators;
+const { toggleLoadStart } = LoadingActionCreators;
 
 export interface ProductsState {
   products: Products;

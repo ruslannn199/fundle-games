@@ -1,6 +1,6 @@
 // Components
 import Product from './Product';
-import { ConfigProvider, Row, Select } from 'antd';
+import { ConfigProvider, Row, Select, Spin } from 'antd';
 // Hooks
 import { useEffect, useState } from 'react';
 import { useProductsActions, useTypedSelector } from '../../hooks';
@@ -12,8 +12,9 @@ import type { DefaultOptionType, SelectProps } from 'antd/es/select';
 import type { FilterFunc, SelectHandler } from 'rc-select/lib/Select';
 // Utils
 import { getCategories } from '../../utils';
+import Spinner from '../Spinner';
 
-const ProductResults: React.FC = () => {
+const ProductResults = () => {
   const defaultOptionName = 'Show all';
 
   const initialOptions: SelectProps['options'] = [{
@@ -24,6 +25,7 @@ const ProductResults: React.FC = () => {
   const { fetchProductsStart } = useProductsActions();
   const [options, setOptions] = useState<SelectProps['options']>(initialOptions);
   const { products } = useTypedSelector((state) => (state.productsData));
+  const { isLoading } = useTypedSelector((state) => (state.loader));
   const [selectedOption, setSelectedOption] = useState<string>('');
   
   useEffect(() => {
@@ -66,7 +68,7 @@ const ProductResults: React.FC = () => {
   }
 
   return (
-    <>
+    <Spin spinning={isLoading} indicator={Spinner}>
       <h1>{!products.data.length ? "No search results" : "Browse products"}</h1>
       <ConfigProvider theme={orangeTheme}>
         <Select
@@ -98,7 +100,7 @@ const ProductResults: React.FC = () => {
           }
         </Row>
       }
-    </>
+    </Spin>
   );
 }
 

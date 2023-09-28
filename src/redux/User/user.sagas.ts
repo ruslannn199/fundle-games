@@ -6,16 +6,20 @@ import { ActionType } from './user.actions';
 import { getSnapshotFromUserAuth, handleResetPasswordAPI } from '../../utils/user.utils';
 import { userAuth } from '../../types/types';
 import UserActionsCreators from './user.actions';
+import LoadingActionCreators from '../Loading/loading.actions';
 
 const { userError, signOutSuccess, recoverPasswordSuccess } = UserActionsCreators;
+const { toggleLoadStart } = LoadingActionCreators;
 
 // Worker sagas
 export function* emailSignIn({
   payload: { email, password }
 }: EmailSignInStartAction) {
   try {
+    yield put(toggleLoadStart(true));
     const { user } = yield signInWithEmailAndPassword(auth, email, password);
     yield getSnapshotFromUserAuth(user);
+    yield put(toggleLoadStart(false));
   } catch (err) {
     if (err instanceof Error) yield put(userError([err.message]));
   }
@@ -23,8 +27,10 @@ export function* emailSignIn({
 
 export function* emailSignOut() {
   try {
+    yield put(toggleLoadStart(true));
     yield signOut(auth);
     yield put(signOutSuccess(null));
+    yield put(toggleLoadStart(false));
   } catch (err) {
     if (err instanceof Error) yield put(userError([err.message]));
   }
@@ -34,8 +40,10 @@ export function* emailSignUp({
   payload: { email, password, displayName },
 }: EmailSignUpStartAction) {
   try {
+    yield put(toggleLoadStart(true));
     const { user } = yield createUserWithEmailAndPassword(auth, email, password);
     yield getSnapshotFromUserAuth(user, { displayName });
+    yield put(toggleLoadStart(false));
   } catch (err) {
     if (err instanceof Error) yield put(userError([err.message]));
   }
@@ -62,8 +70,10 @@ export function* recoverPassword({ payload }: PasswordRecoveryStartAction) {
 
 export function* googleSignIn() {
   try {
+    yield put(toggleLoadStart(true));
     const { user } = yield signInWithPopup(auth, GoogleProvider);
     yield getSnapshotFromUserAuth(user);
+    yield put(toggleLoadStart(false));
   } catch (err) {
     console.error(err);
   }

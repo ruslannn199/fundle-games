@@ -4,15 +4,19 @@ import { auth } from '../../utils/firebase.utils';
 import type { ProductData } from '../../types/interfaces';
 import { handleAddProduct, handleDeleteProducts, handleFetchProducts } from '../../utils';
 import ProductsActionCreators from './products.actions';
+import LoadingActionCreators from '../Loading/loading.actions';
 import { ActionType } from './products.actions';
 import { convertToMySQLDateTime } from '../../utils';
 
 const { fetchProductsStart, setMultipleProducts } = ProductsActionCreators;
+const { toggleLoadStart } = LoadingActionCreators;
 
 export function* addProduct({ payload }: AddProductStartAction) {
   try {
     const timeStamp = convertToMySQLDateTime(new Date());
     if (auth.currentUser) {
+      yield put(toggleLoadStart(true));
+
       yield handleAddProduct({
         ...payload,
         productAdminUserID: auth.currentUser.uid,
@@ -28,11 +32,13 @@ export function* addProduct({ payload }: AddProductStartAction) {
 
 export function* fetchProducts() {
   try {
+    yield put(toggleLoadStart(true));
     const productDataArr: ProductData[] = yield handleFetchProducts();
     yield put(setMultipleProducts({
       data: productDataArr,
       isLastPage: false,
     }));
+    yield put(toggleLoadStart(false));
   } catch (err) {
     if (err instanceof Error) console.error(err.message);
   }
@@ -41,6 +47,7 @@ export function* fetchProducts() {
 export function* deleteProduct({ payload }: DeleteProductStartAction) {
   try {
     if (payload) {
+      yield put(toggleLoadStart(true));
       yield handleDeleteProducts(payload);
       yield put(fetchProductsStart());
     }

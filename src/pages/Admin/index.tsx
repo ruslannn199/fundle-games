@@ -1,5 +1,5 @@
 // Components
-import { Menu, ConfigProvider } from 'antd';
+import { Menu, ConfigProvider, Spin } from 'antd';
 import AdminNavItems from '../../components/AdminNavItems';
 import Wrapper from '../../components/Wrapper';
 import AddNewProduct from '../../components/AddNewProduct';
@@ -12,10 +12,12 @@ import { orangeTheme } from '../../utils/themes';
 // Types
 import { AdminItemsLabels } from '../../types/enums';
 import type { MenuInfo } from 'rc-menu/lib/interface';
+import Spinner from '../../components/Spinner';
 
 const Admin: React.FC = () => {
   const { currentUser } = useTypedSelector((state) => (state.user));
   const { products } = useTypedSelector((state) => (state.productsData));
+  const { isLoading } = useTypedSelector((state) => (state.loader));
   const { emailSignOutStart } = useUserActions();
   const { fetchProductsStart } = useProductsActions();
 
@@ -40,7 +42,9 @@ const Admin: React.FC = () => {
       </ConfigProvider>
       <div className="admin__dashboard">
         <AddNewProduct />
-        <ProductsTable products={products} />
+        <Spin indicator={Spinner} spinning={isLoading}>
+          <ProductsTable products={products} />
+        </Spin>
       </div>
     </Wrapper>
   );
