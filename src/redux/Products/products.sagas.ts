@@ -23,7 +23,10 @@ export function* addProduct({ payload }: AddProductStartAction) {
         createdDate: timeStamp,
       });
 
-      yield put(fetchProductsStart());
+      yield put(fetchProductsStart({
+        currentPage: 1,
+        pageSize: 24,
+      }));
     }
   } catch (err) {
     if (err instanceof Error) console.error(err.message);
@@ -46,7 +49,10 @@ export function* deleteProduct({ payload }: DeleteProductStartAction) {
     if (payload) {
       yield put(toggleLoadStart(true));
       yield handleDeleteProducts(payload);
-      yield put(fetchProductsStart());
+      yield put(fetchProductsStart({
+        currentPage: 1,
+        pageSize: 24,
+      }));
     }
   } catch (err) {
     if (err instanceof Error) console.error(err.message);

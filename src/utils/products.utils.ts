@@ -8,17 +8,16 @@ import type { AxiosResponse } from 'axios';
 import { makeComplexProductFetchURL, makeFetchURL } from '.';
 
 const filterFetchProductByParams = (params?: FetchProductParams): string => {
-  const pageSize = 12;
   if (params) {
-    const { filterType, persistProducts, currentPage } = params;
+    const { filterType, persistProducts, currentPage, pageSize } = params;
     if (persistProducts?.length) {
       if (filterType) {
-        return makeComplexProductFetchURL({ requestedPage: currentPage, pageSize });
+        return makeComplexProductFetchURL({ requestedPage: currentPage, pageSize: pageSize || 12 });
       }
-      return makeComplexProductFetchURL({ requestedPage: currentPage, pageSize });
+      return makeComplexProductFetchURL({ requestedPage: currentPage, pageSize: pageSize || 12 });
     }
   }
-  return makeComplexProductFetchURL({ requestedPage: 1, pageSize });
+  return makeComplexProductFetchURL({ requestedPage: 1, pageSize: params?.pageSize || 12 });
 }
 
 export const handleAddProduct = async (product: ProductData) => {
@@ -34,10 +33,9 @@ export const handleAddProduct = async (product: ProductData) => {
 
 export const handleFetchProducts = async (params?: FetchProductParams): Promise<Products | undefined> => {
   try {
-    const pageSize = 12;
     const url: string = filterFetchProductByParams(params);
     const { data: { records, results } }: AxiosResponse<ApiResponse<ProductData[]>> = await axios.get(url);
-    const isLastPage: boolean = (results / ((params?.currentPage || 1) * pageSize)) < 1;
+    const isLastPage: boolean = (results / ((params?.currentPage || 1) * (params?.pageSize || 12))) < 1;
     return {
       data: params?.persistProducts?.length ? params?.persistProducts.concat(records) : records,
       isLastPage,

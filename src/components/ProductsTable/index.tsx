@@ -17,6 +17,7 @@ export interface ProductTableColumns {
   thumbnail: string;
 };
 
+// TODO implement reset func to first page after adding new product
 const ProductsTable: React.FC<Record<'products', Products>> = ({ products }) => {
   const { deleteProductStart } = useProductsActions();
   const columns: ColumnsType<ProductTableColumns> = [

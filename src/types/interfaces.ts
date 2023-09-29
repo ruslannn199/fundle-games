@@ -66,4 +66,5 @@ export interface FetchProductParams {
   currentPage: number;
   persistProducts?: ProductData[];
   filterType?: string;
+  pageSize?: number;
 }
