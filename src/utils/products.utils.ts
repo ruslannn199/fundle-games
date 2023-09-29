@@ -1,11 +1,25 @@
 // Axios
 import axios from 'axios';
 // Types
-import type { CategoryData, ProductData } from '../types/interfaces';
+import type { CategoryData, FetchProductParams, ProductData, Products } from '../types/interfaces';
 import type { ApiResponse } from '../types/types';
 import type { AxiosResponse } from 'axios';
 // Utils
-import { makeFetchURL } from '.';
+import { makeComplexProductFetchURL, makeFetchURL } from '.';
+
+const filterFetchProductByParams = (params?: FetchProductParams): string => {
+  const pageSize = 12;
+  if (params) {
+    const { filterType, persistProducts, currentPage } = params;
+    if (persistProducts?.length) {
+      if (filterType) {
+        return makeComplexProductFetchURL({ requestedPage: currentPage, pageSize });
+      }
+      return makeComplexProductFetchURL({ requestedPage: currentPage, pageSize });
+    }
+  }
+  return makeComplexProductFetchURL({ requestedPage: 1, pageSize });
+}
 
 export const handleAddProduct = async (product: ProductData) => {
   try {
@@ -18,11 +32,16 @@ export const handleAddProduct = async (product: ProductData) => {
   }
 }
 
-export const handleFetchProducts = async (): Promise<ProductData[] | undefined> => {
+export const handleFetchProducts = async (params?: FetchProductParams): Promise<Products | undefined> => {
   try {
-    const url: string = makeFetchURL(`products?order=createdDate,desc`);
-    const { data: { records } }: AxiosResponse<ApiResponse<ProductData[]>> = await axios.get(url);
-    return records;
+    const pageSize = 12;
+    const url: string = filterFetchProductByParams(params);
+    const { data: { records, results } }: AxiosResponse<ApiResponse<ProductData[]>> = await axios.get(url);
+    const isLastPage: boolean = (results / ((params?.currentPage || 1) * pageSize)) < 1;
+    return {
+      data: params?.persistProducts?.length ? params?.persistProducts.concat(records) : records,
+      isLastPage,
+    }
   } catch (err) {
     console.error(err);
   }

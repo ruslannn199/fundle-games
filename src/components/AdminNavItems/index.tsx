@@ -5,6 +5,7 @@ import { HomeOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { AdminItemsLabels } from '../../types/enums';
 import type { CurrentUser } from '../../types/interfaces';
+import AddNewProduct from '../AddNewProduct';
 
 const AdminNavItems = ({ displayName }: CurrentUser): MenuProps['items'] => ([
   {
@@ -24,6 +25,10 @@ const AdminNavItems = ({ displayName }: CurrentUser): MenuProps['items'] => ([
     key: AdminItemsLabels.SIGN_OUT,
     icon: <LogoutOutlined />,
   },
+  {
+    label: <AddNewProduct />,
+    key: AdminItemsLabels.ADD_NEW_PRODUCT,
+  }
 ]);
 
 export default AdminNavItems;

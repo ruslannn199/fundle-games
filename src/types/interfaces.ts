@@ -56,3 +56,14 @@ export interface CategoryData {
   category: string;
   type: ProductCategoriesTypes;
 }
+
+export interface ProductURLOptions {
+  requestedPage: number;
+  pageSize: number;
+}
+
+export interface FetchProductParams {
+  currentPage: number;
+  persistProducts?: ProductData[];
+  filterType?: string;
+}

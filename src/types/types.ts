@@ -31,4 +31,7 @@ export type docSnapshotDataType = DocumentSnapshot<DocumentData>;
 
 export type userAuth = User | null;
 
-export type ApiResponse<T> = Record<'records', T>;
+export type ApiResponse<T> = {
+  records: T;
+  results: number;
+}

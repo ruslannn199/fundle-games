@@ -2,7 +2,6 @@
 import { Menu, ConfigProvider, Spin } from 'antd';
 import AdminNavItems from '../../components/AdminNavItems';
 import Wrapper from '../../components/Wrapper';
-import AddNewProduct from '../../components/AddNewProduct';
 import ProductsTable from '../../components/ProductsTable';
 // Hooks
 import { useUserActions, useTypedSelector, useProductsActions } from '../../hooks';
@@ -41,7 +40,6 @@ const Admin: React.FC = () => {
         />
       </ConfigProvider>
       <div className="admin__dashboard">
-        <AddNewProduct />
         <Spin indicator={Spinner} spinning={isLoading}>
           <ProductsTable products={products} />
         </Spin>

@@ -1,18 +1,20 @@
 // Components
 import Product from './Product';
 import { ConfigProvider, Row, Select, Spin } from 'antd';
+import Spinner from '../Spinner';
+import LoadMoreButton from '../LoadMore';
+import Wrapper from '../Wrapper';
 // Hooks
 import { useEffect, useState } from 'react';
 import { useProductsActions, useTypedSelector } from '../../hooks';
 // Themes
-import { orangeTheme } from '../../utils/themes';
+import { blackTheme, orangeTheme } from '../../utils/themes';
 // Types
 import type { ProductData } from '../../types/interfaces';
 import type { DefaultOptionType, SelectProps } from 'antd/es/select';
 import type { FilterFunc, SelectHandler } from 'rc-select/lib/Select';
 // Utils
 import { getCategories } from '../../utils';
-import Spinner from '../Spinner';
 
 const ProductResults = () => {
   const defaultOptionName = 'Show all';
@@ -27,6 +29,7 @@ const ProductResults = () => {
   const { products } = useTypedSelector((state) => (state.productsData));
   const { isLoading } = useTypedSelector((state) => (state.loader));
   const [selectedOption, setSelectedOption] = useState<string>('');
+  const [currentPage, setCurrentPage] = useState<number>(1);
   
   useEffect(() => {
     fetchProductsStart();
@@ -47,6 +50,14 @@ const ProductResults = () => {
   }, []);
 
   if (!Array.isArray(products.data)) return null;
+
+  const handleLoadingMore = () => {
+    fetchProductsStart({
+      persistProducts: products.data,
+      currentPage: currentPage + 1,
+    })
+    setCurrentPage(currentPage + 1);
+  }
 
   const handleFilter: SelectHandler<string> = (value) => {
     setSelectedOption(value === defaultOptionName ? '' : value);
@@ -82,24 +93,27 @@ const ProductResults = () => {
           onSelect={handleFilter}
         />
       </ConfigProvider>
-      {
-        <Row gutter={[0, 32]} align="middle">
-          {
-            products
-              .data
-              .filter((product: ProductData) => (
-                !selectedOption || product.category.includes(selectedOption)
-              ))
-              .map(({ thumbnail, productName, price, id }: ProductData, position: number) => ((
-                <Product
-                  productConfig={{ thumbnail, productName, price }}
-                  position={position}
-                  key={id}
-                />
-              )))
-          }
-        </Row>
-      }
+      <Row gutter={[0, 32]} align="middle">
+        {
+          products
+            .data
+            .filter((product: ProductData) => (
+              !selectedOption || product.category.includes(selectedOption)
+            ))
+            .map(({ thumbnail, productName, price, id }: ProductData, position: number) => ((
+              <Product
+                productConfig={{ thumbnail, productName, price }}
+                position={position}
+                key={id}
+              />
+            )))
+        }
+      </Row>
+      <ConfigProvider theme={blackTheme}>
+        <Wrapper className="wrapper_flex">
+          {products.isLastPage ? null : <LoadMoreButton onLoadMore={handleLoadingMore} />}
+        </Wrapper>
+      </ConfigProvider>
     </Spin>
   );
 }

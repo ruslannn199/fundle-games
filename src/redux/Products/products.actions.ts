@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import type { ProductData, Products } from '../../types/interfaces';
+import { FetchProductParams, type ProductData, type Products } from '../../types/interfaces';
 
 export enum ActionType {
   ADD_NEW_PRODUCT_START = 'ADD_NEW_PRODUCT_START',
@@ -15,14 +15,19 @@ export interface AddProductStartAction {
 }
 
 export interface DeleteProductStartAction {
-  type: ActionType.DELETE_PRODUCT_START,
+  type: ActionType.DELETE_PRODUCT_START;
   payload: string;
+}
+
+export interface FetchProductStartAction {
+  type: ActionType.FETCH_PRODUCTS_START;
+  payload: FetchProductParams | undefined;
 }
 
 const ProductsActionCreators = {
   addProductStart: createAction<ProductData>(ActionType.ADD_NEW_PRODUCT_START),
   setMultipleProducts: createAction<Products>(ActionType.SET_MULTIPLE_PRODUCTS),
-  fetchProductsStart: createAction(ActionType.FETCH_PRODUCTS_START),
+  fetchProductsStart: createAction<FetchProductParams | undefined>(ActionType.FETCH_PRODUCTS_START),
   deleteProductStart: createAction<string>(ActionType.DELETE_PRODUCT_START),
 }
 

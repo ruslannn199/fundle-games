@@ -1,7 +1,7 @@
 import { takeLatest, put, all, call } from 'redux-saga/effects';
-import { AddProductStartAction, DeleteProductStartAction } from './products.actions';
+import { AddProductStartAction, DeleteProductStartAction, FetchProductStartAction } from './products.actions';
 import { auth } from '../../utils/firebase.utils';
-import type { ProductData } from '../../types/interfaces';
+import type { ProductData, Products } from '../../types/interfaces';
 import { handleAddProduct, handleDeleteProducts, handleFetchProducts } from '../../utils';
 import ProductsActionCreators from './products.actions';
 import LoadingActionCreators from '../Loading/loading.actions';
@@ -30,14 +30,11 @@ export function* addProduct({ payload }: AddProductStartAction) {
   }
 }
 
-export function* fetchProducts() {
+export function* fetchProducts({ payload }: FetchProductStartAction) {
   try {
     yield put(toggleLoadStart(true));
-    const productDataArr: ProductData[] = yield handleFetchProducts();
-    yield put(setMultipleProducts({
-      data: productDataArr,
-      isLastPage: false,
-    }));
+    const productData: Products = yield handleFetchProducts(payload);
+    yield put(setMultipleProducts(productData));
     yield put(toggleLoadStart(false));
   } catch (err) {
     if (err instanceof Error) console.error(err.message);

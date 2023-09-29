@@ -79,6 +79,7 @@ const ProductsTable: React.FC<Record<'products', Products>> = ({ products }) => 
       <Table
         columns={columns}
         dataSource={dataSource}
+        sticky
       />
     </ConfigProvider>
   );
