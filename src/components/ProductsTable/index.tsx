@@ -25,17 +25,29 @@ const ProductsTable: React.FC<Record<'products', Products>> = ({ products }) => 
       title: 'Name',
       key: 'name',
       dataIndex: 'name',
+      sorter: {
+        compare: (a, b) => (a.name.localeCompare(b.name)),
+        multiple: 3,
+      },
     },
     {
       title: 'Quantity',
       key: 'quantity',
       dataIndex: 'quantity',
+      sorter: {
+        compare: (a, b) => (a.quantity - b.quantity),
+        multiple: 3,
+      },
     },
     {
       title: 'Price',
       key: 'price',
       dataIndex: 'price',
-      render: (_: any, { price }: ProductTableColumns) => (<>{price}₽</>)
+      render: (_: any, { price }: ProductTableColumns) => (<>{price}₽</>),
+      sorter: {
+        compare: (a, b) => (a.price - b.price),
+        multiple: 3,
+      },
     },
     {
       title: 'Categories',

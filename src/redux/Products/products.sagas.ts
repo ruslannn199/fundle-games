@@ -25,7 +25,7 @@ export function* addProduct({ payload }: AddProductStartAction) {
 
       yield put(fetchProductsStart({
         currentPage: 1,
-        pageSize: 24,
+        pageSize: 50,
       }));
     }
   } catch (err) {
@@ -51,7 +51,7 @@ export function* deleteProduct({ payload }: DeleteProductStartAction) {
       yield handleDeleteProducts(payload);
       yield put(fetchProductsStart({
         currentPage: 1,
-        pageSize: 24,
+        pageSize: 50,
       }));
     }
   } catch (err) {

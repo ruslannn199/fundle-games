@@ -27,7 +27,7 @@ const Admin: React.FC = () => {
 
   useEffect(() => {
     fetchProductsStart({
-      pageSize: 24,
+      pageSize: 50,
       currentPage,
     });
   }, [fetchProductsStart]);
