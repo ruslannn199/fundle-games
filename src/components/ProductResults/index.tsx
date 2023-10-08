@@ -7,6 +7,7 @@ import Wrapper from '../Wrapper';
 // Hooks
 import { useEffect, useState } from 'react';
 import { useProductsActions, useTypedSelector } from '../../hooks';
+import { useSearchParams } from 'react-router-dom';
 // Themes
 import { blackTheme, orangeTheme } from '../../utils/themes';
 // Types
@@ -14,7 +15,7 @@ import type { ProductData } from '../../types/interfaces';
 import type { DefaultOptionType, SelectProps } from 'antd/es/select';
 import type { FilterFunc, SelectHandler } from 'rc-select/lib/Select';
 // Utils
-import { getCategories } from '../../utils';
+import { convertFromURLAddress, getCategories } from '../../utils';
 
 const ProductResults = () => {
   const defaultOptionName = 'Show all';
@@ -28,12 +29,29 @@ const ProductResults = () => {
   const [options, setOptions] = useState<SelectProps['options']>(initialOptions);
   const { products } = useTypedSelector((state) => (state.productsData));
   const { isLoading } = useTypedSelector((state) => (state.loader));
-  const [selectedOption, setSelectedOption] = useState<string>('');
   const [currentPage, setCurrentPage] = useState<number>(1);
-  
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [selectedOption, setSelectedOption] = useState<string>(convertFromURLAddress(searchParams.get('filter') || ''));
+
   useEffect(() => {
-    fetchProductsStart();
-  }, [fetchProductsStart]);
+    if (searchParams.size) {
+      const params = convertFromURLAddress(searchParams.get('filter') || '');
+      if (currentPage > 1) {
+        fetchProductsStart({
+          persistProducts: products.data,
+          currentPage,
+          filterType: params,
+        });
+      } else {
+        fetchProductsStart({
+          currentPage,
+          filterType: params,
+        });
+      }
+    } else {
+      fetchProductsStart();
+    }
+  }, [fetchProductsStart, currentPage, searchParams]);
 
   useEffect(() => {
     getCategories()
@@ -49,18 +67,23 @@ const ProductResults = () => {
       });
   }, []);
 
+  useEffect(() => {
+    setSearchParams(
+      selectedOption === defaultOptionName
+        ? ''
+        : { filter: selectedOption.toLowerCase().replaceAll(' ', '-') }
+    );
+  }, [selectedOption, setSearchParams]);
+
   if (!Array.isArray(products.data)) return null;
 
-  const handleLoadingMore = () => {
-    fetchProductsStart({
-      persistProducts: products.data,
-      currentPage: currentPage + 1,
-    })
+  const handleLoadingMore = (): void => {
     setCurrentPage(currentPage + 1);
   }
 
-  const handleFilter: SelectHandler<string> = (value) => {
+  const handleFilter: SelectHandler<string> = (value): void => {
     setSelectedOption(value === defaultOptionName ? '' : value);
+    setCurrentPage(1);
   }
 
   const filterOption: FilterFunc<DefaultOptionType> = (input: string, option?: DefaultOptionType) => (
@@ -73,7 +96,7 @@ const ProductResults = () => {
       return -1;
     if (optionB.label === defaultOptionName)
       return 1;
-    if (typeof optionA.label === "string" && typeof optionB.label === "string")
+    if (typeof optionA.label === 'string' && typeof optionB.label === 'string')
       return optionA.label.toLowerCase().localeCompare((optionB.label).toLowerCase());
     return -1;
   }
@@ -89,7 +112,7 @@ const ProductResults = () => {
           filterOption={filterOption}
           filterSort={filterSort}
           options={options}
-          defaultValue={defaultOptionName}
+          defaultValue={selectedOption || defaultOptionName}
           onSelect={handleFilter}
         />
       </ConfigProvider>
@@ -97,9 +120,6 @@ const ProductResults = () => {
         {
           products
             .data
-            .filter((product: ProductData) => (
-              !selectedOption || product.category.includes(selectedOption)
-            ))
             .map(({ thumbnail, productName, price, id }: ProductData, position: number) => ((
               <Product
                 productConfig={{ thumbnail, productName, price }}

@@ -60,6 +60,7 @@ export interface CategoryData {
 export interface ProductURLOptions {
   requestedPage: number;
   pageSize: number;
+  filter?: string;
 }
 
 export interface FetchProductParams {

@@ -14,6 +14,7 @@ import { blackTheme, orangeTheme } from '../../utils/themes';
 // Types
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import { NavigationItemsLabels } from '../../types/enums';
+import { SearchProps } from 'antd/es/input';
 
 const AppHeader: React.FC = () => {
   const { currentUser } = useTypedSelector((state) => (state.user));
@@ -23,8 +24,12 @@ const AppHeader: React.FC = () => {
 
   const { Search } = Input;
 
-  const handleSearch = () => {
-    navigate('/search');
+  const handleSearch: SearchProps['onSearch'] = (value) => {
+    if (value) {
+      navigate(`/search?query=${value}`);
+    } else {
+      navigate('/search');
+    }
   }
 
   const menuSignOutAction = ({ key }: MenuInfo): void => {

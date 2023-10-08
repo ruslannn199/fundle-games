@@ -12,9 +12,20 @@ const filterFetchProductByParams = (params?: FetchProductParams): string => {
     const { filterType, persistProducts, currentPage, pageSize } = params;
     if (persistProducts?.length) {
       if (filterType) {
-        return makeComplexProductFetchURL({ requestedPage: currentPage, pageSize: pageSize || 12 });
+        return makeComplexProductFetchURL({
+          requestedPage: currentPage,
+          pageSize: pageSize || 12,
+          filter: filterType,
+        });
       }
       return makeComplexProductFetchURL({ requestedPage: currentPage, pageSize: pageSize || 12 });
+    }
+    if (filterType) {
+      return makeComplexProductFetchURL({
+        requestedPage: currentPage,
+        pageSize: pageSize || 12,
+        filter: filterType,
+      });
     }
   }
   return makeComplexProductFetchURL({ requestedPage: 1, pageSize: params?.pageSize || 12 });

@@ -1,4 +1,4 @@
-import { configureStore, createAction, createReducer } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 import userReducer from './User/user.reducer';
@@ -15,7 +15,7 @@ export const store = configureStore({
     productsData: productsReducer,
     loader: loadingReducer,
   },
-  middleware: [thunk, sagaMiddleware, logger] as const,
+  middleware: [thunk, sagaMiddleware] as const,
 });
 
 sagaMiddleware.run(rootSaga);
