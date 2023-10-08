@@ -15,7 +15,7 @@ import type { ProductData } from '../../types/interfaces';
 import type { DefaultOptionType, SelectProps } from 'antd/es/select';
 import type { FilterFunc, SelectHandler } from 'rc-select/lib/Select';
 // Utils
-import { convertFromURLAddress, getCategories } from '../../utils';
+import { convertFromURLAddress, convertToURLAddress, getCategories } from '../../utils';
 
 const ProductResults = () => {
   const defaultOptionName = 'Show all';
@@ -31,25 +31,32 @@ const ProductResults = () => {
   const { isLoading } = useTypedSelector((state) => (state.loader));
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [selectedOption, setSelectedOption] = useState<string>(convertFromURLAddress(searchParams.get('filter') || ''));
+  const [selectedOption, setSelectedOption] = useState<string>(convertFromURLAddress(searchParams.get('category') || ''));
 
   useEffect(() => {
     if (searchParams.size) {
-      const params = convertFromURLAddress(searchParams.get('filter') || '');
+      const category = convertFromURLAddress(searchParams.get('category') || '');
+      const query = convertFromURLAddress(searchParams.get('query') || '');
       if (currentPage > 1) {
         fetchProductsStart({
           persistProducts: products.data,
           currentPage,
-          filterType: params,
+          filters: {
+            category,
+            query,
+          },
         });
       } else {
         fetchProductsStart({
           currentPage,
-          filterType: params,
+          filters: {
+            category,
+            query,
+          },
         });
       }
     } else {
-      fetchProductsStart();
+      fetchProductsStart({ currentPage });
     }
   }, [fetchProductsStart, currentPage, searchParams]);
 
@@ -68,12 +75,28 @@ const ProductResults = () => {
   }, []);
 
   useEffect(() => {
-    setSearchParams(
-      selectedOption === defaultOptionName
-        ? ''
-        : { filter: selectedOption.toLowerCase().replaceAll(' ', '-') }
-    );
-  }, [selectedOption, setSearchParams]);
+    setSearchParams((prev) => {
+      const query = prev.get('query');
+      if (selectedOption) {
+        if (query) {
+          setCurrentPage(1);
+          return {
+            ...prev,
+            query,
+            category: convertToURLAddress(selectedOption),
+          };
+        }
+        return {
+          category: convertToURLAddress(selectedOption),
+        };
+      }
+      if (query) {
+        setCurrentPage(1);
+        return { ...prev, query };
+      }
+      return '';
+    });
+  }, [selectedOption, setSearchParams, setCurrentPage]);
 
   if (!Array.isArray(products.data)) return null;
 

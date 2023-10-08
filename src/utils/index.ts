@@ -13,13 +13,17 @@ const makeFetchURL = (str: string): string => (
 );
 
 const makeComplexProductFetchURL = (
-    { requestedPage, pageSize, filter }: ProductURLOptions
+    { requestedPage, pageSize, filters }: ProductURLOptions
   ): string => (
   `${
     makeFetchURL('products?order=createdDate,desc')
   }${
-    filter
-      ? `&filter=category,cs,${filter}`
+    filters?.category
+      ? `&filter=category,cs,${filters.category}`
+      : ''
+  }${
+    filters?.query
+      ? `&filter1=productName,cs,${filters.query}&filter2=description,cs,${filters.query}`
       : ''
   }${
     requestedPage

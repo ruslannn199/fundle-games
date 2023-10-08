@@ -57,15 +57,20 @@ export interface CategoryData {
   type: ProductCategoriesTypes;
 }
 
+export interface Filters {
+  category?: string;
+  query?: string;
+}
+
 export interface ProductURLOptions {
   requestedPage: number;
   pageSize: number;
-  filter?: string;
+  filters?: Filters;
 }
 
 export interface FetchProductParams {
   currentPage: number;
   persistProducts?: ProductData[];
-  filterType?: string;
+  filters?: Filters;
   pageSize?: number;
 }

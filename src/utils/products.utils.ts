@@ -7,28 +7,28 @@ import type { AxiosResponse } from 'axios';
 // Utils
 import { makeComplexProductFetchURL, makeFetchURL } from '.';
 
-const filterFetchProductByParams = (params?: FetchProductParams): string => {
+const filterFetchProductByParams = (params: FetchProductParams): string => {
   if (params) {
-    const { filterType, persistProducts, currentPage, pageSize } = params;
+    const { filters, persistProducts, currentPage, pageSize } = params;
     if (persistProducts?.length) {
-      if (filterType) {
+      if (filters) {
         return makeComplexProductFetchURL({
           requestedPage: currentPage,
           pageSize: pageSize || 12,
-          filter: filterType,
+          filters,
         });
       }
       return makeComplexProductFetchURL({ requestedPage: currentPage, pageSize: pageSize || 12 });
     }
-    if (filterType) {
+    if (filters) {
       return makeComplexProductFetchURL({
         requestedPage: currentPage,
         pageSize: pageSize || 12,
-        filter: filterType,
+        filters,
       });
     }
   }
-  return makeComplexProductFetchURL({ requestedPage: 1, pageSize: params?.pageSize || 12 });
+  return makeComplexProductFetchURL({ requestedPage: 1, pageSize: params.pageSize || 12 });
 }
 
 export const handleAddProduct = async (product: ProductData) => {
@@ -42,7 +42,7 @@ export const handleAddProduct = async (product: ProductData) => {
   }
 }
 
-export const handleFetchProducts = async (params?: FetchProductParams): Promise<Products | undefined> => {
+export const handleFetchProducts = async (params: FetchProductParams): Promise<Products | undefined> => {
   try {
     const url: string = filterFetchProductByParams(params);
     const { data: { records, results } }: AxiosResponse<ApiResponse<ProductData[]>> = await axios.get(url);

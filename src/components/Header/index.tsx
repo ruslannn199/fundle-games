@@ -14,7 +14,9 @@ import { blackTheme, orangeTheme } from '../../utils/themes';
 // Types
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import { NavigationItemsLabels } from '../../types/enums';
-import { SearchProps } from 'antd/es/input';
+import type { SearchProps } from 'antd/es/input';
+// Utils
+import { convertToURLAddress } from '../../utils';
 
 const AppHeader: React.FC = () => {
   const { currentUser } = useTypedSelector((state) => (state.user));
@@ -26,7 +28,7 @@ const AppHeader: React.FC = () => {
 
   const handleSearch: SearchProps['onSearch'] = (value) => {
     if (value) {
-      navigate(`/search?query=${value}`);
+      navigate(`/search?query=${convertToURLAddress(value)}`);
     } else {
       navigate('/search');
     }
