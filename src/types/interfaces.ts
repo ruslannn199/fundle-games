@@ -60,17 +60,16 @@ export interface CategoryData {
 export interface Filters {
   category?: string;
   query?: string;
+  currentPage: number;
 }
 
 export interface ProductURLOptions {
-  requestedPage: number;
   pageSize: number;
   filters?: Filters;
 }
 
 export interface FetchProductParams {
-  currentPage: number;
   persistProducts?: ProductData[];
-  filters?: Filters;
+  filters: Filters;
   pageSize?: number;
 }

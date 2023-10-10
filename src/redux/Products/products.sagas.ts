@@ -1,7 +1,7 @@
 import { takeLatest, put, all, call } from 'redux-saga/effects';
 import { AddProductStartAction, DeleteProductStartAction, FetchProductStartAction } from './products.actions';
 import { auth } from '../../utils/firebase.utils';
-import type { ProductData, Products } from '../../types/interfaces';
+import type { Products } from '../../types/interfaces';
 import { handleAddProduct, handleDeleteProducts, handleFetchProducts } from '../../utils';
 import ProductsActionCreators from './products.actions';
 import LoadingActionCreators from '../Loading/loading.actions';
@@ -24,7 +24,9 @@ export function* addProduct({ payload }: AddProductStartAction) {
       });
 
       yield put(fetchProductsStart({
-        currentPage: 1,
+        filters: {
+          currentPage: 1,
+        },
         pageSize: 50,
       }));
     }
@@ -50,7 +52,9 @@ export function* deleteProduct({ payload }: DeleteProductStartAction) {
       yield put(toggleLoadStart(true));
       yield handleDeleteProducts(payload);
       yield put(fetchProductsStart({
-        currentPage: 1,
+        filters: {
+          currentPage: 1,
+        },
         pageSize: 50,
       }));
     }

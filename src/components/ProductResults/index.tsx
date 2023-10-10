@@ -5,7 +5,7 @@ import Spinner from '../Spinner';
 import LoadMoreButton from '../LoadMore';
 import Wrapper from '../Wrapper';
 // Hooks
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useProductsActions, useTypedSelector } from '../../hooks';
 import { useSearchParams } from 'react-router-dom';
 // Themes
@@ -29,84 +29,83 @@ const ProductResults = () => {
   const [options, setOptions] = useState<SelectProps['options']>(initialOptions);
   const { products } = useTypedSelector((state) => (state.productsData));
   const { isLoading } = useTypedSelector((state) => (state.loader));
-  const [currentPage, setCurrentPage] = useState<number>(1);
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedOption, setSelectedOption] = useState<string>(convertFromURLAddress(searchParams.get('category') || ''));
+
+  const updateCategory = (option: string) => {
+    setSearchParams((prev) => ({
+      ...prev,
+      ...(option ? {category: convertToURLAddress(selectedOption)} : {}),
+    }));
+  }
+
+  const setFirstPage = () => {
+    setSearchParams({ page: '1' });
+  };
+
+  const resetPage = () => {
+    setSearchParams((prev) => ({ ...prev, page: '1' }));
+  }
+
+  const increasePage = () => {
+    const currentPage = parseInt(convertFromURLAddress(searchParams.get('page') || ''), 10);
+    setSearchParams((prev) => ({ ...prev, page: `${currentPage + 1}`}));
+  }
 
   useEffect(() => {
     if (searchParams.size) {
       const category = convertFromURLAddress(searchParams.get('category') || '');
       const query = convertFromURLAddress(searchParams.get('query') || '');
-      if (currentPage > 1) {
-        fetchProductsStart({
-          persistProducts: products.data,
+      const currentPage = parseInt(convertFromURLAddress(searchParams.get('page') || '1'), 10);
+      const persistProducts = currentPage > 1 ? products.data : [];
+      fetchProductsStart({
+        persistProducts,
+        filters: {
           currentPage,
-          filters: {
-            category,
-            query,
-          },
-        });
-      } else {
-        fetchProductsStart({
-          currentPage,
-          filters: {
-            category,
-            query,
-          },
-        });
-      }
-    } else {
-      fetchProductsStart({ currentPage });
+          category,
+          query,
+        }
+      });
     }
-  }, [fetchProductsStart, currentPage, searchParams]);
+  }, [fetchProductsStart, searchParams]);
 
   useEffect(() => {
     getCategories()
       .then((categories) => {
         if (categories) {
-          setOptions(
-            initialOptions.concat(
-              categories
-                .map(({ category }) => ({ label: category, value: category }))
-            )
-          );
+          setOptions([
+            ...initialOptions,
+            ...categories.map(({ category }) => ({ label: category, value: category })),
+          ]);
         }
       });
   }, []);
 
   useEffect(() => {
-    setSearchParams((prev) => {
-      const query = prev.get('query');
-      if (selectedOption) {
-        if (query) {
-          setCurrentPage(1);
-          return {
-            ...prev,
-            query,
-            category: convertToURLAddress(selectedOption),
-          };
-        }
-        return {
-          category: convertToURLAddress(selectedOption),
-        };
-      }
-      if (query) {
-        setCurrentPage(1);
-        return { ...prev, query };
-      }
-      return '';
-    });
-  }, [selectedOption, setSearchParams, setCurrentPage]);
+    if (searchParams.size === 0) setFirstPage();
+  });
+
+  useCallback(() => {
+    updateCategory(selectedOption);
+    // setSearchParams((prev) => {
+    //   const query = prev.get('query');
+    //   for (const [i, j] of prev.entries()) {
+    //     console.log(`${i}: ${j}`);
+    //   }
+    //   return {
+    //     ...prev,
+    //     ...(selectedOption ? {category: convertToURLAddress(selectedOption)} : {}),
+        // page: prev.get('page') || '1',
+        // ...(query ? {query} : {}),
+    //   };
+    // });
+  }, [updateCategory, selectedOption]);
 
   if (!Array.isArray(products.data)) return null;
 
-  const handleLoadingMore = (): void => {
-    setCurrentPage(currentPage + 1);
-  }
-
   const handleFilter: SelectHandler<string> = (value): void => {
     setSelectedOption(value === defaultOptionName ? '' : value);
-    setCurrentPage(1);
+    resetPage();
   }
 
   const filterOption: FilterFunc<DefaultOptionType> = (input: string, option?: DefaultOptionType) => (
@@ -154,7 +153,7 @@ const ProductResults = () => {
       </Row>
       <ConfigProvider theme={blackTheme}>
         <Wrapper className="wrapper_flex">
-          {products.isLastPage ? null : <LoadMoreButton onLoadMore={handleLoadingMore} />}
+          {products.isLastPage ? null : <LoadMoreButton onLoadMore={() => { increasePage(); }} />}
         </Wrapper>
       </ConfigProvider>
     </Spin>

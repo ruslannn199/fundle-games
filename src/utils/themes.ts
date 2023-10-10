@@ -20,11 +20,13 @@ export const beigeTheme: ThemeConfig = {
 export const orangeTheme: ThemeConfig = {
   token: {
     colorPrimary: orange,
+    colorLinkHover: black,
   }
 }
 
 export const blackTheme: ThemeConfig = {
   token: {
     colorPrimary: black,
+    colorLinkHover: orange,
   }
 }

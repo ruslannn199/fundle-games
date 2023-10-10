@@ -28,9 +28,9 @@ const AppHeader: React.FC = () => {
 
   const handleSearch: SearchProps['onSearch'] = (value) => {
     if (value) {
-      navigate(`/search?query=${convertToURLAddress(value)}`);
+      navigate(`/search?query=${convertToURLAddress(value)}&page=1`);
     } else {
-      navigate('/search');
+      navigate('/search?page=1');
     }
   }
 
