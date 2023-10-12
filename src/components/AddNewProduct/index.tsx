@@ -1,5 +1,7 @@
 // Components
 import { Button, ConfigProvider, Modal, Form, Input, Select } from 'antd';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 // Hooks
 import { useEffect, useState } from 'react';
 import { useProductsActions } from '../../hooks';
@@ -20,8 +22,6 @@ const AddNewProduct: React.FC = () => {
   const { useForm } = Form;
   const [form] = useForm();
 
-  const { TextArea } = Input;
-
   useEffect(() => {
     getCategories()
       .then((categories) => {
@@ -37,6 +37,7 @@ const AddNewProduct: React.FC = () => {
     setOpen(false);
   }
 
+  // TODO set up CKEditor
   const handleSubmit = ({
     productCategory,
     productName,
@@ -45,6 +46,7 @@ const AddNewProduct: React.FC = () => {
     productDescription,
   }: ProductFormData): void => {
     hideModal();
+    console.log(productDescription.data);
     addProductStart({
       category: productCategory,
       productName: productName,
@@ -153,12 +155,8 @@ const AddNewProduct: React.FC = () => {
             name={ProductFormFields.DESCRIPTION}
             rules={[{ required: true }]}
           >
-            <TextArea
-              placeholder="Enter description"
-              style={{ width: 300 }}
-              showCount
-              maxLength={1024}
-              autoSize={{ minRows: 2, maxRows: 6 }}
+            <CKEditor
+              editor={ ClassicEditor }
             />
           </Form.Item>
 

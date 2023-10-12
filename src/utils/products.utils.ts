@@ -52,6 +52,12 @@ export const handleFetchProducts = async (params: FetchProductParams): Promise<P
   }
 }
 
+export const handleFetchProduct = async (productId: string): Promise<ProductData | undefined> => {
+  const url: string = makeFetchURL(`products/${productId}`);
+  const { data }: AxiosResponse<ProductData> = await axios.get(url);
+  return data;
+}
+
 export const handleDeleteProducts = async (documentId: string): Promise<void> => {
   try {
     await axios.delete(makeFetchURL(`products/${documentId}`));

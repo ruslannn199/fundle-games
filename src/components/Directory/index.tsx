@@ -17,7 +17,7 @@ const Directory: React.FC = () => {
         <div className="directory__item" style={{backgroundImage: `url(${NewGamesImg})`}}>
           <h2 className="directory__title">Новинки</h2>
           <ConfigProvider theme={blackTheme}>
-            <Link to="search/?category=new-products" className="directory__link" onClick={() => setFakeLoadingStart()}>
+            <Link to="search/?category=new-products&page=1" className="directory__link" onClick={() => setFakeLoadingStart()}>
               <Button type="primary" className="btn directory__btn" size="large">
                 Перейти
               </Button>
@@ -28,7 +28,7 @@ const Directory: React.FC = () => {
           <h2 className="directory__title">Популярные</h2>
           <ConfigProvider theme={blackTheme}>
             <Button type="default" className="btn directory__btn" size="large">
-              <Link to="search/?category=popular" className="directory__link" onClick={() => setFakeLoadingStart()}>
+              <Link to="search/?category=popular&page=1" className="directory__link" onClick={() => setFakeLoadingStart()}>
                 Перейти
               </Link>
             </Button>

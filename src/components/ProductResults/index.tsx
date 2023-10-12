@@ -88,7 +88,7 @@ const ProductResults = () => {
   }
 
   return (
-    <Spin spinning={isLoading} indicator={Spinner}>
+    <Spin spinning={isLoading} indicator={Spinner} className="spinner">
       <h1>{!products.data.length ? "No search results" : "Browse products"}</h1>
       <ConfigProvider theme={orangeTheme}>
         <Select
@@ -108,7 +108,7 @@ const ProductResults = () => {
             .data
             .map(({ thumbnail, productName, price, id }: ProductData, position: number) => ((
               <Product
-                productConfig={{ thumbnail, productName, price }}
+                productConfig={{ thumbnail, productName, price, id }}
                 position={position}
                 key={id}
               />

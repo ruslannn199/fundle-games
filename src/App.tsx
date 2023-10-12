@@ -1,5 +1,13 @@
-// Routes
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+// Components
+import { Layout } from 'antd';
+import Header from './components/Header';
+import AdminToolbar from './components/AdminToolbar';
+// Hooks
+import { useEffect } from 'react';
+import { useUserActions } from './hooks';
+// Hoc
+import WithAuth from './hoc/withAuth';
+import WithAdminAuth from './hoc/withAdminAuth';
 // Pages
 import Homepage from './pages/Homepage';
 import Registration from './pages/Registration';
@@ -8,16 +16,9 @@ import Recovery from './pages/Recovery';
 import Dashboard from './pages/Dashboard';
 import Admin from './pages/Admin';
 import Search from './pages/Search';
-// Hooks
-import { useEffect } from 'react';
-import { useUserActions } from './hooks';
-// Hoc
-import WithAuth from './hoc/withAuth';
-import WithAdminAuth from './hoc/withAdminAuth';
-// Components
-import { Layout } from 'antd';
-import Header from './components/Header';
-import AdminToolbar from './components/AdminToolbar';
+import ProductDetails from './pages/ProductDetails';
+// Routes
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // Types
 import { NavigationItemsLabels } from './types/enums';
 
@@ -39,7 +40,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/search" element={<Search />} />
-          <Route path="/search:filterType" element={<Search />} />
+          <Route path="/products/:productId" element={<ProductDetails />} />
           <Route
             path={`/${NavigationItemsLabels.REGISTRATION}`}
             element={<Registration />}

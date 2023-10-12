@@ -2,7 +2,7 @@ import { PayloadAction, createReducer } from '@reduxjs/toolkit';
 import { ProductData, Products } from '../../types/interfaces'
 import ProductsActionCreators from './products.actions';
 
-const { addProductStart, setMultipleProducts } = ProductsActionCreators;
+const { addProductStart, setProduct, setMultipleProducts } = ProductsActionCreators;
 
 export interface ProductsState {
   products: Products;
@@ -22,6 +22,10 @@ const productsReducer = createReducer(initialState, (builder) => {
     .addCase(
       addProductStart,
       (state, { payload }: PayloadAction<ProductData>) => ({ ...state, product: payload }),
+    )
+    .addCase(
+      setProduct,
+      (state, { payload }: PayloadAction<ProductData | null>) => ({ ...state, product: payload }),
     )
     .addCase(
       setMultipleProducts,

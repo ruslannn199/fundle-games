@@ -1,14 +1,15 @@
 import { takeLatest, put, all, call } from 'redux-saga/effects';
-import { AddProductStartAction, DeleteProductStartAction, FetchProductStartAction } from './products.actions';
+import { AddProductStartAction, DeleteProductStartAction, FetchProductStartAction, FetchProductsStartAction } from './products.actions';
 import { auth } from '../../utils/firebase.utils';
-import type { Products } from '../../types/interfaces';
+import type { ProductData, Products } from '../../types/interfaces';
 import { handleAddProduct, handleDeleteProducts, handleFetchProducts } from '../../utils';
 import ProductsActionCreators from './products.actions';
 import LoadingActionCreators from '../Loading/loading.actions';
 import { ActionType } from './products.actions';
 import { convertToMySQLDateTime } from '../../utils';
+import { handleFetchProduct } from '../../utils/products.utils';
 
-const { fetchProductsStart, setMultipleProducts } = ProductsActionCreators;
+const { fetchProductsStart, setProduct, setMultipleProducts } = ProductsActionCreators;
 const { toggleLoadStart } = LoadingActionCreators;
 
 export function* addProduct({ payload }: AddProductStartAction) {
@@ -35,7 +36,7 @@ export function* addProduct({ payload }: AddProductStartAction) {
   }
 }
 
-export function* fetchProducts({ payload }: FetchProductStartAction) {
+export function* fetchProducts({ payload }: FetchProductsStartAction) {
   try {
     yield put(toggleLoadStart(true));
     const productData: Products = yield handleFetchProducts(payload);
@@ -43,6 +44,15 @@ export function* fetchProducts({ payload }: FetchProductStartAction) {
     yield put(toggleLoadStart(false));
   } catch (err) {
     if (err instanceof Error) console.error(err.message);
+  }
+}
+
+export function* fetchProduct({ payload }: FetchProductStartAction) {
+  try {
+    const product: ProductData = yield handleFetchProduct(payload);
+    yield put(setProduct(product));
+  } catch (err) {
+    console.error(err);
   }
 }
 
@@ -71,6 +81,10 @@ export function* onFetchProductsStart() {
   yield takeLatest(ActionType.FETCH_PRODUCTS_START, fetchProducts);
 }
 
+export function* onFetchProductStart() {
+  yield takeLatest(ActionType.FETCH_PRODUCT_START, fetchProduct);
+}
+
 export function* onDeleteProductStart() {
   yield takeLatest(ActionType.DELETE_PRODUCT_START, deleteProduct);
 }
@@ -80,6 +94,7 @@ export default function* productsSagas() {
   yield all([
     call(onAddProductStart),
     call(onFetchProductsStart),
+    call(onFetchProductStart),
     call(onDeleteProductStart),
   ]);
 }

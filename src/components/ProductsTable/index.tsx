@@ -77,15 +77,18 @@ const ProductsTable: React.FC<Record<'products', Products>> = ({ products }) => 
     },
   ];
 
-  const dataSource = products.data.map((
-    { productName, quantity, price, category, thumbnail, id }, index) => ({
-      key: id || `${index}`,
-      name: productName,
-      quantity,
-      price,
-      category,
-      thumbnail,
-  }));
+  const dataSource =
+    products
+      .data
+      .map(({ productName, quantity, price, category, thumbnail, id }, index) => ({
+        key: id || `${index}`,
+        name: productName,
+        quantity,
+        price,
+        category,
+        thumbnail,
+      }
+  ));
 
   return (
     <ConfigProvider theme={blackTheme}>
