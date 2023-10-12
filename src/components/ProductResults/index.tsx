@@ -5,7 +5,7 @@ import Spinner from '../Spinner';
 import LoadMoreButton from '../LoadMore';
 import Wrapper from '../Wrapper';
 // Hooks
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useProductsActions, useTypedSelector } from '../../hooks';
 import { useSearchParams } from 'react-router-dom';
 // Themes
@@ -15,97 +15,61 @@ import type { ProductData } from '../../types/interfaces';
 import type { DefaultOptionType, SelectProps } from 'antd/es/select';
 import type { FilterFunc, SelectHandler } from 'rc-select/lib/Select';
 // Utils
-import { convertFromURLAddress, convertToURLAddress, getCategories } from '../../utils';
+import { convertFromURLAddress, convertToURLAddress } from '../../utils';
+import { useCategoriesActions } from '../../hooks/useActions';
 
 const ProductResults = () => {
   const defaultOptionName = 'Show all';
 
-  const initialOptions: SelectProps['options'] = [{
-    label: defaultOptionName,
-    value: defaultOptionName,
-  }];
-
   const { fetchProductsStart } = useProductsActions();
-  const [options, setOptions] = useState<SelectProps['options']>(initialOptions);
+  const { fetchCategoriesStart } = useCategoriesActions();
+  const { categories, category } = useTypedSelector((state) => (state.category));
   const { products } = useTypedSelector((state) => (state.productsData));
   const { isLoading } = useTypedSelector((state) => (state.loader));
   const [searchParams, setSearchParams] = useSearchParams();
-  const [selectedOption, setSelectedOption] = useState<string>(convertFromURLAddress(searchParams.get('category') || ''));
 
-  const updateCategory = (option: string) => {
-    setSearchParams((prev) => ({
-      ...prev,
-      ...(option ? {category: convertToURLAddress(selectedOption)} : {}),
+  const options: SelectProps['options'] = useMemo(() => (
+    categories.map(({ category }) => ({ label: category, value: category }))
+  ), [categories]);
+
+  const filters = useMemo(() => ({
+    currentPage: parseInt(convertFromURLAddress(searchParams.get('page') || '1'), 10),
+    category: convertFromURLAddress(searchParams.get('category') || ''),
+    query: convertFromURLAddress(searchParams.get('query') || ''),
+  }), [searchParams]);
+
+  const increasePage = () => {
+    const query = searchParams.get('query');
+    const currentPage = parseInt(convertFromURLAddress(searchParams.get('page') || ''), 10);
+    const category = searchParams.get('category');
+    setSearchParams(() => ({
+      ...(category ? { category } : {}),
+      ...(query ? { query } : {}),
+      page: `${currentPage + 1}`,
     }));
   }
 
-  const setFirstPage = () => {
-    setSearchParams({ page: '1' });
-  };
-
-  const resetPage = () => {
-    setSearchParams((prev) => ({ ...prev, page: '1' }));
-  }
-
-  const increasePage = () => {
-    const currentPage = parseInt(convertFromURLAddress(searchParams.get('page') || ''), 10);
-    setSearchParams((prev) => ({ ...prev, page: `${currentPage + 1}`}));
-  }
+  useEffect(() => {
+    const persistProducts = filters.currentPage > 1 ? products.data : [];
+    fetchProductsStart({
+      persistProducts,
+      filters,
+    });
+  }, [fetchProductsStart, filters]);
 
   useEffect(() => {
-    if (searchParams.size) {
-      const category = convertFromURLAddress(searchParams.get('category') || '');
-      const query = convertFromURLAddress(searchParams.get('query') || '');
-      const currentPage = parseInt(convertFromURLAddress(searchParams.get('page') || '1'), 10);
-      const persistProducts = currentPage > 1 ? products.data : [];
-      fetchProductsStart({
-        persistProducts,
-        filters: {
-          currentPage,
-          category,
-          query,
-        }
-      });
-    }
-  }, [fetchProductsStart, searchParams]);
-
-  useEffect(() => {
-    getCategories()
-      .then((categories) => {
-        if (categories) {
-          setOptions([
-            ...initialOptions,
-            ...categories.map(({ category }) => ({ label: category, value: category })),
-          ]);
-        }
-      });
-  }, []);
-
-  useEffect(() => {
-    if (searchParams.size === 0) setFirstPage();
-  });
-
-  useCallback(() => {
-    updateCategory(selectedOption);
-    // setSearchParams((prev) => {
-    //   const query = prev.get('query');
-    //   for (const [i, j] of prev.entries()) {
-    //     console.log(`${i}: ${j}`);
-    //   }
-    //   return {
-    //     ...prev,
-    //     ...(selectedOption ? {category: convertToURLAddress(selectedOption)} : {}),
-        // page: prev.get('page') || '1',
-        // ...(query ? {query} : {}),
-    //   };
-    // });
-  }, [updateCategory, selectedOption]);
+    fetchCategoriesStart();
+  }, [fetchCategoriesStart]);
 
   if (!Array.isArray(products.data)) return null;
 
   const handleFilter: SelectHandler<string> = (value): void => {
-    setSelectedOption(value === defaultOptionName ? '' : value);
-    resetPage();
+    const query = searchParams.get('query');
+    setSearchParams(() => ({
+      ...(query ? { query } : {}),
+      ...(value !== defaultOptionName ? { category: convertToURLAddress(value) } : {}),
+      page: '1',
+    }));
   }
 
   const filterOption: FilterFunc<DefaultOptionType> = (input: string, option?: DefaultOptionType) => (
@@ -134,7 +98,7 @@ const ProductResults = () => {
           filterOption={filterOption}
           filterSort={filterSort}
           options={options}
-          defaultValue={selectedOption || defaultOptionName}
+          defaultValue={category}
           onSelect={handleFilter}
         />
       </ConfigProvider>

@@ -6,6 +6,7 @@ import productsReducer from './Products/products.reducer';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './saga';
 import loadingReducer from './Loading/loading.reducer';
+import categoriesReducer from './Categories/categories.reducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -14,6 +15,7 @@ export const store = configureStore({
     user: userReducer,
     productsData: productsReducer,
     loader: loadingReducer,
+    category: categoriesReducer,
   },
   middleware: [thunk, sagaMiddleware] as const,
 });

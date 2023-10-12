@@ -1,6 +1,6 @@
 // Hooks
 import { useTypedSelector, useUserActions } from '../../hooks';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useSearchParams, useNavigate } from 'react-router-dom';
 // Components
 import { Link } from 'react-router-dom';
 import { Header } from 'antd/es/layout/layout';
@@ -23,14 +23,20 @@ const AppHeader: React.FC = () => {
   const { emailSignOutStart } = useUserActions();
   const location = useLocation();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { Search } = Input;
 
   const handleSearch: SearchProps['onSearch'] = (value) => {
-    if (value) {
-      navigate(`/search?query=${convertToURLAddress(value)}&page=1`);
+    const category = searchParams.get('category');
+    if (location.pathname.includes('search')) {
+      setSearchParams(() => ({
+        ...(value ? { query: convertToURLAddress(value) } : {}),
+        ...(category ? { category } : {}),
+        page: '1',
+      }))
     } else {
-      navigate('/search?page=1');
+      navigate(`/search?page=1${value ? `&query=${convertToURLAddress(value)}` : ''}`);
     }
   }
 

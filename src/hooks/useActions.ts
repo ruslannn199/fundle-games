@@ -1,7 +1,12 @@
 import { useDispatch } from 'react-redux'
 import { useMemo } from 'react';
 import { bindActionCreators } from 'redux';
-import { UserActionCreators, ProductsActionCreators, LoadingActionCreators } from '../redux';
+import {
+  UserActionCreators,
+  ProductsActionCreators,
+  LoadingActionCreators,
+  CategoriesActionsCreators
+} from '../redux';
 
 export const useUserActions = () => {
   const dispatch = useDispatch();
@@ -21,5 +26,12 @@ export const useLoadingActions = () => {
   const dispatch = useDispatch();
   return useMemo(() => {
     return bindActionCreators(LoadingActionCreators, dispatch)
+  }, [dispatch]);
+}
+
+export const useCategoriesActions = () => {
+  const dispatch = useDispatch();
+  return useMemo(() => {
+    return bindActionCreators(CategoriesActionsCreators, dispatch)
   }, [dispatch]);
 }

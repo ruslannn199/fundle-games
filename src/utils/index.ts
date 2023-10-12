@@ -2,6 +2,7 @@
 import type { CurrentUser, ProductURLOptions } from '../types/interfaces';
 // Utils
 import { handleFetchProducts, handleAddProduct, handleDeleteProducts, getCategories } from './products.utils';
+import { handleFetchCategories } from './categories.utils';
 
 const checkUserIsAdmin = (currentUser: CurrentUser | null): boolean => {
   return !!(currentUser && Array.isArray(currentUser.userRoles)
@@ -60,6 +61,7 @@ export {
   makeFetchURL,
   makeComplexProductFetchURL,
   handleFetchProducts,
+  handleFetchCategories,
   handleDeleteProducts,
   handleAddProduct,
   getCategories,
