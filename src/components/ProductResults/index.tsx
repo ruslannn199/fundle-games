@@ -38,17 +38,6 @@ const ProductResults = () => {
     query: convertFromURLAddress(searchParams.get('query') || ''),
   }), [searchParams]);
 
-  const increasePage = () => {
-    const query = searchParams.get('query');
-    const currentPage = parseInt(convertFromURLAddress(searchParams.get('page') || ''), 10);
-    const category = searchParams.get('category');
-    setSearchParams(() => ({
-      ...(category ? { category } : {}),
-      ...(query ? { query } : {}),
-      page: `${currentPage + 1}`,
-    }));
-  }
-
   useEffect(() => {
     const persistProducts = filters.currentPage > 1 ? products.data : [];
     fetchProductsStart({
@@ -63,13 +52,24 @@ const ProductResults = () => {
 
   if (!Array.isArray(products.data)) return null;
 
+  const increasePage = () => {
+    const currentPage = parseInt(convertFromURLAddress(searchParams.get('page') || ''), 10);
+    setSearchParams((searchMap) => {
+      searchMap.set('page', `${currentPage + 1}`);
+      return searchMap;
+    });
+  }
+
   const handleFilter: SelectHandler<string> = (value): void => {
-    const query = searchParams.get('query');
-    setSearchParams(() => ({
-      ...(query ? { query } : {}),
-      ...(value !== defaultOptionName ? { category: convertToURLAddress(value) } : {}),
-      page: '1',
-    }));
+    setSearchParams((searchMap) => {
+      if (value !== defaultOptionName) {
+        searchMap.set('category', convertToURLAddress(value));
+      } else {
+        searchMap.delete('category');
+      }
+      searchMap.set('page', '1');
+      return searchMap;
+    });
   }
 
   const filterOption: FilterFunc<DefaultOptionType> = (input: string, option?: DefaultOptionType) => (

@@ -28,13 +28,16 @@ const AppHeader: React.FC = () => {
   const { Search } = Input;
 
   const handleSearch: SearchProps['onSearch'] = (value) => {
-    const category = searchParams.get('category');
     if (location.pathname.includes('search')) {
-      setSearchParams(() => ({
-        ...(value ? { query: convertToURLAddress(value) } : {}),
-        ...(category ? { category } : {}),
-        page: '1',
-      }))
+      setSearchParams((searchMap) => {
+        if (value) {
+          searchMap.set('query', convertToURLAddress(value));
+        } else {
+          searchMap.delete('query');
+        }
+        searchMap.set('page', '1');
+        return searchMap;
+      });
     } else {
       navigate(`/search?page=1${value ? `&query=${convertToURLAddress(value)}` : ''}`);
     }
