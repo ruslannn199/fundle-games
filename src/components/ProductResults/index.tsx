@@ -117,7 +117,7 @@ const ProductResults = () => {
       </Row>
       <ConfigProvider theme={blackTheme}>
         <Wrapper className="wrapper_flex">
-          {products.isLastPage ? null : <LoadMoreButton onLoadMore={() => { increasePage(); }} />}
+          {products.isLastPage ? null : <LoadMoreButton onLoadMore={ () => increasePage() } />}
         </Wrapper>
       </ConfigProvider>
     </Spin>

@@ -8,6 +8,12 @@ export const checkCartItemExistence = ({
   ))
 );
 
+export const countAmountOfCartItems = (cartItems: ProductData[]): number => (
+  cartItems.reduce((quantity, items) => (
+    quantity + items.quantity
+  ), 0)
+);
+
 export const handleAddToCart = ({
   prevCartItems, nextCartItem
 }: ProductDataToCompare): ProductData[] => {
@@ -15,7 +21,7 @@ export const handleAddToCart = ({
   const cartItemExists = checkCartItemExistence({
     nextCartItem,
     prevCartItems,
-  })
+  });
 
   if (cartItemExists) {
     return prevCartItems.map((cartItem) => (
@@ -34,8 +40,17 @@ export const handleAddToCart = ({
   ];
 };
 
-export const handleAmountOfCartItems = (cartItems: ProductData[]): number => (
-  cartItems.reduce((quantity, items) => (
-    quantity + items.quantity
-  ), 0)
+export const handleRemoveCartItem = (prevCartItems: ProductData[], id: string) => (
+  prevCartItems.filter((cartItem: ProductData) => (cartItem.id !== id))
+);
+
+export const handleReduceCartItem = (prevCartItems: ProductData[], id: string) => (
+  prevCartItems.map((cartItem: ProductData) => (
+    cartItem.id === id
+      ? {
+        ...cartItem,
+        quantity: cartItem.quantity - 1,
+      }
+      : cartItem
+  ))
 );

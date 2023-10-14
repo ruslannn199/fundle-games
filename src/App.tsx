@@ -17,6 +17,7 @@ import Dashboard from './pages/Dashboard';
 import Admin from './pages/Admin';
 import Search from './pages/Search';
 import ProductDetails from './pages/ProductDetails';
+import Cart from './pages/Cart';
 // Routes
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // Types
@@ -41,6 +42,7 @@ const App: React.FC = () => {
           <Route path="/" element={<Homepage />} />
           <Route path="/search" element={<Search />} />
           <Route path="/products/:productId" element={<ProductDetails />} />
+          <Route path="/cart" element={ <Cart /> } />
           <Route
             path={`/${NavigationItemsLabels.REGISTRATION}`}
             element={<Registration />}

@@ -8,7 +8,7 @@ import { blackTheme } from '../../utils/themes';
 import type { Products } from '../../types/interfaces';
 import type { ColumnsType } from 'antd/es/table';
 
-export interface ProductTableColumns {
+interface ProductTableColumns {
   key: string;
   name: string;
   quantity: number;
@@ -72,7 +72,7 @@ const ProductsTable: React.FC<Record<'products', Products>> = ({ products }) => 
       key: 'actions',
       dataIndex: 'actions',
       render: (_: any, { key }: ProductTableColumns) => (
-        <Button type="link" onClick={() => { deleteProductStart(key); }}>Delete</Button>
+        <Button type="link" onClick={() => deleteProductStart(key)}>Delete</Button>
       ),
     },
   ];

@@ -20,6 +20,7 @@ export const beigeTheme: ThemeConfig = {
 export const orangeTheme: ThemeConfig = {
   token: {
     colorPrimary: orange,
+    colorLink: orange,
     colorLinkHover: black,
   }
 }
@@ -27,6 +28,7 @@ export const orangeTheme: ThemeConfig = {
 export const blackTheme: ThemeConfig = {
   token: {
     colorPrimary: black,
+    colorLink: black,
     colorLinkHover: orange,
   }
 }

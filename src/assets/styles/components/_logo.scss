@@ -9,6 +9,18 @@
     font-family: 'Satisfy', 'Style Script', sans-serif;
     font-size: 2.6rem;
     color: var(--black-brown);
+
+    @include mixins.media("max", "md") {
+      font-size: 1.8rem;
+    }
+
+    @include mixins.media("max", "sm") {
+      font-size: 1.4rem;
+    }
+
+    @include mixins.media("max", "xs") {
+      font-size: 1rem;
+    }
   }
 
   &__img {

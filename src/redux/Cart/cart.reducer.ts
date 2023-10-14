@@ -1,9 +1,9 @@
 import { PayloadAction, createReducer } from '@reduxjs/toolkit';
 import { ProductData } from '../../types/interfaces';
 import CartActionCreators from './cart.actions';
-import { handleAddToCart, handleAmountOfCartItems } from './cart.utils';
+import { handleAddToCart, countAmountOfCartItems, handleReduceCartItem, handleRemoveCartItem } from './cart.utils';
 
-const { addToCart } = CartActionCreators;
+const { addToCart, removeCartItem, reduceCartItem, clearCartItems } = CartActionCreators;
 
 interface CartState {
   cartItems: ProductData[];
@@ -16,6 +16,7 @@ const initialState: CartState = {
 }
 
 const cartReducer = createReducer(initialState, (builder) => {
+  const quantityIncrement = 1;
   builder
     .addCase(
       addToCart,
@@ -27,9 +28,35 @@ const cartReducer = createReducer(initialState, (builder) => {
         return {
           ...state,
           cartItems: newCartItems,
-          cartItemsAmount: handleAmountOfCartItems(newCartItems),
+          cartItemsAmount: state.cartItemsAmount + quantityIncrement,
         };
       },
+    )
+    .addCase(
+      removeCartItem,
+      (state, { payload }: PayloadAction<string>) => {
+        const newCartItems = handleRemoveCartItem(state.cartItems, payload);
+        return {
+          ...state,
+          cartItems: newCartItems,
+          cartItemsAmount: countAmountOfCartItems(newCartItems),
+        };
+      },
+    )
+    .addCase(
+      reduceCartItem,
+      (state, { payload }: PayloadAction<string>) => {
+        const newCartItems = handleReduceCartItem(state.cartItems, payload);
+        return {
+          ...state,
+          cartItems: newCartItems,
+          cartItemsAmount: state.cartItemsAmount - quantityIncrement,
+        }
+      }
+    )
+    .addCase(
+      clearCartItems,
+      (state) => ({ ...state, ...initialState })
     )
 });
 

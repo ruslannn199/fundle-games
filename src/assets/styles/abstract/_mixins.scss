@@ -41,14 +41,14 @@ $origin: null, $position: null, $repeat: null, $size: null) {
   }
 }
 
-@mixin media-laptop {
-  @media (max-width: var(--laptop-width)) { @content; }
-}
+$sizes: ("xs": 320px, "sm": 576px, "md": 768px, "lg": 992px, "xl": 1200px);
 
-@mixin media-tablet {
-  @media (max-width: var(--tablet-width)) { @content; }
-}
-
-@mixin media-mobile {
-  @media (max-width: var(--mobile-big-width)) { @content; }
+@mixin media($minmax, $media) {
+  @each $size, $resolution in $sizes {
+    @if $media == $size {
+      @media only screen and (#{$minmax}-width: $resolution) {
+        @content;
+      }
+    }
+  }
 }

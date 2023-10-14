@@ -10,7 +10,6 @@ import { orange } from '../../utils/themes';
 import { CurrentUser } from '../../types/interfaces';
 // Types
 import { NavigationItemsLabels } from '../../types/enums';
-import { Space, Button, FloatButton, Flex } from 'antd';
 import type { MenuProps } from 'antd';
 
 const LoggedInNavItems = ({ displayName, photoURL }: CurrentUser, cartItemsAmount: number): MenuProps['items'] => ([
@@ -45,7 +44,14 @@ const LoggedInNavItems = ({ displayName, photoURL }: CurrentUser, cartItemsAmoun
   },
   {
     label: (
-      <div className="nav__profile" style={{ position: "relative" }}>
+      <Link
+        to="/cart"
+        className="nav__profile"
+        style={{
+          position: "relative",
+          color: "#000",
+        }}
+      >
         <ShoppingCartOutlined style={{ fontSize: 42, height: '64px' }} />
         <div style={{
           backgroundImage: `url(${EllipseBackground})`,
@@ -56,10 +62,11 @@ const LoggedInNavItems = ({ displayName, photoURL }: CurrentUser, cartItemsAmoun
           position: "absolute",
           right: "-5px",
           top: "10px",
+          fontWeight: "bold",
         }}>
           {cartItemsAmount}
         </div>
-      </div>
+      </Link>
     ),
     key: NavigationItemsLabels.CART,
     children: cartItemsAmount ? CartItems : [],
