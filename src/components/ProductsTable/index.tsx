@@ -1,5 +1,5 @@
 // Components
-import { ConfigProvider, Image, Table, Tag } from 'antd';
+import { Button, ConfigProvider, Image, Table, Tag } from 'antd';
 // Hooks
 import { useProductsActions } from '../../hooks';
 // Themes
@@ -72,7 +72,7 @@ const ProductsTable: React.FC<Record<'products', Products>> = ({ products }) => 
       key: 'actions',
       dataIndex: 'actions',
       render: (_: any, { key }: ProductTableColumns) => (
-        <a onClick={() => { deleteProductStart(key); }}>Delete</a>
+        <Button type="link" onClick={() => { deleteProductStart(key); }}>Delete</Button>
       ),
     },
   ];

@@ -1,7 +1,7 @@
 // Axios
 import axios from 'axios';
 // Types
-import type { CategoryData, FetchProductParams, ProductData, Products } from '../types/interfaces';
+import type { FetchProductParams, ProductData, Products } from '../types/interfaces';
 import type { ApiResponse } from '../types/types';
 import type { AxiosResponse } from 'axios';
 // Utils
@@ -61,15 +61,6 @@ export const handleFetchProduct = async (productId: string): Promise<ProductData
 export const handleDeleteProducts = async (documentId: string): Promise<void> => {
   try {
     await axios.delete(makeFetchURL(`products/${documentId}`));
-  } catch (err) {
-    console.error(err);
-  }
-}
-
-export const getCategories = async () => {
-  try {
-    const { data: { records } }: AxiosResponse<ApiResponse<CategoryData[]>> = await axios.get(makeFetchURL('category'));
-    return records;
   } catch (err) {
     console.error(err);
   }

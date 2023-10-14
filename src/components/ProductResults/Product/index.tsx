@@ -1,11 +1,8 @@
 // Components
-import { Button, Card, Col, ConfigProvider, Image } from 'antd';
-// Themes
-import { blackTheme } from '../../../utils/themes';
+import { Card, Col, Image } from 'antd';
 // Types
 import type { ProductData } from '../../../types/interfaces';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
 import AddToCart from '../../AddToCart';
 
 type ProductElementPropsFromData = Record<'productConfig', Pick<ProductData, 'thumbnail' | 'price' | 'productName' | 'id'>>;
@@ -16,7 +13,6 @@ interface ProductElementProps extends ProductElementPropsFromData {
 
 const Product: React.FC<ProductElementProps> = ({ productConfig: { thumbnail, price, productName, id } }) => {
   const { Meta } = Card;
-  const [isHover, setHover] = useState<boolean>(false);
 
   return (!(thumbnail || productName || typeof price !== 'undefined'))
     ? null
@@ -26,13 +22,11 @@ const Product: React.FC<ProductElementProps> = ({ productConfig: { thumbnail, pr
         style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Card
           hoverable
-          style={{ width: 240, ...(isHover ? { position: 'absolute', zIndex: '10', top: 'calc(-500px / 3)', } : {}) }}
+          style={{ width: 240, position: "relative" }}
           cover={<Image alt={productName} src={thumbnail} />}
-          onMouseOver={() => (setHover(true))}
-          onMouseLeave={() => (setHover(false))}
-          actions={ isHover ? [ <AddToCart /> ] : [] }
+          actions={[ <AddToCart /> ]}
         >
-          <Link to={`/products/${id}`}>
+          <Link to={`/products/${id}`} style={{ height: "61.138px" }}>
             <Meta title={productName} description={`${price}₽`} />
           </Link>
         </Card>

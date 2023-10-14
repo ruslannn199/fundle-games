@@ -1,7 +1,7 @@
 import useAuth from './useAuth';
 import useAdminAuth from './useAdminAuth';
 import useTypedSelector from './useTypedSelector';
-import { useUserActions, useProductsActions } from './useActions';
+import { useUserActions, useProductsActions, useCategoriesActions, useLoadingActions } from './useActions';
 
 export {
   useAuth,
@@ -9,4 +9,6 @@ export {
   useTypedSelector,
   useUserActions,
   useProductsActions,
+  useCategoriesActions,
+  useLoadingActions,
 };

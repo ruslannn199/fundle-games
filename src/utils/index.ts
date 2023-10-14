@@ -1,7 +1,7 @@
 // Types
 import type { CurrentUser, ProductURLOptions } from '../types/interfaces';
 // Utils
-import { handleFetchProducts, handleAddProduct, handleDeleteProducts, getCategories } from './products.utils';
+import { handleFetchProducts, handleAddProduct, handleDeleteProducts } from './products.utils';
 import { handleFetchCategories } from './categories.utils';
 
 const checkUserIsAdmin = (currentUser: CurrentUser | null): boolean => {
@@ -64,7 +64,6 @@ export {
   handleFetchCategories,
   handleDeleteProducts,
   handleAddProduct,
-  getCategories,
   convertToMySQLDateTime,
   convertToURLAddress,
   convertFromURLAddress,

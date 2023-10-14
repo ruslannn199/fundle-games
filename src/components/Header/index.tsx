@@ -1,5 +1,5 @@
 // Hooks
-import { useTypedSelector, useUserActions } from '../../hooks';
+import { useCategoriesActions, useTypedSelector, useUserActions } from '../../hooks';
 import { useLocation, useSearchParams, useNavigate } from 'react-router-dom';
 // Components
 import { Link } from 'react-router-dom';
@@ -21,6 +21,7 @@ import { convertToURLAddress } from '../../utils';
 const AppHeader: React.FC = () => {
   const { currentUser } = useTypedSelector((state) => (state.user));
   const { emailSignOutStart } = useUserActions();
+  const { updateCategory } = useCategoriesActions();
   const location = useLocation();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -39,6 +40,7 @@ const AppHeader: React.FC = () => {
         return searchMap;
       });
     } else {
+      updateCategory('Show all');
       navigate(`/search?page=1${value ? `&query=${convertToURLAddress(value)}` : ''}`);
     }
   }

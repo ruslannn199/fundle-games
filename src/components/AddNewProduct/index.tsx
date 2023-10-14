@@ -3,33 +3,32 @@ import { Button, ConfigProvider, Modal, Form, Input, Select } from 'antd';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 // Hooks
-import { useEffect, useState } from 'react';
-import { useProductsActions } from '../../hooks';
+import { useEffect, useMemo, useState } from 'react';
+import { useProductsActions, useTypedSelector, useCategoriesActions } from '../../hooks';
 // Themes
 import { blackTheme, orangeTheme } from '../../utils/themes';
 // Types
 import { ProductFormFields } from '../../types/enums';
 import type { ProductFormData } from '../../types/interfaces';
 import type { SelectProps } from 'antd';
-// Utils
-import { getCategories } from '../../utils';
 
 
 const AddNewProduct: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
-  const [options, setOptions] = useState<SelectProps["options"]>([]);
   const [ckeditorText, setCkeditorText] = useState<string>('');
   const { addProductStart } = useProductsActions();
+  const { fetchCategoriesStart } = useCategoriesActions();
+  const { categories } = useTypedSelector((state) => (state.category));
   const { useForm } = Form;
   const [form] = useForm();
 
-  // TODO implement fetchCategory
+  const options: SelectProps['options'] = useMemo(() => (
+    categories.map(({ category }) => ({ label: category, value: category }))
+  ), [categories]);
+
   useEffect(() => {
-    getCategories()
-      .then((categories) => {
-        setOptions(categories?.map(({ category }) => ({ label: category, value: category })))
-      });
-  }, []);
+    fetchCategoriesStart();
+  }, [fetchCategoriesStart]);
 
   const showModal = () => {
     setOpen(true);
@@ -156,7 +155,7 @@ const AddNewProduct: React.FC = () => {
           >
             <CKEditor
               editor={ ClassicEditor }
-              onChange={(evt, editor) => {
+              onChange={(e, editor) => {
                 setCkeditorText(editor.getData());
               }}
             />

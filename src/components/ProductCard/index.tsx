@@ -17,7 +17,7 @@ const ProductCard: React.FC = () => {
     fetchProductStart(productId!);
 
     return () => { setProduct(null); }
-  }, [fetchProductStart]);
+  }, [fetchProductStart, setProduct, productId]);
 
   if (!product) return null;
   const {
