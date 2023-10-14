@@ -18,10 +18,12 @@ import { getCategories } from '../../utils';
 const AddNewProduct: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [options, setOptions] = useState<SelectProps["options"]>([]);
+  const [ckeditorText, setCkeditorText] = useState<string>('');
   const { addProductStart } = useProductsActions();
   const { useForm } = Form;
   const [form] = useForm();
 
+  // TODO implement fetchCategory
   useEffect(() => {
     getCategories()
       .then((categories) => {
@@ -37,22 +39,19 @@ const AddNewProduct: React.FC = () => {
     setOpen(false);
   }
 
-  // TODO set up CKEditor
   const handleSubmit = ({
     productCategory,
     productName,
     productPrice,
     productThumbnail,
-    productDescription,
   }: ProductFormData): void => {
     hideModal();
-    console.log(productDescription.data);
     addProductStart({
       category: productCategory,
       productName: productName,
       price: parseFloat(productPrice),
       thumbnail: productThumbnail,
-      description: productDescription,
+      description: ckeditorText,
       quantity: 1,
     });
 
@@ -157,6 +156,9 @@ const AddNewProduct: React.FC = () => {
           >
             <CKEditor
               editor={ ClassicEditor }
+              onChange={(evt, editor) => {
+                setCkeditorText(editor.getData());
+              }}
             />
           </Form.Item>
 

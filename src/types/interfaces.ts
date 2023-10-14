@@ -50,7 +50,6 @@ export interface ProductFormData {
   productName: string;
   productPrice: string;
   productThumbnail: string;
-  productDescription: any;
 }
 
 export interface CategoryData {

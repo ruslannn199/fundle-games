@@ -22,7 +22,7 @@
     "isolatedModules": true,
     "noImplicitAny": true,
     "noFallthroughCasesInSwitch": true,
-    "types": ["node"]
+    "types": ["node", "dompurify"]
   },
   "include": ["src"],
   "exclude": ["node_modules", "build", "tsconfig.json"]

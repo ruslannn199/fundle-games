@@ -1,9 +1,12 @@
+// Components
+import { Flex, Image } from 'antd';
+import AddToCart from '../AddToCart';
+// DOMSanitize
+import DOMPurify from 'isomorphic-dompurify';
 // Hooks
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useProductsActions, useTypedSelector } from '../../hooks';
-import { Flex, Image } from 'antd';
-import AddToCart from '../AddToCart';
 
 const ProductCard: React.FC = () => {
   const { productId } = useParams();
@@ -24,6 +27,8 @@ const ProductCard: React.FC = () => {
     description,
   } = product;
 
+  const cleanDescription = DOMPurify.sanitize(description);
+
   return (
     <Flex vertical align="center" style={{ padding: "10rem" }}>
       <Flex justify="space-between" gap={10}>
@@ -42,7 +47,10 @@ const ProductCard: React.FC = () => {
           <AddToCart />
         </Flex>
       </Flex>
-      <p>{description}</p>
+      <div
+        style={{ alignSelf: "flex-start" }}
+        dangerouslySetInnerHTML={{ __html: cleanDescription }}
+      />
     </Flex>
   );
 }
