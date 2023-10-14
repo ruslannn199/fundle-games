@@ -4,12 +4,13 @@ import { LogoutOutlined, EditTwoTone, ShoppingCartOutlined } from '@ant-design/i
 import CartItems from '../CartItems';
 // Images
 import LogoImg from '../../assets/images/logo.png';
+import EllipseBackground from '../../assets/images/ellipse.png';
 // Themes
 import { orange } from '../../utils/themes';
 import { CurrentUser } from '../../types/interfaces';
 // Types
 import { NavigationItemsLabels } from '../../types/enums';
-import { Space, Button, FloatButton } from 'antd';
+import { Space, Button, FloatButton, Flex } from 'antd';
 import type { MenuProps } from 'antd';
 
 const LoggedInNavItems = ({ displayName, photoURL }: CurrentUser, cartItemsAmount: number): MenuProps['items'] => ([
@@ -44,18 +45,24 @@ const LoggedInNavItems = ({ displayName, photoURL }: CurrentUser, cartItemsAmoun
   },
   {
     label: (
-      <Space style={{ display: 'flex', alignSelf: 'flex-end' }}>
-        <Button
-          style={{ height: '100%' }}
-          type="default"
-          icon={<ShoppingCartOutlined style={{ fontSize: 32, alignSelf: "flex-end" }} />}
-        >
+      <div className="nav__profile" style={{ position: "relative" }}>
+        <ShoppingCartOutlined style={{ fontSize: 42, height: '64px' }} />
+        <div style={{
+          backgroundImage: `url(${EllipseBackground})`,
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+          width: "24px",
+          textAlign: "center",
+          position: "absolute",
+          right: "-5px",
+          top: "10px",
+        }}>
           {cartItemsAmount}
-        </Button>
-      </Space>
+        </div>
+      </div>
     ),
     key: NavigationItemsLabels.CART,
-    children: CartItems,
+    children: cartItemsAmount ? CartItems : [],
   },
 ]);
 
