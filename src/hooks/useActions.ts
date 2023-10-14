@@ -5,7 +5,8 @@ import {
   UserActionCreators,
   ProductsActionCreators,
   LoadingActionCreators,
-  CategoriesActionsCreators
+  CategoriesActionsCreators,
+  CartActionCreators,
 } from '../redux';
 
 export const useUserActions = () => {
@@ -33,5 +34,12 @@ export const useCategoriesActions = () => {
   const dispatch = useDispatch();
   return useMemo(() => {
     return bindActionCreators(CategoriesActionsCreators, dispatch)
+  }, [dispatch]);
+}
+
+export const useCartActions = () => {
+  const dispatch = useDispatch();
+  return useMemo(() => {
+    return bindActionCreators(CartActionCreators, dispatch)
   }, [dispatch]);
 }

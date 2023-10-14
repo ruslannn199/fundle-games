@@ -1,18 +1,19 @@
 // Components
 import { Card, Col, Image } from 'antd';
-// Types
-import type { ProductData } from '../../../types/interfaces';
 import { Link } from 'react-router-dom';
 import AddToCart from '../../AddToCart';
+// Types
+import type { ProductData } from '../../../types/interfaces';
 
-type ProductElementPropsFromData = Record<'productConfig', Pick<ProductData, 'thumbnail' | 'price' | 'productName' | 'id'>>;
+type ProductElementPropsFromData = Record<'productConfig', ProductData>;
 
 interface ProductElementProps extends ProductElementPropsFromData {
   position: number;
 }
 
-const Product: React.FC<ProductElementProps> = ({ productConfig: { thumbnail, price, productName, id } }) => {
+const Product: React.FC<ProductElementProps> = ({ productConfig }) => {
   const { Meta } = Card;
+  const { thumbnail, price, productName, id } = productConfig;
 
   return (!(thumbnail || productName || typeof price !== 'undefined'))
     ? null
@@ -24,7 +25,7 @@ const Product: React.FC<ProductElementProps> = ({ productConfig: { thumbnail, pr
           hoverable
           style={{ width: 240, position: "relative" }}
           cover={<Image alt={productName} src={thumbnail} />}
-          actions={[ <AddToCart /> ]}
+          actions={[ <AddToCart product={productConfig} /> ]}
         >
           <Link to={`/products/${id}`} style={{ height: "61.138px" }}>
             <Meta title={productName} description={`${price}₽`} />

@@ -44,7 +44,7 @@ const ProductCard: React.FC = () => {
         <Flex vertical style={{ width: 240 }} align="flex-end">
           <h4>Цена:</h4>
           <h3>{price}₽</h3>
-          <AddToCart />
+          <AddToCart product={product} />
         </Flex>
       </Flex>
       <div

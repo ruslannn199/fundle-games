@@ -4,7 +4,7 @@ import ProductsActionCreators from './products.actions';
 
 const { addProductStart, setProduct, setMultipleProducts } = ProductsActionCreators;
 
-export interface ProductsState {
+interface ProductsState {
   products: Products;
   product: ProductData | null;
 }

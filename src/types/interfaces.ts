@@ -74,3 +74,8 @@ export interface FetchProductParams {
   filters: Filters;
   pageSize?: number;
 }
+
+export interface ProductDataToCompare {
+  prevCartItems: ProductData[];
+  nextCartItem: ProductData;
+}

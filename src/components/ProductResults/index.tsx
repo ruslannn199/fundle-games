@@ -106,11 +106,11 @@ const ProductResults = () => {
         {
           products
             .data
-            .map(({ thumbnail, productName, price, id }: ProductData, position: number) => ((
+            .map((product: ProductData, position: number) => ((
               <Product
-                productConfig={{ thumbnail, productName, price, id }}
+                productConfig={product}
                 position={position}
-                key={id}
+                key={product?.id}
               />
             )))
         }

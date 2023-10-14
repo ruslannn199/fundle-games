@@ -7,17 +7,19 @@ import createSagaMiddleware from 'redux-saga';
 import rootSaga from './saga';
 import loadingReducer from './Loading/loading.reducer';
 import categoriesReducer from './Categories/categories.reducer';
+import cartReducer from './Cart/cart.reducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
   reducer: {
-    user: userReducer,
-    productsData: productsReducer,
-    loader: loadingReducer,
+    cartData: cartReducer,
     category: categoriesReducer,
+    loader: loadingReducer,
+    productsData: productsReducer,
+    user: userReducer,
   },
-  middleware: [thunk, sagaMiddleware] as const,
+  middleware: [thunk, sagaMiddleware, logger] as const,
 });
 
 sagaMiddleware.run(rootSaga);

@@ -3,6 +3,7 @@ export enum NavigationItemsLabels {
   LOGIN = 'login',
   LOG_OUT = 'Log Out',
   DASHBOARD = 'dashboard',
+  CART = 'cart',
 }
 
 export enum AdminItemsLabels {

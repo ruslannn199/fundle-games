@@ -3,6 +3,7 @@ import type { CurrentUser, ProductURLOptions } from '../types/interfaces';
 // Utils
 import { handleFetchProducts, handleAddProduct, handleDeleteProducts } from './products.utils';
 import { handleFetchCategories } from './categories.utils';
+import { handleAddToCart } from '../redux/Cart/cart.utils';
 
 const checkUserIsAdmin = (currentUser: CurrentUser | null): boolean => {
   return !!(currentUser && Array.isArray(currentUser.userRoles)
@@ -64,6 +65,7 @@ export {
   handleFetchCategories,
   handleDeleteProducts,
   handleAddProduct,
+  handleAddToCart,
   convertToMySQLDateTime,
   convertToURLAddress,
   convertFromURLAddress,

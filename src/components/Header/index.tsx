@@ -20,6 +20,7 @@ import { convertToURLAddress } from '../../utils';
 
 const AppHeader: React.FC = () => {
   const { currentUser } = useTypedSelector((state) => (state.user));
+  const { cartItemsAmount } = useTypedSelector((state) => (state.cartData));
   const { emailSignOutStart } = useUserActions();
   const { updateCategory } = useCategoriesActions();
   const location = useLocation();
@@ -64,8 +65,9 @@ const AppHeader: React.FC = () => {
               disabledOverflow={true}
               mode="horizontal"
               className="nav"
+              selectable={false}
               items={currentUser
-                ? LoggedInNavItems(currentUser)
+                ? LoggedInNavItems(currentUser, cartItemsAmount)
                 : RegisterItems}
               onClick={menuSignOutAction}
             />
