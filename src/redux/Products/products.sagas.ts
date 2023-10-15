@@ -8,6 +8,7 @@ import LoadingActionCreators from '../Loading/loading.actions';
 import { ActionType } from './products.actions';
 import { convertToMySQLDateTime } from '../../utils';
 import { handleFetchProduct } from '../../utils/products.utils';
+import { redirect } from 'react-router-dom';
 
 const { fetchProductsStart, setProduct, setMultipleProducts } = ProductsActionCreators;
 const { toggleLoadStart } = LoadingActionCreators;
@@ -51,8 +52,8 @@ export function* fetchProduct({ payload }: FetchProductStartAction) {
   try {
     const product: ProductData = yield handleFetchProduct(payload);
     yield put(setProduct(product));
-  } catch (err) {
-    console.error(err);
+  } catch {
+    redirect('/404');
   }
 }
 

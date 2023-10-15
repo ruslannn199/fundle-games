@@ -7,6 +7,7 @@ const { addProductStart, setProduct, setMultipleProducts } = ProductsActionCreat
 interface ProductsState {
   products: Products;
   product: ProductData | null;
+  errors: Error[];
 }
 
 const initialState: ProductsState = {
@@ -15,6 +16,7 @@ const initialState: ProductsState = {
     isLastPage: false,
   },
   product: null,
+  errors: [],
 }
 
 const productsReducer = createReducer(initialState, (builder) => {
