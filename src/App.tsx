@@ -18,6 +18,9 @@ import Admin from './pages/Admin';
 import Search from './pages/Search';
 import ProductDetails from './pages/ProductDetails';
 import Cart from './pages/Cart';
+// Persistor
+import { persistor } from './redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
 // Routes
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // Types
@@ -33,51 +36,53 @@ const App: React.FC = () => {
   }, [checkUserSession]);
 
   return (
-  <Router>
-    <Layout style={{ minHeight: '100vh' }}>
-      <AdminToolbar />
-      <Header />
-      <Content>
-        <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/products/:productId" element={<ProductDetails />} />
-          <Route path="/cart" element={ <Cart /> } />
-          <Route
-            path={`/${NavigationItemsLabels.REGISTRATION}`}
-            element={<Registration />}
-          />
-          <Route
-            path={`/${NavigationItemsLabels.LOGIN}`}
-            element={<Login />}
-          />
-          <Route
-            path="/recovery"
-            element={<Recovery />}
-          />
-          <Route
-            path="/dashboard"
-            element={
-            <WithAuth>
-              <Dashboard />
-            </WithAuth>
-            }
-          />
-          <Route
-            path="/admin"
-            element={
-            <WithAdminAuth>
-              <Admin />
-            </WithAdminAuth>
-            }
-          />
-        </Routes>
-      </Content>
-      <Footer>
-        © Ruslan Kamenskiy 2023
-      </Footer>
-    </Layout>
-  </Router>
+    <PersistGate persistor={persistor}>
+      <Router>
+        <Layout style={{ minHeight: '100vh' }}>
+          <AdminToolbar />
+          <Header />
+          <Content>
+            <Routes>
+              <Route path="/" element={<Homepage />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/products/:productId" element={<ProductDetails />} />
+              <Route path="/cart" element={ <Cart /> } />
+              <Route
+                path={`/${NavigationItemsLabels.REGISTRATION}`}
+                element={<Registration />}
+              />
+              <Route
+                path={`/${NavigationItemsLabels.LOGIN}`}
+                element={<Login />}
+              />
+              <Route
+                path="/recovery"
+                element={<Recovery />}
+              />
+              <Route
+                path="/dashboard"
+                element={
+                <WithAuth>
+                  <Dashboard />
+                </WithAuth>
+                }
+              />
+              <Route
+                path="/admin"
+                element={
+                <WithAdminAuth>
+                  <Admin />
+                </WithAdminAuth>
+                }
+              />
+            </Routes>
+          </Content>
+          <Footer>
+            © Ruslan Kamenskiy 2023
+          </Footer>
+        </Layout>
+      </Router>
+    </PersistGate>
 )};
 
 export default App;

@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 import userReducer from './User/user.reducer';
@@ -8,24 +8,39 @@ import rootSaga from './saga';
 import loadingReducer from './Loading/loading.reducer';
 import categoriesReducer from './Categories/categories.reducer';
 import cartReducer from './Cart/cart.reducer';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 const sagaMiddleware = createSagaMiddleware();
 
+const configStorage = {
+  key: 'root',
+  storage,
+  whitelist: ['cartData'],
+}
+
+const rootReducer = combineReducers({
+  cartData: cartReducer,
+  category: categoriesReducer,
+  loader: loadingReducer,
+  productsData: productsReducer,
+  user: userReducer,
+});
+
 export const store = configureStore({
-  reducer: {
-    cartData: cartReducer,
-    category: categoriesReducer,
-    loader: loadingReducer,
-    productsData: productsReducer,
-    user: userReducer,
-  },
+  reducer: persistReducer(configStorage, rootReducer),
   middleware: [thunk, sagaMiddleware, logger] as const,
 });
 
 sagaMiddleware.run(rootSaga);
 
+export const persistor = persistStore(store);
+
 export type RootState = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
 
-export default store;
+export default {
+  store,
+  persistor,
+};
