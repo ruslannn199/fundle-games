@@ -4,6 +4,7 @@ import type { CurrentUser, ProductURLOptions } from '../types/interfaces';
 import { handleFetchProducts, handleAddProduct, handleDeleteProducts } from './products.utils';
 import { handleFetchCategories } from './categories.utils';
 import { handleAddToCart } from '../redux/Cart/cart.utils';
+import { SelectProps } from 'antd';
 
 const checkUserIsAdmin = (currentUser: CurrentUser | null): boolean => {
   return !!(currentUser && Array.isArray(currentUser.userRoles)
@@ -57,6 +58,16 @@ const convertFromURLAddress = (str: string): string => (
     .join('')
 );
 
+const countriesList = [
+  'Russia', 'Kazakhstan', 'Finland', 'Georgia', 'Romania',
+  'United States', 'United Kingdom', 'Germany', 'France',
+  'Italy', 'Spain', 'Poland', 'Belarus', 'Estonia', 'Latvia',
+  'Lithuania', 'Armenia', 'Azerbaijan', 'Moldavia', 'Austria',
+].sort();
+
+const countryOptions: Record<'label' | 'value', string>[] = countriesList
+  .map((country) => ({ label: country, value: country }));
+
 export {
   checkUserIsAdmin,
   makeFetchURL,
@@ -69,4 +80,5 @@ export {
   convertToMySQLDateTime,
   convertToURLAddress,
   convertFromURLAddress,
+  countryOptions,
 };

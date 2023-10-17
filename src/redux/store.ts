@@ -29,7 +29,7 @@ const rootReducer = combineReducers({
 
 export const store = configureStore({
   reducer: persistReducer(configStorage, rootReducer),
-  middleware: [thunk, sagaMiddleware, logger] as const,
+  middleware: [thunk, sagaMiddleware] as const,
 });
 
 sagaMiddleware.run(rootSaga);

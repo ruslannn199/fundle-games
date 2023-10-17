@@ -25,6 +25,21 @@ export type registrationFields = loginFields & {
   confirmPassword: string;
 }
 
+export type orderFields = {
+  billerCity: string;
+  billerLine1: string;
+  billerLine2: string;
+  billerName: string;
+  billerPostalCode: string;
+  billerState: string;
+  recipientCity: string;
+  recipientLine1: string;
+  recipientLine2: string;
+  recipientName: string;
+  recipientPostalCode: string;
+  recipientState: string;
+}
+
 export type docRefType = DocumentReference<DocumentData>;
 
 export type docSnapshotDataType = DocumentSnapshot<DocumentData>;

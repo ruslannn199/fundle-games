@@ -4,7 +4,8 @@ import {
   MailOutlined,
   LockOutlined,
   GoogleCircleFilled,
-  QuestionCircleFilled } from '@ant-design/icons';
+  QuestionCircleFilled
+} from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 // Hooks
 import { useNavigate } from 'react-router-dom';

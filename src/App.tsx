@@ -8,6 +8,7 @@ import { useUserActions } from './hooks';
 // Hoc
 import WithAuth from './hoc/withAuth';
 import WithAdminAuth from './hoc/withAdminAuth';
+import WithCartItems from './hoc/withCartItems';
 // Pages
 import Homepage from './pages/Homepage';
 import Registration from './pages/Registration';
@@ -18,6 +19,8 @@ import Admin from './pages/Admin';
 import Search from './pages/Search';
 import ProductDetails from './pages/ProductDetails';
 import Cart from './pages/Cart';
+import NotFound from './pages/NotFound';
+import Payment from './pages/Payment';
 // Persistor
 import { persistor } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -25,7 +28,6 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // Types
 import { NavigationItemsLabels } from './types/enums';
-import NotFound from './pages/NotFound';
 
 const { Content, Footer } = Layout;
 
@@ -39,7 +41,7 @@ const App: React.FC = () => {
   return (
     <PersistGate persistor={persistor}>
       <Router>
-        <Layout style={{ minHeight: '100vh' }}>
+        <Layout style={{ minHeight: "100vh" }}>
           <AdminToolbar />
           <Header />
           <Content>
@@ -50,7 +52,15 @@ const App: React.FC = () => {
                 path="/products/:productId"
                 element={<ProductDetails />}
               />
-              <Route path="/cart" element={ <Cart /> } />
+              <Route path="/cart" element={<Cart />} />
+              <Route
+                path="/payment"
+                element={
+                  <WithCartItems>
+                    <Payment />
+                  </WithCartItems>
+                }
+              />
               <Route
                 path={`/${NavigationItemsLabels.REGISTRATION}`}
                 element={<Registration />}
