@@ -67,7 +67,12 @@ const AppHeader: React.FC = () => {
               className="nav"
               selectable={false}
               items={currentUser
-                ? LoggedInNavItems(currentUser, cartItemsAmount)
+                ? LoggedInNavItems({
+                  displayName: currentUser.displayName,
+                  photoURL: currentUser.photoURL,
+                  cartItemsAmount,
+                  isCartPage: location.pathname.includes('cart'),
+                })
                 : RegisterItems}
               onClick={menuSignOutAction}
             />

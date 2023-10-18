@@ -14,7 +14,11 @@ interface CartTableColumns {
   thumbnail: string;
 }
 
-const Checkout: React.FC = () => {
+interface CheckoutProps extends React.HTMLAttributes<HTMLElement> {
+  popup?: boolean;
+}
+
+const Checkout: React.FC<CheckoutProps> = ({ popup }) => {
   const { cartItems } = useTypedSelector((state) => (state.cartData));
   const { product } = useTypedSelector((state) => (state.productsData));
   const { fetchProductStart, setProduct } = useProductsActions();
@@ -44,16 +48,16 @@ const Checkout: React.FC = () => {
         compare: (a, b) => (a.name.localeCompare(b.name)),
         multiple: 3,
       },
-      width: 150,
+      width: popup ? 50 : 150,
     },
     {
       title: 'Thumbnail',
       key: 'thumbnail',
       dataIndex: 'thumbnail',
       render: (_: any, { thumbnail }: CartTableColumns) => (
-        <Image src={thumbnail} width={200} />
+        <Image src={thumbnail} width={popup ? 63 : 200} />
       ),
-      width: 230,
+      width: popup ? 50 : 230,
       align: 'center',
     },
     {
@@ -68,14 +72,18 @@ const Checkout: React.FC = () => {
             onClick={() => handleDecrease(key, quantity)}
           />
           {quantity}
-          <Button icon={<PlusCircleOutlined />} onClick={() => fetchProductStart(key) } type="text" />
+          <Button
+            icon={<PlusCircleOutlined />}
+            onClick={() => fetchProductStart(key) }
+            type="text"
+          />
         </ConfigProvider>
       ),
       sorter: {
         compare: (a, b) => (a.quantity - b.quantity),
         multiple: 3,
       },
-      width: 105,
+      width: popup ? 35 : 105,
       align: 'center',
     },
     {
@@ -89,7 +97,7 @@ const Checkout: React.FC = () => {
         compare: (a, b) => (a.price * a.quantity - b.price * b.quantity),
         multiple: 3,
       },
-      width: 80,
+      width: popup ? 30 : 80,
       align: 'center',
     },
     {
@@ -105,7 +113,7 @@ const Checkout: React.FC = () => {
           />
         </ConfigProvider>
       ),
-      width: 80,
+      width: popup ? 30 : 80,
       align: 'center',
     },
   ];
@@ -127,8 +135,9 @@ const Checkout: React.FC = () => {
       >
         <Table
           style={{
-            maxWidth: "900px"
+            maxWidth: popup ? "60rem" : "90rem",
           }}
+          scroll={ popup ? { y: "35rem", scrollToFirstRowOnChange: true } : undefined}
           columns={columns}
           dataSource={dataSource}
           pagination={false}
@@ -147,7 +156,10 @@ const Checkout: React.FC = () => {
                   <Button
                     type="link"
                     onClick={() => clearCartItems()}
-                    style={{ fontWeight: "bold" }}
+                    style={{
+                      fontWeight: "bold",
+                      textAlign: "center",
+                    }}
                   >
                     Clear
                   </Button>

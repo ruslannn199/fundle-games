@@ -1,18 +1,27 @@
 // Components
 import { Link } from 'react-router-dom';
 import { LogoutOutlined, EditTwoTone, ShoppingCartOutlined } from '@ant-design/icons';
-import CartItems from '../CartItems';
+import { Popover } from 'antd';
+import Checkout from '../Checkout';
 // Images
 import LogoImg from '../../assets/images/logo.png';
-import EllipseBackground from '../../assets/images/ellipse.png';
 // Themes
 import { orange } from '../../utils/themes';
-import { CurrentUser } from '../../types/interfaces';
 // Types
 import { NavigationItemsLabels } from '../../types/enums';
 import type { MenuProps } from 'antd';
+import CartModal from '../CartModal';
 
-const LoggedInNavItems = ({ displayName, photoURL }: CurrentUser, cartItemsAmount: number): MenuProps['items'] => ([
+interface LoggedInNavItemsProps {
+  displayName: string;
+  photoURL: string | null;
+  cartItemsAmount: number;
+  isCartPage: boolean;
+}
+
+const LoggedInNavItems = ({
+  displayName, photoURL, cartItemsAmount, isCartPage
+}: LoggedInNavItemsProps): MenuProps['items'] => ([
   {
     label: (
       <h3 className="nav__profile">
@@ -44,32 +53,36 @@ const LoggedInNavItems = ({ displayName, photoURL }: CurrentUser, cartItemsAmoun
   },
   {
     label: (
-      <Link
-        to="/cart"
-        className="nav__profile"
-        style={{
-          position: "relative",
-          color: "#000",
-        }}
-      >
-        <ShoppingCartOutlined style={{ fontSize: 42, height: '64px' }} />
-        <div style={{
-          backgroundImage: `url(${EllipseBackground})`,
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-          width: "24px",
-          textAlign: "center",
-          position: "absolute",
-          right: "-5px",
-          top: "10px",
-          fontWeight: "bold",
-        }}>
-          {cartItemsAmount}
-        </div>
-      </Link>
+      !isCartPage
+        ? (
+          <Popover
+            placement="bottomRight"
+            title="Cart"
+            trigger="hover"
+            content={<Checkout popup />}
+            style={{ height: "64px" }}
+          >
+            <Link
+              to="/cart"
+              className="nav__profile"
+              style={{
+                position: "relative",
+                color: "#000",
+                height: "64px",
+              }}
+            >
+              <ShoppingCartOutlined style={{ fontSize: 42, height: "64px" }} />
+              { cartItemsAmount ? <CartModal itemsCounter={cartItemsAmount} /> : null }
+            </Link>
+          </Popover>
+        )
+        : (
+          <div style={{ height: "64px" }}>
+            <ShoppingCartOutlined style={{ fontSize: 42, height: "64px" }} />
+          </div>
+        )
     ),
     key: NavigationItemsLabels.CART,
-    children: cartItemsAmount ? CartItems : [],
   },
 ]);
 
