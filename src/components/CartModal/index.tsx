@@ -1,26 +1,27 @@
 // Images
 import EllipseBackground from '../../assets/images/ellipse.png';
+import { useTypedSelector } from '../../hooks';
 
-interface CartModalProps {
-  itemsCounter: number;
-}
+const CartModal: React.FC = () => {
+  const { cartItemsAmount } = useTypedSelector((state) => (state.cartData));
 
-const CartModal: React.FC<CartModalProps> = ({ itemsCounter }) => {
-  return (
-    <div style={{
-      backgroundImage: `url(${EllipseBackground})`,
-      backgroundRepeat: "no-repeat",
-      backgroundPosition: "center",
-      width: "24px",
-      textAlign: "center",
-      position: "absolute",
-      right: "-5px",
-      top: "10px",
-      fontWeight: "bold",
-    }}>
-      {itemsCounter}
-    </div>
-  );
+  return cartItemsAmount
+    ? (
+      <div style={{
+        backgroundImage: `url(${EllipseBackground})`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        width: "24px",
+        textAlign: "center",
+        position: "absolute",
+        right: "-5px",
+        top: "10px",
+        fontWeight: "bold",
+      }}>
+        {cartItemsAmount}
+      </div>
+    )
+    : null;
 }
 
 export default CartModal;

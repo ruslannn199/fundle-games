@@ -1,7 +1,5 @@
 import type { User } from 'firebase/auth';
 import type { ProductCategoriesTypes } from './enums';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 export interface CurrentUser {
   email: string;

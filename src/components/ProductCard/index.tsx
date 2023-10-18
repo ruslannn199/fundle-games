@@ -16,7 +16,7 @@ const ProductCard: React.FC = () => {
   useEffect(() => {
     fetchProductStart(productId!);
 
-    return () => { setProduct(null); }
+    return () => { setProduct(null) };
   }, [fetchProductStart, setProduct, productId]);
 
   if (!product) return null;

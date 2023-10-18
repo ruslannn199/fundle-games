@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import type { MenuProps } from 'antd';
 import { NavigationItemsLabels } from '../../types/enums';
 
-const RegisterItems: MenuProps['items'] = [
+const GuestMenuItems: MenuProps['items'] = [
   {
     label: (
       <Link to={`/${NavigationItemsLabels.REGISTRATION}`} className='nav__link'>
@@ -26,4 +26,4 @@ const RegisterItems: MenuProps['items'] = [
   },
 ];
 
-export default RegisterItems;
+export default GuestMenuItems;

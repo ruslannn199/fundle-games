@@ -5,15 +5,14 @@ import { useState } from 'react';
 import CountrySearch from '../CountrySearch';
 import { orderFields } from '../../types/types';
 import PayButton from '../PayButton';
-import { useForm } from 'antd/es/form/Form';
 
 const PaymentDetails: React.FC = () => {
   const [recipientCountry, setRecipientCountry] = useState<string>('Russia');
   const [billerCountry, setBillerCountry] = useState('Russia');
-  const [form] = useForm();
+  const [form] = Form.useForm<orderFields>();
 
-  const handleFormSubmit = (fields: orderFields) => {
-    console.log(fields);
+  const handleFormSubmit = (values: orderFields) => {
+    console.log(values);
   }
 
   const handleBillingCountryChange = (value: string) => {
@@ -27,23 +26,20 @@ const PaymentDetails: React.FC = () => {
   return (
     <ConfigProvider theme={orangeTheme}>
       <Form
-        name="Form"
         form={form}
         initialValues={{ remember: true }}
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 32 }}
         onFinish={handleFormSubmit}
         autoComplete="on"
+        name="Payment"
       >
-        <Form.Item className="form__title">
-          <h2>Your order</h2>
-        </Form.Item>
+        <h2 className="form__title">Your order</h2>
 
-        <Form.Item className="form__title">
-          <h3 style={{ margin: 0 }}>Shipping address</h3>
-        </Form.Item>
+        <h3 className="form__title">Shipping address</h3>
 
         <Form.Item
+          name="recipientName"
           rules={[{
             required: true,
             message: "Please, put recipient's name",
@@ -121,13 +117,11 @@ const PaymentDetails: React.FC = () => {
           />
         </Form.Item>
 
-        <Form.Item name="recipientCountry">
+        <Form.Item>
           <CountrySearch onChange={handleRecipientCountryChange} />
         </Form.Item>
 
-        <Form.Item className="form__title">
-          <h3 style={{ margin: 0 }}>Billing address</h3>
-        </Form.Item>
+        <h3 className="form__title">Billing address</h3>
 
         <Form.Item
           name="billerName"
@@ -208,11 +202,11 @@ const PaymentDetails: React.FC = () => {
           />
         </Form.Item>
 
-        <Form.Item name="billingCountry">
+        <Form.Item>
           <CountrySearch onChange={handleBillingCountryChange} />
         </Form.Item>
 
-        <Form.Item name="cardDetails">
+        <Form.Item>
           Card details
         </Form.Item>
 
