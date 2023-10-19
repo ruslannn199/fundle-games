@@ -38,6 +38,7 @@ const ProductResults = () => {
     query: convertFromURLAddress(searchParams.get('query') || ''),
   }), [searchParams]);
 
+  // TODO implement php-rest-api search
   useEffect(() => {
     const persistProducts = filters.currentPage > 1 ? products.data : [];
     fetchProductsStart({

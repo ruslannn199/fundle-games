@@ -8,6 +8,8 @@ export enum ActionType {
   EMAIL_SIGN_OUT_START = 'EMAIL_SIGN_OUT_START',
   GOOGLE_SIGN_IN_START = 'GOOGLE_SIGN_IN_START',
   PASSWORD_RECOVERY_START = 'PASSWORD_RECOVERY_START',
+  FETCH_CLIENT_START = 'FETCH_CLIENT_START',
+  SET_CLIENT = 'SET_CLIENT',
   // Success actions
   SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS',
   SIGN_OUT_SUCCESS = 'SIGN_OUT_SUCCESS',
@@ -43,6 +45,8 @@ const UserActionCreators = {
   emailSignUpStart: createAction<UserCredentials>(ActionType.EMAIL_SIGN_UP_START),
   recoverPasswordStart: createAction<string>(ActionType.PASSWORD_RECOVERY_START),
   googleSignInStart: createAction(ActionType.GOOGLE_SIGN_IN_START),
+  fetchClientStart: createAction(ActionType.FETCH_CLIENT_START),
+  setClient: createAction<string>(ActionType.SET_CLIENT),
   // Success action creators
   signInSuccess: createAction<CurrentUser | null>(ActionType.SIGN_IN_SUCCESS),
   signOutSuccess: createAction<null>(ActionType.SIGN_OUT_SUCCESS),

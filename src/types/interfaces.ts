@@ -77,3 +77,9 @@ export interface ProductDataToCompare {
   prevCartItems: ProductData[];
   nextCartItem: ProductData;
 }
+
+export interface StripeClientResponse {
+  status: number;
+  clientSecret: string;
+  message: string;
+}

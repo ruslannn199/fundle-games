@@ -4,12 +4,16 @@ import type { CurrentUser, ProductURLOptions } from '../types/interfaces';
 import { handleFetchProducts, handleAddProduct, handleDeleteProducts } from './products.utils';
 import { handleFetchCategories } from './categories.utils';
 import { handleAddToCart } from '../redux/Cart/cart.utils';
-import { SelectProps } from 'antd';
+import axios from 'axios';
 
 const checkUserIsAdmin = (currentUser: CurrentUser | null): boolean => {
   return !!(currentUser && Array.isArray(currentUser.userRoles)
     && currentUser.userRoles.includes('admin'));
 };
+
+const stripeApi = axios.create({
+  baseURL: process.env.REACT_APP_API_URL,
+});
 
 const makeFetchURL = (str: string): string => (
   `http://localhost/fundle-games/api/records/${str}`
@@ -69,6 +73,7 @@ const countryOptions: Record<'label' | 'value', string>[] = countriesList
   .map((country) => ({ label: country, value: country }));
 
 export {
+  stripeApi,
   checkUserIsAdmin,
   makeFetchURL,
   makeComplexProductFetchURL,

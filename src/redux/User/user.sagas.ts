@@ -7,8 +7,10 @@ import { getSnapshotFromUserAuth, handleResetPasswordAPI } from '../../utils/use
 import { userAuth } from '../../types/types';
 import UserActionsCreators from './user.actions';
 import LoadingActionCreators from '../Loading/loading.actions';
+import { handleFetchClient } from './user.utils';
+import { StripeClientResponse } from '../../types/interfaces';
 
-const { userError, signOutSuccess, recoverPasswordSuccess } = UserActionsCreators;
+const { userError, signOutSuccess, recoverPasswordSuccess, setClient } = UserActionsCreators;
 const { toggleLoadStart } = LoadingActionCreators;
 
 // Worker sagas
@@ -79,6 +81,17 @@ export function* googleSignIn() {
   }
 }
 
+export function* fetchClient() {
+  try {
+    yield put(toggleLoadStart(true));
+    const client: StripeClientResponse = yield handleFetchClient();
+    yield put(setClient(client.clientSecret));
+    yield put(toggleLoadStart(false));
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 // Start sagas
 export function* onCheckUserSession() {
   yield takeLatest(ActionType.CHECK_USER_SESSION, isUserAuthenticated);
@@ -104,6 +117,10 @@ export function* onGoogleSignInStart() {
   yield takeLatest(ActionType.GOOGLE_SIGN_IN_START, googleSignIn);
 }
 
+export function* onFetchClientStart() {
+  yield takeLatest(ActionType.FETCH_CLIENT_START, fetchClient);
+}
+
 // Global saga
 export default function* userSagas() {
   yield all([
@@ -113,5 +130,6 @@ export default function* userSagas() {
     call(onEmailSignUpStart),
     call(onRecoverPasswordStart),
     call(onGoogleSignInStart),
+    call(onFetchClientStart),
   ]);
 }

@@ -1,5 +1,11 @@
 import type { ProductData, ProductDataToCompare } from '../../types/interfaces';
 
+export const countTotal = (pageData: ProductData[]): number => (
+  pageData.reduce((counter, { price, quantity }) => (
+    counter + (price * quantity)
+  ), 0)
+);
+
 export const checkCartItemExistence = ({
   prevCartItems, nextCartItem
 }: ProductDataToCompare): ProductData | undefined => (

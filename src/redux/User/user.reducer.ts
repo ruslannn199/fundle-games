@@ -3,13 +3,14 @@ import { ActionType } from './user.actions';
 import { CurrentUser } from '../../types/interfaces';
 import UserActionsCreators from './user.actions';
 
-const { signInSuccess, userError, recoverPasswordSuccess } = UserActionsCreators;
+const { signInSuccess, userError, recoverPasswordSuccess, setClient } = UserActionsCreators;
 
 // State interface
 export interface UserState {
   currentUser: CurrentUser | null;
   userErrors: string[];
   recoverPasswordSuccess: boolean;
+  clientSecret: string | null;
 }
 
 // Initial state
@@ -17,6 +18,7 @@ const initialState: UserState = {
   currentUser: null,
   userErrors: [],
   recoverPasswordSuccess: false,
+  clientSecret: null,
 }
 
 const userReducer = createReducer(initialState, (builder) => {
@@ -36,6 +38,10 @@ const userReducer = createReducer(initialState, (builder) => {
     .addCase(
       recoverPasswordSuccess,
       (state, { payload }: PayloadAction<boolean>) => ({ ...state, recoverPasswordSuccess: payload }),
+    )
+    .addCase(
+      setClient,
+      (state, { payload }: PayloadAction<string>) => ({ ...state, clientSecret: payload }),
     )
     .addMatcher(
       (action) =>

@@ -19,7 +19,7 @@ interface CheckoutProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 const Checkout: React.FC<CheckoutProps> = ({ popup }) => {
-  const { cartItems } = useTypedSelector((state) => (state.cartData));
+  const { cartItems, total } = useTypedSelector((state) => (state.cartData));
   const { product } = useTypedSelector((state) => (state.productsData));
   const { fetchProductStart, setProduct } = useProductsActions();
   const { addToCart, removeCartItem, reduceCartItem, clearCartItems } = useCartActions();
@@ -143,10 +143,7 @@ const Checkout: React.FC<CheckoutProps> = ({ popup }) => {
           pagination={false}
           bordered
           sticky
-          summary={(pageData) => {
-            const total = pageData.reduce((acc, { price, quantity }) => (
-              acc + (price * quantity)
-            ), 0);
+          summary={() => {
             const { Summary: { Row, Cell } } = Table;
             return (
               <Row>

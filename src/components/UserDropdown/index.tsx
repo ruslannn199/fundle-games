@@ -9,7 +9,7 @@ const UserDropdown: React.FC = () => {
   return currentUser
     ? (
     <h3 className="nav__profile">
-      <img src={currentUser.photoURL || LogoImg} alt="profile avatar" className="nav__img" />
+      <img src={LogoImg} alt="profile avatar" className="nav__img" />
       {currentUser.displayName || "User"}
     </h3>
     )
