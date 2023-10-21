@@ -7,9 +7,9 @@
       "DOM",
       "DOM.Iterable",
     ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
+    "allowJs": false,
+    "skipLibCheck": false,
+    "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "paths": {
@@ -22,8 +22,9 @@
     "isolatedModules": true,
     "noImplicitAny": true,
     "noFallthroughCasesInSwitch": true,
-    "types": ["node", "dompurify"]
+    "types": ["node", "dompurify"],
+    "noEmit": true,
   },
-  "include": ["src"],
+  "include": ["src", "client.d.ts"],
   "exclude": ["node_modules", "build", "tsconfig.json"]
 }
