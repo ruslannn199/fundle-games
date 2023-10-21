@@ -12,7 +12,7 @@ const checkUserIsAdmin = (currentUser: CurrentUser | null): boolean => {
 };
 
 const stripeApi = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL: import.meta.env.VITE_APP_API_URL,
 });
 
 const makeFetchURL = (str: string): string => (

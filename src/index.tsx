@@ -1,5 +1,6 @@
 // Styles
 import './assets/styles/global.scss';
+import FontStyles from './fontStyles';
 // Components
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
