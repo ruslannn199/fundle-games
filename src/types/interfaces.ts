@@ -1,5 +1,6 @@
 import type { User } from 'firebase/auth';
 import type { ProductCategoriesTypes } from './enums';
+import { PaymentIntentConfirmParams, PaymentMethodCreateParams, Stripe, StripeCardElement } from '@stripe/stripe-js';
 
 export interface CurrentUser {
   email: string;
@@ -82,4 +83,28 @@ export interface StripeClientResponse {
   status: number;
   clientSecret: string;
   message: string;
+}
+
+interface RequiredPaymentMethodData {
+  card: StripeCardElement;
+  billing_details: PaymentMethodCreateParams.BillingDetails;
+}
+
+export interface RequiredConfirmCardPaymentData {
+  payment_method: RequiredPaymentMethodData;
+  return_url: string;
+  shipping: PaymentIntentConfirmParams.Shipping;
+}
+
+export interface FetchClientActionPayload {
+  cartData: ProductData[];
+  total: number;
+}
+
+export interface RetrievePaymentActionPayload extends FetchClientActionPayload {
+  stripe: Stripe | null;
+}
+
+export interface ConfirmCardPaymentActionPayload extends RetrievePaymentActionPayload {
+  cardPaymentData: RequiredConfirmCardPaymentData;
 }

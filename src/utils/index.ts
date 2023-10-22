@@ -62,15 +62,23 @@ const convertFromURLAddress = (str: string): string => (
     .join('')
 );
 
-const countriesList = [
-  'Russia', 'Kazakhstan', 'Finland', 'Georgia', 'Romania',
-  'United States', 'United Kingdom', 'Germany', 'France',
-  'Italy', 'Spain', 'Poland', 'Belarus', 'Estonia', 'Latvia',
-  'Lithuania', 'Armenia', 'Azerbaijan', 'Moldavia', 'Austria',
-].sort();
+const countriesList = new Map<string, string>();
+countriesList
+  .set('RU', 'Russia').set('FI', 'Finland').set('GE', 'Georgia').set('RO', 'Romania').set('US', 'United States')
+  .set('KZ', 'Kazakhstan').set('GB', 'United Kingdom').set('DE', 'Germany').set('FR', 'France').set('IT', 'Italy')
+  .set('ES', 'Spain').set('PL', 'Poland').set('BY', 'Belarus').set('EE', 'Estonia').set('LV', 'Latvia')
+  .set('LT', 'Lithuania').set('AM', 'Armenia').set('AZ', 'Azerbaijan').set('MD', 'Moldavia').set('AT', 'Austria');
 
-const countryOptions: Record<'label' | 'value', string>[] = countriesList
-  .map((country) => ({ label: country, value: country }));
+const countryOptions = (): Record<'label' | 'value', string>[] => {
+  const options = [];
+  for (const [abb, name] of countriesList) {
+    options.push({
+      label: name,
+      value: abb,
+    });
+  }
+  return options;
+}
 
 export {
   stripeApi,

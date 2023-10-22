@@ -1,7 +1,8 @@
-import { Form, Input, ConfigProvider, Flex } from 'antd';
+import { Form, Input, ConfigProvider, Flex, Spin } from 'antd';
 import {
   FlagOutlined,
-  HomeFilled, HomeOutlined,
+  HomeFilled,
+  HomeOutlined,
   InsertRowRightOutlined,
   MailOutlined,
   UserOutlined
@@ -14,42 +15,25 @@ import PayButton from '../PayButton';
 import { CardElement, useStripe } from '@stripe/react-stripe-js';
 import { StripeCardElementOptions } from '@stripe/stripe-js';
 import { useElements } from '@stripe/react-stripe-js';
-import { useTypedSelector } from '../../hooks';
+import { useStripeActions, useTypedSelector } from '../../hooks';
 import { FormTitle } from '../../styles/Form';
+import Spinner from '../Spinner';
 
 const PaymentDetails: React.FC = () => {
-  const { cartItemsAmount } = useTypedSelector((state) => (state.cartData));
-  const [message, setMessage] = useState<string | null>(null);
-  const { clientSecret } = useTypedSelector((state) => (state.user));
-  const [recipientCountry, setRecipientCountry] = useState<string>('Russia');
-  const [billerCountry, setBillerCountry] = useState('Russia');
+  const { isLoading } = useTypedSelector((state) => (state.loader));
+  const { cartItems, total } = useTypedSelector((state) => (state.cartData));
+  const { retrievePaymentStart, confirmCardPaymentStart } = useStripeActions();
+  const [recipientCountry, setRecipientCountry] = useState<string>('RU');
+  const [billerCountry, setBillerCountry] = useState<string>('RU');
   const [form] = Form.useForm<orderFields>();
   const elements = useElements();
   const stripe = useStripe();
 
   useEffect(() => {
-    if (!stripe || !clientSecret) {
-      return () => (setMessage('Something went wrong.'));
-    }
-    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-      switch (paymentIntent?.status) {
-        case 'succeeded':
-          setMessage('Payment succeeded!');
-          break;
-        case 'processing':
-          setMessage('Your payment is processing.');
-          break;
-        case 'requires_payment_method':
-          setMessage('Your payment was not successful, please try again.');
-          break;
-        default:
-          setMessage('Something went wrong.');
-          break;
-      }
-    });
+    retrievePaymentStart({ stripe, cartData: cartItems, total });
   }, [stripe]);
 
-  const handleFormSubmit = async (values: orderFields) => {
+  const handleFormSubmit = (values: orderFields) => {
     const {
       recipientName,
       recipientCity,
@@ -57,33 +41,49 @@ const PaymentDetails: React.FC = () => {
       recipientLine2,
       recipientPostalCode,
       recipientState,
-      billerName
+      billerName,
+      billerCity,
+      billerLine1,
+      billerLine2,
+      billerPostalCode,
+      billerState,
     } = values;
     const cardElement = elements?.getElement('card');
 
-    if (stripe && elements && clientSecret && cardElement) {
-      const result = await stripe.confirmCardPayment(clientSecret , {
-        payment_method: {
-          card: cardElement,
-          billing_details: {
-            name: billerName,
+    if (cardElement) {
+      confirmCardPaymentStart({
+        stripe,
+        cardPaymentData: {
+          payment_method: {
+            card: cardElement,
+            billing_details: {
+              name: billerName,
+              address: {
+                city: billerCity,
+                line1: billerLine1,
+                line2: billerLine2,
+                postal_code: billerPostalCode,
+                state: billerState,
+                country: billerCountry,
+              }
+            },
           },
-        },
-        return_url: 'http://localhost:3000/',
-        shipping: {
-          name: recipientName,
-          address: {
-            city: recipientCity,
-            line1: recipientLine1,
-            line2: recipientLine2,
-            postal_code: recipientPostalCode,
-            state: recipientState,
+          return_url: 'http://localhost:3000/',
+          shipping: {
+            name: recipientName,
+            address: {
+              city: recipientCity,
+              line1: recipientLine1,
+              line2: recipientLine2,
+              postal_code: recipientPostalCode,
+              state: recipientState,
+              country: recipientCountry,
+            }
           }
-        }
-      }, {
-        handleActions: false,
-      });
-      console.log(result);
+        },
+        cartData: cartItems,
+        total,
+      })
     }
   }
 
@@ -99,7 +99,7 @@ const PaymentDetails: React.FC = () => {
     iconStyle: 'solid',
     style: {
       base: {
-        fontSize: '1.6rem',
+        fontSize: '16px',
       },
     },
     hidePostalCode: true,
@@ -107,200 +107,202 @@ const PaymentDetails: React.FC = () => {
 
   return (
     <ConfigProvider theme={orangeTheme}>
-      <Form
-        form={form}
-        initialValues={{ remember: true }}
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 32 }}
-        onFinish={handleFormSubmit}
-        autoComplete="on"
-        name="Payment"
-      >
-        <FormTitle level={2}>Your order</FormTitle>
-
-        <FormTitle level={3}>Shipping address</FormTitle>
-
-        <Form.Item
-          name="recipientName"
-          rules={[{
-            required: true,
-            message: "Please, put recipient's name",
-          }]}
+      <Spin spinning={isLoading} indicator={Spinner}>
+        <Form
+          form={form}
+          initialValues={{ remember: true }}
+          labelCol={{ span: 8 }}
+          wrapperCol={{ span: 32 }}
+          onFinish={handleFormSubmit}
+          autoComplete="on"
+          name="Payment"
         >
-          <Input
-            prefix={<UserOutlined className="form__icon" />}
-            placeholder="Recipient's full name"
-            style={{ width: "56rem" }}
-          />
-        </Form.Item>
+          <FormTitle level={2}>Your order</FormTitle>
 
-        <Form.Item
-          name="recipientLine1"
-          rules={[{
-            required: true,
-            message: "Please, put main recipient's address",
-          }]}
-        >
-          <Input
-            prefix={<HomeOutlined className="form__icon" />}
-            placeholder="Address Line 1 (or company name)"
-            style={{ width: "56rem" }}
-          />
-        </Form.Item>
+          <FormTitle level={3}>Shipping address</FormTitle>
 
-        <Form.Item name="recipientLine2">
-          <Input
-            prefix={<HomeFilled className="form__icon" />}
-            placeholder="Address Line 2 (optional)"
-            style={{ width: "56rem" }}
-          />
-        </Form.Item>
+          <Form.Item
+            name="recipientName"
+            rules={[{
+              required: true,
+              message: "Please, put recipient's name",
+            }]}
+          >
+            <Input
+              prefix={<UserOutlined className="form__icon" />}
+              placeholder="Recipient's full name"
+              style={{ width: "56rem" }}
+            />
+          </Form.Item>
 
-        <Form.Item
-          name="recipientCity"
-          rules={[{
-            required: true,
-            message: "Please, put recipient's city",
-          }]}
-        >
-          <Input
-            prefix={<InsertRowRightOutlined className="form__icon" />}
-            placeholder="City"
-            style={{ width: "56rem" }}
-          />
-        </Form.Item>
+          <Form.Item
+            name="recipientLine1"
+            rules={[{
+              required: true,
+              message: "Please, put main recipient's address",
+            }]}
+          >
+            <Input
+              prefix={<HomeOutlined className="form__icon" />}
+              placeholder="Address Line 1 (or company name)"
+              style={{ width: "56rem" }}
+            />
+          </Form.Item>
 
-        <Form.Item
-          name="recipientState"
-          rules={[{
-            required: true,
-            message: "Please, put recipient's state",
-          }]}
-        >
-          <Input
-            prefix={<FlagOutlined className="form__icon" />}
-            placeholder="State/province/region"
-            style={{ width: "56rem" }}
-          />
-        </Form.Item>
+          <Form.Item name="recipientLine2">
+            <Input
+              prefix={<HomeFilled className="form__icon" />}
+              placeholder="Address Line 2 (optional)"
+              style={{ width: "56rem" }}
+            />
+          </Form.Item>
 
-        <Form.Item
-          name="recipientPostalCode"
-          rules={[{
-            required: true,
-            message: "Please, put recipient's postal code",
-          }]}
-        >
-          <Input
-            prefix={<MailOutlined className="form__icon" />}
-            placeholder="Postal code/ZIP"
-            style={{ width: "56rem" }}
-            pattern="[0-9]*"
-          />
-        </Form.Item>
+          <Form.Item
+            name="recipientCity"
+            rules={[{
+              required: true,
+              message: "Please, put recipient's city",
+            }]}
+          >
+            <Input
+              prefix={<InsertRowRightOutlined className="form__icon" />}
+              placeholder="City"
+              style={{ width: "56rem" }}
+            />
+          </Form.Item>
 
-        <Form.Item>
-          <CountrySearch onChange={handleRecipientCountryChange} />
-        </Form.Item>
+          <Form.Item
+            name="recipientState"
+            rules={[{
+              required: true,
+              message: "Please, put recipient's state",
+            }]}
+          >
+            <Input
+              prefix={<FlagOutlined className="form__icon" />}
+              placeholder="State/province/region"
+              style={{ width: "56rem" }}
+            />
+          </Form.Item>
 
-        <FormTitle level={3}>Billing address</FormTitle>
+          <Form.Item
+            name="recipientPostalCode"
+            rules={[{
+              required: true,
+              message: "Please, put recipient's postal code",
+            }]}
+          >
+            <Input
+              prefix={<MailOutlined className="form__icon" />}
+              placeholder="Postal code/ZIP"
+              style={{ width: "56rem" }}
+              pattern="[0-9]*"
+            />
+          </Form.Item>
 
-        <Form.Item
-          name="billerName"
-          rules={[{
-            required: true,
-            message: "Please, put biller's name",
-          }]}
-        >
-          <Input
-            prefix={<UserOutlined className="form__icon" />}
-            placeholder="Name on Card"
-            style={{ width: "56rem" }}
-          />
-        </Form.Item>
+          <Form.Item>
+            <CountrySearch onChange={handleRecipientCountryChange} />
+          </Form.Item>
 
-        <Form.Item
-          name="billerLine1"
-          rules={[{
-            required: true,
-            message: "Please, put biller's main address",
-          }]}
-        >
-          <Input
-            prefix={<HomeOutlined className="form__icon" />}
-            placeholder="Address Line 1 (or company name)"
-            style={{ width: "56rem" }}
-          />
-        </Form.Item>
+          <FormTitle level={3}>Billing address</FormTitle>
 
-        <Form.Item name="billerLine2">
-          <Input
-            prefix={<HomeFilled className="form__icon" />}
-            placeholder="Address Line 2 (optional)"
-            style={{ width: "56rem" }}
-          />
-        </Form.Item>
+          <Form.Item
+            name="billerName"
+            rules={[{
+              required: true,
+              message: "Please, put biller's name",
+            }]}
+          >
+            <Input
+              prefix={<UserOutlined className="form__icon" />}
+              placeholder="Name on Card"
+              style={{ width: "56rem" }}
+            />
+          </Form.Item>
 
-        <Form.Item
-          name="billerCity"
-          rules={[{
-            required: true,
-            message: "Please, put biller's city",
-          }]}
-        >
-          <Input
-            prefix={<InsertRowRightOutlined className="form__icon" />}
-            placeholder="City"
-            style={{ width: "56rem" }}
-          />
-        </Form.Item>
+          <Form.Item
+            name="billerLine1"
+            rules={[{
+              required: true,
+              message: "Please, put biller's main address",
+            }]}
+          >
+            <Input
+              prefix={<HomeOutlined className="form__icon" />}
+              placeholder="Address Line 1 (or company name)"
+              style={{ width: "56rem" }}
+            />
+          </Form.Item>
 
-        <Form.Item
-          name="billerState"
-          rules={[{
-            required: true,
-            message: "Please, put biller's state",
-          }]}
-        >
-          <Input
-            prefix={<FlagOutlined className="form__icon" />}
-            placeholder="State/Province/Region"
-            style={{ width: "56rem" }}
-          />
-        </Form.Item>
+          <Form.Item name="billerLine2">
+            <Input
+              prefix={<HomeFilled className="form__icon" />}
+              placeholder="Address Line 2 (optional)"
+              style={{ width: "56rem" }}
+            />
+          </Form.Item>
 
-        <Form.Item
-          name="billerPostalCode"
-          rules={[{
-            required: true,
-            message: "Please, put biller's postal code",
-          }]}
-        >
-          <Input
-            prefix={<MailOutlined className="form__icon" />}
-            placeholder="Postal code/ZIP"
-            style={{ width: "56rem" }}
-            pattern="[0-9]*"
-          />
-        </Form.Item>
+          <Form.Item
+            name="billerCity"
+            rules={[{
+              required: true,
+              message: "Please, put biller's city",
+            }]}
+          >
+            <Input
+              prefix={<InsertRowRightOutlined className="form__icon" />}
+              placeholder="City"
+              style={{ width: "56rem" }}
+            />
+          </Form.Item>
 
-        <Form.Item>
-          <CountrySearch onChange={handleBillingCountryChange} />
-        </Form.Item>
+          <Form.Item
+            name="billerState"
+            rules={[{
+              required: true,
+              message: "Please, put biller's state",
+            }]}
+          >
+            <Input
+              prefix={<FlagOutlined className="form__icon" />}
+              placeholder="State/Province/Region"
+              style={{ width: "56rem" }}
+            />
+          </Form.Item>
 
-        <Form.Item>
-          <h2>Card details</h2>
-          <CardElement
-            options={configCardElement}
-          />
-        </Form.Item>
+          <Form.Item
+            name="billerPostalCode"
+            rules={[{
+              required: true,
+              message: "Please, put biller's postal code",
+            }]}
+          >
+            <Input
+              prefix={<MailOutlined className="form__icon" />}
+              placeholder="Postal code/ZIP"
+              style={{ width: "56rem" }}
+              pattern="[0-9]*"
+            />
+          </Form.Item>
 
-        <Form.Item>
-          <Flex justify="center">
-            <PayButton form={form} />
-          </Flex>
-        </Form.Item>
-      </Form>
+          <Form.Item>
+            <CountrySearch onChange={handleBillingCountryChange} />
+          </Form.Item>
+
+          <Form.Item>
+            <h2>Card details</h2>
+            <CardElement
+              options={configCardElement}
+            />
+          </Form.Item>
+
+          <Form.Item>
+            <Flex justify="center">
+              <PayButton form={form} />
+            </Flex>
+          </Form.Item>
+        </Form>
+      </Spin>
     </ConfigProvider>
   );
 }

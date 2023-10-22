@@ -2,7 +2,7 @@ import useAuth from './useAuth';
 import useAdminAuth from './useAdminAuth';
 import useTypedSelector from './useTypedSelector';
 import useCartItems from './useCartItems';
-import { useUserActions, useProductsActions, useCategoriesActions, useLoadingActions } from './useActions';
+import { useUserActions, useProductsActions, useCategoriesActions, useLoadingActions, useStripeActions } from './useActions';
 
 export {
   useAuth,
@@ -13,4 +13,5 @@ export {
   useCategoriesActions,
   useLoadingActions,
   useCartItems,
+  useStripeActions,
 };

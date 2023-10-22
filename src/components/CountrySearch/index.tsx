@@ -23,7 +23,7 @@ const CountrySearch: React.FC<CountrySearchProps> = ({ onChange }) => {
       placeholder="Select country"
       filterOption={filterOption}
       filterSort={filterSort}
-      options={countryOptions}
+      options={countryOptions()}
       onChange={onChange}
       defaultValue={"Russia"}
     />

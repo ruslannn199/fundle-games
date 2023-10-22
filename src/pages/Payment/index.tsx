@@ -3,29 +3,37 @@ import PaymentDetails from '../../components/PaymentDetails';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { publishableKeys } from '../../stripe/config';
-import { useEffect } from 'react';
-import { useTypedSelector, useUserActions } from '../../hooks';
+import { useEffect, useState } from 'react';
+import { useTypedSelector, useStripeActions } from '../../hooks';
+import { useNavigate } from 'react-router-dom';
 
 const Payment: React.FC = () => {
-  const { fetchClientStart } = useUserActions();
-  const { clientSecret } = useTypedSelector((state) => (state.user));
+  const { clientSecret } = useTypedSelector((state) => (state.stripe));
+  const { cartItems, total, cartItemsAmount } = useTypedSelector((state) => (state.cartData));
+  const { fetchClientStart } = useStripeActions();
+  const [stripePromise] = useState(() => loadStripe(publishableKeys));
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchClientStart();
-  }, []);
+    if (cartItemsAmount < 1) {
+      navigate('/');
+    }
+  }, [cartItemsAmount]);
 
-  const stripePromise = loadStripe(publishableKeys);
+  useEffect(() => {
+    fetchClientStart({ cartData: cartItems, total });
+  }, [fetchClientStart]);
 
   return (
     clientSecret
-    ? (
-      <Elements stripe={stripePromise} options={{ clientSecret: clientSecret }}>
-        <Flex align="center" justify="center">
-          <PaymentDetails />
-        </Flex>
-      </Elements>
-    )
-    : null
+      ? (
+        <Elements stripe={stripePromise} options={{ clientSecret }}>
+          <Flex align="center" justify="center">
+            <PaymentDetails />
+          </Flex>
+        </Elements>
+      )
+      : null
   );
 }
 
