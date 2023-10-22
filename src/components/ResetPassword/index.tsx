@@ -63,7 +63,7 @@ const ResetPassword: React.FC = () => {
         <Input
           prefix={<MailOutlined className="form__icon" />}
           placeholder="Email"
-          style={{ width: "30rem" }}
+          style={{ width: "50rem" }}
           onChange={() => setError(false)}
         />
       </Form.Item>

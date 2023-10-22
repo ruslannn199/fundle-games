@@ -102,7 +102,7 @@ const ProductResults = () => {
           onSelect={handleFilter}
         />
       </ConfigProvider>
-      <Row gutter={[0, 32]} align="middle">
+      <Row gutter={[0, 32]} align="middle" style={{ width: "192rem" }}>
         {
           products
             .data

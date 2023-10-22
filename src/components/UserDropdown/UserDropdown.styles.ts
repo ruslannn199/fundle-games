@@ -6,6 +6,7 @@ export const UserDropdownTitle = styled.h3`
   align-items: center;
   gap: 1rem;
   margin: 0;
+  height: 10rem;
 `;
 
 export const UserDropdownImage = styled.img`

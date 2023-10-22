@@ -68,7 +68,7 @@ const SignIn: React.FC = () => {
         <Input
           prefix={<MailOutlined className="form__icon" />}
           placeholder="Email"
-          style={{ width: "30rem" }}
+          style={{ width: "50rem" }}
         />
       </Form.Item>
 
@@ -83,7 +83,7 @@ const SignIn: React.FC = () => {
         />
       </Form.Item>
 
-      <SignInActionsWrapper justify="center">
+      <SignInActionsWrapper justify="center" align="center">
         <ConfigProvider theme={blackTheme}>
           <FormButton type="primary" htmlType="submit">
             Log in

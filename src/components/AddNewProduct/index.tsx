@@ -59,7 +59,13 @@ const AddNewProduct: React.FC = () => {
 
   return (
     <ConfigProvider theme={blackTheme}>
-      <Button type="primary" onClick={showModal}>ADD NEW PRODUCT</Button>
+      <Button
+        type="primary"
+        style={{ fontSize: "2rem" }}
+        onClick={showModal}
+      >
+        ADD NEW PRODUCT
+      </Button>
       <Modal
         title="ADD NEW PRODUCT"
         open={open}
@@ -100,7 +106,7 @@ const AddNewProduct: React.FC = () => {
               <Select
                 showSearch
                 mode="tags"
-                style={{ width: "30rem" }}
+                style={{ width: "40rem" }}
                 placeholder="Choose category"
                 filterOption={(input, option): boolean => (typeof option?.label === 'string' && option.label.includes(input))}
                 filterSort={(optionA, optionB): number => {
@@ -119,7 +125,7 @@ const AddNewProduct: React.FC = () => {
           >
             <Input
               placeholder="Enter name"
-              style={{ width: "30rem" }}
+              style={{ width: "40rem" }}
               type="text"
             />
           </Form.Item>
@@ -130,7 +136,7 @@ const AddNewProduct: React.FC = () => {
           >
             <Input
               placeholder="Enter image URL"
-              style={{ width: "30rem" }}
+              style={{ width: "40rem" }}
               type="url"
             />
           </Form.Item>
@@ -141,7 +147,7 @@ const AddNewProduct: React.FC = () => {
           >
             <Input
               placeholder="Enter price"
-              style={{ width: "30rem" }}
+              style={{ width: "40rem" }}
               type="number"
               min={0}
               step={0.01}

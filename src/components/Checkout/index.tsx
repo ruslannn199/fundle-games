@@ -5,7 +5,7 @@ import { CloseSquareFilled, MinusCircleOutlined, PlusCircleOutlined } from '@ant
 import { orangeTheme, redTheme } from '../../utils/themes';
 import { useCartActions, useProductsActions } from '../../hooks/useActions';
 import { useEffect } from 'react';
-import { CheckoutButton, CheckoutCell, CheckoutMinusIcon, CheckoutRow, CheckoutTable } from './Checkout.styles';
+import { CheckoutCell, CheckoutRow, CheckoutTable } from './Checkout.styles';
 import CheckoutCounter from '../CheckoutCounter';
 
 interface CartTableColumns {
@@ -68,15 +68,17 @@ const Checkout: React.FC<CheckoutProps> = ({ popup }) => {
       dataIndex: 'quantity',
       render: (_: any, { quantity, key }: CartTableColumns) => (
         <ConfigProvider theme={orangeTheme}>
-          <CheckoutCounter
-            icon={<CheckoutMinusIcon />}
-            onClick={() => handleDecrease(key, quantity)}
-          />
-          {quantity}
-          <CheckoutCounter
-            icon={<PlusCircleOutlined style={{ fontSize: "2rem" }} />}
-            onClick={() => fetchProductStart(key) }
-          />
+          <Flex justify="center" align="center" gap="1rem">
+            <CheckoutCounter
+              icon={<MinusCircleOutlined style={{ fontSize: "2rem" }} />}
+              onClick={() => handleDecrease(key, quantity)}
+            />
+            <Flex align="center">{quantity}</Flex>
+            <CheckoutCounter
+              icon={<PlusCircleOutlined style={{ fontSize: "2rem" }} />}
+              onClick={() => fetchProductStart(key) }
+            />
+          </Flex>
         </ConfigProvider>
       ),
       sorter: {
@@ -113,7 +115,7 @@ const Checkout: React.FC<CheckoutProps> = ({ popup }) => {
           />
         </ConfigProvider>
       ),
-      width: popup ? '13rem' : '20rem',
+      width: popup ? '15rem' : '20rem',
       align: 'center',
     },
   ];
@@ -147,13 +149,19 @@ const Checkout: React.FC<CheckoutProps> = ({ popup }) => {
               <CheckoutRow>
                 <CheckoutCell index={0}>Total</CheckoutCell>
                 <CheckoutCell index={1} colSpan={3} align="right">{total}₽</CheckoutCell>
-                <CheckoutCell index={2}>
-                  <CheckoutButton
+                <CheckoutCell index={2} align="center">
+                  <Button
                     type="link"
                     onClick={() => clearCartItems()}
+                    style={{
+                      fontSize: "2rem",
+                      fontWeight: "bold",
+                      textAlign: "center",
+                      padding: 0,
+                    }}
                   >
                     Clear
-                  </CheckoutButton>
+                  </Button>
                 </CheckoutCell>
               </CheckoutRow>
             )

@@ -1,5 +1,5 @@
 // Components
-import { Button, ConfigProvider, Image, Table, Tag } from 'antd';
+import { Button, ConfigProvider, Image, Tag } from 'antd';
 // Hooks
 import { useProductsActions } from '../../hooks';
 // Themes
@@ -7,6 +7,7 @@ import { blackTheme } from '../../utils/themes';
 // Types
 import type { Products } from '../../types/interfaces';
 import type { ColumnsType } from 'antd/es/table';
+import { BaseProductsTable } from './ProductsTable.styles';
 
 interface ProductTableColumns {
   key: string;
@@ -29,6 +30,7 @@ const ProductsTable: React.FC<Record<'products', Products>> = ({ products }) => 
         compare: (a, b) => (a.name.localeCompare(b.name)),
         multiple: 3,
       },
+      width: '30rem',
     },
     {
       title: 'Quantity',
@@ -38,6 +40,7 @@ const ProductsTable: React.FC<Record<'products', Products>> = ({ products }) => 
         compare: (a, b) => (a.quantity - b.quantity),
         multiple: 3,
       },
+      width: '20rem',
     },
     {
       title: 'Price',
@@ -48,6 +51,7 @@ const ProductsTable: React.FC<Record<'products', Products>> = ({ products }) => 
         compare: (a, b) => (a.price - b.price),
         multiple: 3,
       },
+      width: '20rem',
     },
     {
       title: 'Categories',
@@ -58,22 +62,31 @@ const ProductsTable: React.FC<Record<'products', Products>> = ({ products }) => 
           {category.map((tag) => (<Tag key={tag}>{tag}</Tag>))}
         </>
       ),
+      width: '30rem',
     },
     {
       title: 'Thumbnail',
       key: 'thumbnail',
       dataIndex: 'thumbnail',
       render: (_: any, { thumbnail }: ProductTableColumns) => (
-        <Image src={thumbnail} width={200} />
+        <Image src={thumbnail} width="20rem" />
       ),
+      width: '25rem',
     },
     {
       title: 'Actions',
       key: 'actions',
       dataIndex: 'actions',
       render: (_: any, { key }: ProductTableColumns) => (
-        <Button type="link" onClick={() => deleteProductStart(key)}>Delete</Button>
+        <Button
+          type="link"
+          style={{ fontSize: "2rem" }}
+          onClick={() => deleteProductStart(key)}
+        >
+          Delete
+        </Button>
       ),
+      width: '15rem',
     },
   ];
 
@@ -92,7 +105,7 @@ const ProductsTable: React.FC<Record<'products', Products>> = ({ products }) => 
 
   return (
     <ConfigProvider theme={blackTheme}>
-      <Table
+      <BaseProductsTable
         columns={columns}
         dataSource={dataSource}
         sticky

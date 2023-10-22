@@ -61,7 +61,7 @@ const SignUp: React.FC = () => {
         <Input
           prefix={<UserOutlined className="form__icon" />}
           placeholder="Username"
-          style={{ width: "32rem" }}
+          style={{ width: "50rem" }}
         />
       </Form.Item>
 
@@ -112,7 +112,7 @@ const SignUp: React.FC = () => {
         />
       </Form.Item>
 
-      <Flex justify="center">
+      <Flex justify="center" align="center">
         <ConfigProvider theme={blackTheme}>
           <FormButton type="primary" htmlType="submit">
             Register

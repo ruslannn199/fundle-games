@@ -13,6 +13,6 @@ export const LogoTitle = styled.span`
 `;
 
 export const LogoImage = styled.img`
-  width: 3.2rem;
-  height: 3.2rem;
+  width: 4rem;
+  height: 4rem;
 `;

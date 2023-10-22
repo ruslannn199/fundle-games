@@ -1,4 +1,4 @@
-import { CheckoutCounterButton } from './CheckoutCounter.styles';
+import { Button } from 'antd';
 
 interface CheckoutCounterProps {
   onClick: () => void;
@@ -6,10 +6,20 @@ interface CheckoutCounterProps {
 }
 
 const CheckoutCounter: React.FC<CheckoutCounterProps> = ({ onClick, icon }) => (
-  <CheckoutCounterButton
+  <Button
     type="text"
     onClick={onClick}
     icon={icon}
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      width: "2rem",
+      height: "2rem",
+      padding: 0,
+      fontSize: "2rem",
+      lineHeight: 1,
+    }}
   />
 );
 

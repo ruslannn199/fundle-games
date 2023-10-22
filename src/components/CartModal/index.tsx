@@ -6,7 +6,7 @@ const CartModal: React.FC = () => {
 
   return cartItemsAmount
     ? (
-      <CartModalWrapper>
+      <CartModalWrapper align="center" justify="center">
         {cartItemsAmount}
       </CartModalWrapper>
     )
