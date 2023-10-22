@@ -1,11 +1,11 @@
 // Components
+import { Flex } from 'antd';
 import SignUp from '../../components/SignUp';
-import Wrapper from '../../components/Wrapper';
 
 const Registration: React.FC = () => (
-  <Wrapper className='wrapper_flex'>
+  <Flex align="center" justify="center">
     <SignUp />
-  </Wrapper>
+  </Flex>
 )
 
 export default Registration;

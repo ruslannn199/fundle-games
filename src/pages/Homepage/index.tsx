@@ -1,11 +1,11 @@
 // Components
 import Directory from '../../components/Directory';
-import Wrapper from '../../components/Wrapper';
+import { HomePageWrapper } from './HomePage.styles';
 
 const Homepage: React.FC = () => (
-  <Wrapper className="homepage">
+  <HomePageWrapper>
     <Directory />
-  </Wrapper>
+  </HomePageWrapper>
 )
 
 export default Homepage;

@@ -1,5 +1,5 @@
 // Components
-import { Form, Input, Button, ConfigProvider, Tooltip } from 'antd';
+import { Form, Input, Button, ConfigProvider, Tooltip, Flex } from 'antd';
 import {
   MailOutlined,
   LockOutlined,
@@ -16,6 +16,8 @@ import { blackTheme, orangeTheme } from '../../utils/themes';
 // Types
 import type { loginFields } from '../../types/types';
 import { NavigationItemsLabels } from '../../types/enums';
+import { FormButton, FormLink, FormTitle } from '../../styles/Form';
+import { SignInActionsWrapper, SignInRecoveryWrapper } from './SignIn.styles';
 
 const SignIn: React.FC = () => {
   const [, setErrors] = useState<string[]>([]);
@@ -57,9 +59,8 @@ const SignIn: React.FC = () => {
       validateMessages={{ required: "Please, input your ${name}"}}
       onFinish={handleSubmit}
     >
-      <Form.Item className="form__title">
-        <h2>{NavigationItemsLabels.LOGIN}</h2>
-      </Form.Item>
+      <FormTitle level={3}>{NavigationItemsLabels.LOGIN}</FormTitle>
+
       <Form.Item
         name="email"
         rules={[{ required: true }]}
@@ -82,37 +83,36 @@ const SignIn: React.FC = () => {
         />
       </Form.Item>
 
-      <Form.Item style={{margin: 0}} className="wrapper_flex">
+      <SignInActionsWrapper justify="center">
         <ConfigProvider theme={blackTheme}>
-          <Button type="primary" htmlType="submit" className="form__btn">
+          <FormButton type="primary" htmlType="submit">
             Log in
-          </Button>
+          </FormButton>
         </ConfigProvider>
         <span>
-          Or <Link
+          Or <FormLink
             to={`/${NavigationItemsLabels.REGISTRATION}`}
-            className="form__link"
             >register now!
-          </Link>
+          </FormLink>
         </span>
-      </Form.Item>
+      </SignInActionsWrapper>
 
-      <Form.Item style={{margin: 5}}>
+      <SignInRecoveryWrapper>
         <Tooltip title="We'll send you reset E-mail" color="orange">
           <QuestionCircleFilled className="form__icon" style={{marginRight: ".5rem"}} />
         </Tooltip>
-        <Link to="/recovery" className="form__link">
+        <FormLink to="/recovery">
           Forgot password?
-        </Link>
-      </Form.Item>
+        </FormLink>
+      </SignInRecoveryWrapper>
 
-      <Form.Item className="wrapper_flex">
+      <Flex justify="center">
         <ConfigProvider theme={blackTheme}>
           <Button type="default" onClick={() => googleSignInStart()}>
             Sign in with Google <GoogleCircleFilled />
           </Button>
         </ConfigProvider>
-      </Form.Item>
+      </Flex>
     </Form>
   </ConfigProvider>
 )};

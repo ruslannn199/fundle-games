@@ -3,17 +3,16 @@ import { useCategoriesActions } from '../../hooks';
 import { useLocation, useSearchParams, useNavigate } from 'react-router-dom';
 // Components
 import { Link } from 'react-router-dom';
-import { Header } from 'antd/es/layout/layout';
-import { ConfigProvider, Input } from 'antd';
+import { ConfigProvider, Flex, Input } from 'antd';
 import Logo from '../Logo';
-import Wrapper from '../Wrapper';
-import NavigationMenu from '../NavigationMenu';
+import NavigationMenuWrapper from '../NavigationMenu';
 // Themes
 import { blackTheme, orangeTheme } from '../../utils/themes';
 // Types
 import type { SearchProps } from 'antd/es/input';
 // Utils
 import { convertToURLAddress } from '../../utils';
+import { HeaderWrapper } from './Header.styles';
 
 const AppHeader: React.FC = () => {
   const { updateCategory } = useCategoriesActions();
@@ -42,8 +41,8 @@ const AppHeader: React.FC = () => {
 
   return !location.pathname.includes('admin')
     ? (
-      <Header className="header">
-        <Wrapper className="header__wrapper">
+      <HeaderWrapper>
+        <Flex align="center" justify="space-between">
           <Link to="/">
             <Logo />
           </Link>
@@ -51,10 +50,10 @@ const AppHeader: React.FC = () => {
             <Search style={{ width: 304 }} enterButton onSearch={handleSearch} />
           </ConfigProvider>
           <ConfigProvider theme={orangeTheme}>
-            <NavigationMenu />
+            <NavigationMenuWrapper />
           </ConfigProvider>
-        </Wrapper>
-      </Header>
+        </Flex>
+      </HeaderWrapper>
     )
     : null;
 };

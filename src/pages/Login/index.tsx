@@ -1,11 +1,11 @@
 // Components
+import { Flex } from 'antd';
 import SignIn from '../../components/SignIn';
-import Wrapper from '../../components/Wrapper';
 
 const Login: React.FC = () => (
-  <Wrapper className='wrapper_flex'>
+  <Flex align="center" justify="center">
     <SignIn />
-  </Wrapper>
+  </Flex>
 );
 
 export default Login;

@@ -7,7 +7,7 @@ import CartPopup from '../CartPopup';
 import { orange } from '../../utils/themes';
 // Types
 import { NavigationItemsLabels } from '../../types/enums';
-import type { MenuProps } from 'antd';
+import { Flex, type MenuProps } from 'antd';
 
 const UserMenuItems: MenuProps['items'] = [
   {
@@ -18,19 +18,21 @@ const UserMenuItems: MenuProps['items'] = [
     children: [
       {
         label: (
-          <Link to={`/${NavigationItemsLabels.DASHBOARD}`} className="nav__option">
-            <EditTwoTone twoToneColor={orange} />
-            <span>My Account</span>
+          <Link to={`/${NavigationItemsLabels.DASHBOARD}`}>
+            <Flex justify="center" align="center">
+              <EditTwoTone twoToneColor={orange} />
+              <span>My Account</span>
+            </Flex>
           </Link>
         ),
         key: NavigationItemsLabels.DASHBOARD,
       },
       {
         label: (
-          <div className="nav__option">
+          <Flex justify="center" align="center" gap="1rem">
             <span>{NavigationItemsLabels.LOG_OUT}</span>
             <LogoutOutlined />
-          </div>
+          </Flex>
         ),
         key: NavigationItemsLabels.LOG_OUT,
       },

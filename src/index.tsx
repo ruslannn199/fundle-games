@@ -1,7 +1,6 @@
 // Styles
-import './assets/styles/global.scss';
-import FontStyles from './fontStyles';
-import GlobalStyle from './globalStyles';
+import Fonts from './styles/Fonts';
+import GlobalStyle from './styles/Global';
 // Components
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
@@ -17,7 +16,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <StrictMode>
     <Provider store={store}>
-      <FontStyles />
+      <Fonts />
       <GlobalStyle />
       <App />
     </Provider>

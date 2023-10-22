@@ -1,11 +1,11 @@
 // Components
+import { Flex } from 'antd';
 import ResetPassword from '../../components/ResetPassword';
-import Wrapper from '../../components/Wrapper';
 
 const Recovery: React.FC = () => (
-  <Wrapper className='wrapper_flex'>
+  <Flex align="center" justify="center">
     <ResetPassword />
-  </Wrapper>
+  </Flex>
 );
 
 export default Recovery;

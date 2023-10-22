@@ -1,12 +1,13 @@
 // Components
-import { Menu, ConfigProvider, Spin } from 'antd';
+import { ConfigProvider, Spin } from 'antd';
 import AdminNavItems from '../../components/AdminNavItems';
-import Wrapper from '../../components/Wrapper';
 import ProductsTable from '../../components/ProductsTable';
 import Spinner from '../../components/Spinner';
 // Hooks
 import { useUserActions, useTypedSelector, useProductsActions } from '../../hooks';
 import { useEffect } from 'react';
+// Styles
+import { AdminDashboard, AdminMenu, AdminWrapper } from './Admin.styles';
 // Themes
 import { orangeTheme } from '../../utils/themes';
 // Types
@@ -34,22 +35,21 @@ const Admin: React.FC = () => {
   }, [fetchProductsStart]);
 
   return (
-    <Wrapper className="admin__wrapper">
+    <AdminWrapper align="flex-start" justify="center">
       <ConfigProvider theme={orangeTheme}>
-        <Menu
+        <AdminMenu
           disabledOverflow={true}
           mode="vertical"
-          className="admin__menu"
           items={currentUser ? AdminNavItems(currentUser) : []}
           onClick={menuSignOutAction}
         />
       </ConfigProvider>
-      <div className="admin__dashboard">
+      <AdminDashboard vertical align="flex-start" justify="center">
         <Spin indicator={Spinner} spinning={isLoading}>
           <ProductsTable products={products} />
         </Spin>
-      </div>
-    </Wrapper>
+      </AdminDashboard>
+    </AdminWrapper>
   );
 };
 

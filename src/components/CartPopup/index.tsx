@@ -3,6 +3,7 @@ import { Popover } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
 import CartModal from '../CartModal';
 import Checkout from '../Checkout';
+import { CartPopupLink } from './CartPopup.styles';
 
 const CartPopup: React.FC = () => {
   const location = useLocation();
@@ -18,18 +19,10 @@ const CartPopup: React.FC = () => {
         content={<Checkout popup />}
         style={{ height: "64px" }}
       >
-        <Link
-          to="/cart"
-          className="nav__profile"
-          style={{
-            position: "relative",
-            color: "#000",
-            height: "64px",
-          }}
-        >
+        <CartPopupLink to="/cart">
           <ShoppingCartOutlined style={{ fontSize: 42, height: "64px" }} />
           <CartModal />
-        </Link>
+        </CartPopupLink>
       </Popover>
     )
     : (

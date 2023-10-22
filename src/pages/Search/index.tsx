@@ -1,12 +1,12 @@
 // Components
 import ProductResults from '../../components/ProductResults';
-import Wrapper from '../../components/Wrapper';
+import SearchWrapper from './Search.styles';
 
 const Search: React.FC = () => {
   return (
-    <Wrapper>
+    <SearchWrapper justify="center">
       <ProductResults />
-    </Wrapper>
+    </SearchWrapper>
   );
 }
 

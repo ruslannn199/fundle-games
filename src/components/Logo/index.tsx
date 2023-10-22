@@ -1,11 +1,13 @@
 // Images
 import LogoImg from '../../assets/images/logo.png';
+// Styles
+import { LogoImage, LogoTitle, LogoWrapper } from './Logo.styles';
 
 const Logo: React.FC = () => (
-  <div className="logo">
-    <span className="logo__text">Fundle&nbsp;Games</span>
-    <img src={LogoImg} alt="Logo" className="logo__img" />
-  </div>
+  <LogoWrapper justify="center" align="center">
+    <LogoTitle>Fundle&nbsp;Games</LogoTitle>
+    <LogoImage src={LogoImg} alt="logo" />
+  </LogoWrapper>
 );
 
 export default Logo;

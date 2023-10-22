@@ -1,5 +1,5 @@
 // Components
-import { Button, ConfigProvider, Form, Input } from 'antd';
+import { Button, ConfigProvider, Flex, Form, Input } from 'antd';
 import { MailOutlined } from '@ant-design/icons';
 // Firebase
 import { sendPasswordResetEmail } from 'firebase/auth';
@@ -10,6 +10,7 @@ import { useState, useEffect } from 'react';
 import { useTypedSelector } from '../../hooks';
 // Themes
 import { blackTheme, orangeTheme } from '../../utils/themes';
+import { FormButton, FormTitle } from '../../styles/Form';
 
 const ResetPassword: React.FC = () => {
   const [form] = Form.useForm<Record<'email', string>>();
@@ -44,9 +45,7 @@ const ResetPassword: React.FC = () => {
       wrapperCol={{ span: 32 }}
       onFinish={handleSubmit}
     >
-      <Form.Item className="form__title">
-        <h2>Reset Password</h2>
-      </Form.Item>
+      <FormTitle level={3}>Reset Password</FormTitle>
 
       <Form.Item
         name="email"
@@ -69,13 +68,13 @@ const ResetPassword: React.FC = () => {
         />
       </Form.Item>
 
-      <Form.Item className="wrapper_flex">
+      <Flex justify="center">
         <ConfigProvider theme={blackTheme}>
-          <Button type="primary" htmlType="submit" className="form__btn">
+          <FormButton type="primary" htmlType="submit">
             Send a password reset E-mail
-          </Button>
+          </FormButton>
         </ConfigProvider>
-        </Form.Item>
+      </Flex>
     </Form>
   </ConfigProvider>
 )};

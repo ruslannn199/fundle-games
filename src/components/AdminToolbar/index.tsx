@@ -1,8 +1,8 @@
-// Components
-import { Link } from 'react-router-dom';
 // Hooks
 import { useLocation } from 'react-router-dom';
 import { useTypedSelector } from '../../hooks';
+// Styles
+import { AdminToolbarWrapper, AdminToolbarLink } from './AdminToolbar.styles';
 // Utils
 import { checkUserIsAdmin } from '../../utils';
 
@@ -13,13 +13,12 @@ const AdminToolbar: React.FC = () => {
 
   return checkUserIsAdmin(currentUser)
     ? (
-    <div className="admin__toolbar">
-      <Link
-        className="admin__link"
+    <AdminToolbarWrapper justify="flex-end">
+      <AdminToolbarLink
         to={isAdminPage ? "/" : "/admin"}>
         {isAdminPage ? "Main page" : "My admin"}
-      </Link>
-    </div>
+      </AdminToolbarLink>
+    </AdminToolbarWrapper>
     )
     : null;
 };

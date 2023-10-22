@@ -1,9 +1,9 @@
 // Components
 import { Card, Col, Image } from 'antd';
 import { Link } from 'react-router-dom';
-import AddToCart from '../../AddToCart';
+import AddToCart from '../AddToCart';
 // Types
-import type { ProductData } from '../../../types/interfaces';
+import type { ProductData } from '../../types/interfaces';
 
 type ProductElementPropsFromData = Record<'productConfig', ProductData>;
 

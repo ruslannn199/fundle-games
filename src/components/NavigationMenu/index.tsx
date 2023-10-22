@@ -1,4 +1,5 @@
-import { Menu } from 'antd';
+// Styles
+import NavigationMenuWrapper from './NavigationMenu.styles';
 // Types
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import { NavigationItemsLabels } from '../../types/enums';
@@ -15,10 +16,9 @@ const NavigationMenu: React.FC = () => {
   }
 
   return (
-    <Menu
+    <NavigationMenuWrapper
       disabledOverflow={true}
       mode="horizontal"
-      className="nav"
       selectable={false}
       onClick={menuSignOutAction}
       items={currentUser

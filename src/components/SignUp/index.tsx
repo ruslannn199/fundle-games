@@ -1,5 +1,5 @@
 // Components
-import { Button, ConfigProvider, Form, Input } from 'antd';
+import { Button, ConfigProvider, Flex, Form, Input } from 'antd';
 import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 // Hooks
@@ -11,6 +11,7 @@ import { blackTheme, orangeTheme } from '../../utils/themes';
 // Types
 import { NavigationItemsLabels } from '../../types/enums';
 import type { registrationFields } from '../../types/types';
+import { FormButton, FormLink, FormTitle } from '../../styles/Form';
 
 const SignUp: React.FC = () => {
   const [error, setError] = useState<boolean>(false);
@@ -49,9 +50,7 @@ const SignUp: React.FC = () => {
       validateMessages={{ required: "Please, input your ${name}"}}
       onFinish={handleSubmit}
     >
-      <Form.Item className="form__title">
-        <h2>{NavigationItemsLabels.REGISTRATION}</h2>
-      </Form.Item>
+      <FormTitle level={3}>{NavigationItemsLabels.REGISTRATION}</FormTitle>
 
       <Form.Item
         name="displayName"
@@ -113,20 +112,19 @@ const SignUp: React.FC = () => {
         />
       </Form.Item>
 
-      <Form.Item className="wrapper_flex">
+      <Flex justify="center">
         <ConfigProvider theme={blackTheme}>
-          <Button type="primary" htmlType="submit" className="form__btn">
+          <FormButton type="primary" htmlType="submit">
             Register
-          </Button>
+          </FormButton>
         </ConfigProvider>
         <span>
-          Or <Link
+          Or <FormLink
             to={`/${NavigationItemsLabels.LOGIN}`}
-            className="form__link"
             >log in!
-          </Link>
+          </FormLink>
         </span>
-      </Form.Item>
+      </Flex>
     </Form>
   </ConfigProvider>
 )};

@@ -2,16 +2,18 @@
 import { useTypedSelector } from '../../hooks';
 // Images
 import LogoImg from '../../assets/images/logo.png';
+// Styles
+import { UserDropdownImage, UserDropdownTitle } from './UserDropdown.styles';
 
 const UserDropdown: React.FC = () => {
   const { currentUser } = useTypedSelector((state) => (state.user));
 
   return currentUser
     ? (
-    <h3 className="nav__profile">
-      <img src={LogoImg} alt="profile avatar" className="nav__img" />
+    <UserDropdownTitle>
+      <UserDropdownImage src={LogoImg} alt="profile avatar" />
       {currentUser.displayName || "User"}
-    </h3>
+    </UserDropdownTitle>
     )
     : null;
 }

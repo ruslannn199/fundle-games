@@ -1,9 +1,8 @@
 // Components
-import Product from './Product';
-import { ConfigProvider, Row, Select, Spin } from 'antd';
+import Product from '../Product';
+import { ConfigProvider, Flex, Row, Select, Spin } from 'antd';
 import Spinner from '../Spinner';
 import LoadMoreButton from '../LoadMore';
-import Wrapper from '../Wrapper';
 // Hooks
 import { useEffect, useMemo } from 'react';
 import { useProductsActions, useTypedSelector } from '../../hooks';
@@ -89,7 +88,7 @@ const ProductResults = () => {
   }
 
   return (
-    <Spin spinning={isLoading} indicator={Spinner} className="spinner">
+    <Spin spinning={isLoading} indicator={Spinner}>
       <h1>{!products.data.length ? "No search results" : "Browse products"}</h1>
       <ConfigProvider theme={orangeTheme}>
         <Select
@@ -117,9 +116,9 @@ const ProductResults = () => {
         }
       </Row>
       <ConfigProvider theme={blackTheme}>
-        <Wrapper className="wrapper_flex">
+        <Flex align="center" justify="center">
           {products.isLastPage ? null : <LoadMoreButton onLoadMore={ () => increasePage() } />}
-        </Wrapper>
+        </Flex>
       </ConfigProvider>
     </Spin>
   );

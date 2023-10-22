@@ -10,6 +10,7 @@ import { StripeCardElementOptions } from '@stripe/stripe-js';
 import { useElements } from '@stripe/react-stripe-js';
 import { stripeApi } from '../../utils';
 import { useTypedSelector } from '../../hooks';
+import { FormTitle } from '../../styles/Form';
 
 const PaymentDetails: React.FC = () => {
   const { cartItemsAmount } = useTypedSelector((state) => (state.cartData));
@@ -110,9 +111,9 @@ const PaymentDetails: React.FC = () => {
         autoComplete="on"
         name="Payment"
       >
-        <h2 className="form__title">Your order</h2>
+        <FormTitle level={2}>Your order</FormTitle>
 
-        <h3 className="form__title">Shipping address</h3>
+        <FormTitle level={3}>Shipping address</FormTitle>
 
         <Form.Item
           name="recipientName"
@@ -197,7 +198,7 @@ const PaymentDetails: React.FC = () => {
           <CountrySearch onChange={handleRecipientCountryChange} />
         </Form.Item>
 
-        <h3 className="form__title">Billing address</h3>
+        <FormTitle level={3}>Billing address</FormTitle>
 
         <Form.Item
           name="billerName"

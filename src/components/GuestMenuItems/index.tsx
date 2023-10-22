@@ -8,21 +8,21 @@ import { NavigationItemsLabels } from '../../types/enums';
 const GuestMenuItems: MenuProps['items'] = [
   {
     label: (
-      <Link to={`/${NavigationItemsLabels.REGISTRATION}`} className='nav__link'>
-        <span className="nav__link-text">{NavigationItemsLabels.REGISTRATION}</span>
+      <Link to={`/${NavigationItemsLabels.REGISTRATION}`}>
+        <span style={{ textTransform: "capitalize" }}>{NavigationItemsLabels.REGISTRATION}</span>
       </Link>
     ),
     key: NavigationItemsLabels.REGISTRATION,
-    icon: <UserAddOutlined className='nav__icon' />,
+    icon: <UserAddOutlined style={{ transform: "border-color .1s .3s" }} />,
   },
   {
     label: (
-      <Link to={`/${NavigationItemsLabels.LOGIN}`} className='nav__link'>
-        <span className='nav__link-text'>{NavigationItemsLabels.LOGIN}</span>
+      <Link to={`/${NavigationItemsLabels.LOGIN}`}>
+        <span style={{ textTransform: "capitalize" }}>{NavigationItemsLabels.LOGIN}</span>
       </Link>
     ),
     key: NavigationItemsLabels.LOGIN,
-    icon: <UserOutlined className='nav__icon' />,
+    icon: <UserOutlined style={{ transform: "border-color .1s .3s" }} />,
   },
 ];
 
