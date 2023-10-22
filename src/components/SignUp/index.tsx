@@ -61,7 +61,7 @@ const SignUp: React.FC = () => {
         <Input
           prefix={<UserOutlined className="form__icon" />}
           placeholder="Username"
-          style={{ width: 320 }}
+          style={{ width: "32rem" }}
         />
       </Form.Item>
 

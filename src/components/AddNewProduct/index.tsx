@@ -100,7 +100,7 @@ const AddNewProduct: React.FC = () => {
               <Select
                 showSearch
                 mode="tags"
-                style={{ width: 300 }}
+                style={{ width: "30rem" }}
                 placeholder="Choose category"
                 filterOption={(input, option): boolean => (typeof option?.label === 'string' && option.label.includes(input))}
                 filterSort={(optionA, optionB): number => {
@@ -119,7 +119,7 @@ const AddNewProduct: React.FC = () => {
           >
             <Input
               placeholder="Enter name"
-              style={{ width: 300 }}
+              style={{ width: "30rem" }}
               type="text"
             />
           </Form.Item>
@@ -130,7 +130,7 @@ const AddNewProduct: React.FC = () => {
           >
             <Input
               placeholder="Enter image URL"
-              style={{ width: 300 }}
+              style={{ width: "30rem" }}
               type="url"
             />
           </Form.Item>
@@ -141,7 +141,7 @@ const AddNewProduct: React.FC = () => {
           >
             <Input
               placeholder="Enter price"
-              style={{ width: 300 }}
+              style={{ width: "30rem" }}
               type="number"
               min={0}
               step={0.01}

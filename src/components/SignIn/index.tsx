@@ -68,7 +68,7 @@ const SignIn: React.FC = () => {
         <Input
           prefix={<MailOutlined className="form__icon" />}
           placeholder="Email"
-          style={{ width: 300 }}
+          style={{ width: "30rem" }}
         />
       </Form.Item>
 
@@ -99,7 +99,7 @@ const SignIn: React.FC = () => {
 
       <SignInRecoveryWrapper>
         <Tooltip title="We'll send you reset E-mail" color="orange">
-          <QuestionCircleFilled className="form__icon" style={{marginRight: ".5rem"}} />
+          <QuestionCircleFilled className="form__icon" style={{ marginRight: ".5rem" }} />
         </Tooltip>
         <FormLink to="/recovery">
           Forgot password?

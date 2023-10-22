@@ -1,6 +1,7 @@
-import { useCartItems } from '../hooks'
+import { useAuth, useCartItems } from '../hooks'
 
 const WithCartItems: React.FC<React.PropsWithChildren> = ({ children }) => {
+  useAuth();
   useCartItems();
   return <>{children}</>;
 }

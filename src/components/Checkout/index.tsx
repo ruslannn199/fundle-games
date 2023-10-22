@@ -1,10 +1,12 @@
-import { Button, ConfigProvider, Empty, Flex, Image, Table } from 'antd';
+import { Button, ConfigProvider, Empty, Flex, Image } from 'antd';
 import { useTypedSelector } from '../../hooks';
 import { ColumnsType } from 'antd/es/table';
 import { CloseSquareFilled, MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { orangeTheme, redTheme } from '../../utils/themes';
 import { useCartActions, useProductsActions } from '../../hooks/useActions';
 import { useEffect } from 'react';
+import { CheckoutButton, CheckoutCell, CheckoutMinusIcon, CheckoutRow, CheckoutTable } from './Checkout.styles';
+import CheckoutCounter from '../CheckoutCounter';
 
 interface CartTableColumns {
   key: string;
@@ -48,16 +50,16 @@ const Checkout: React.FC<CheckoutProps> = ({ popup }) => {
         compare: (a, b) => (a.name.localeCompare(b.name)),
         multiple: 3,
       },
-      width: popup ? 50 : 150,
+      width: popup ? '25rem' : '35rem',
     },
     {
       title: 'Thumbnail',
       key: 'thumbnail',
       dataIndex: 'thumbnail',
       render: (_: any, { thumbnail }: CartTableColumns) => (
-        <Image src={thumbnail} width={popup ? 63 : 200} />
+        <Image src={thumbnail} width={ popup ? "10rem" : "20rem" } />
       ),
-      width: popup ? 50 : 230,
+      width: popup ? '16rem' : '35rem',
       align: 'center',
     },
     {
@@ -66,16 +68,14 @@ const Checkout: React.FC<CheckoutProps> = ({ popup }) => {
       dataIndex: 'quantity',
       render: (_: any, { quantity, key }: CartTableColumns) => (
         <ConfigProvider theme={orangeTheme}>
-          <Button
-            icon={<MinusCircleOutlined />}
-            type="text"
+          <CheckoutCounter
+            icon={<CheckoutMinusIcon />}
             onClick={() => handleDecrease(key, quantity)}
           />
           {quantity}
-          <Button
-            icon={<PlusCircleOutlined />}
+          <CheckoutCounter
+            icon={<PlusCircleOutlined style={{ fontSize: "2rem" }} />}
             onClick={() => fetchProductStart(key) }
-            type="text"
           />
         </ConfigProvider>
       ),
@@ -83,7 +83,7 @@ const Checkout: React.FC<CheckoutProps> = ({ popup }) => {
         compare: (a, b) => (a.quantity - b.quantity),
         multiple: 3,
       },
-      width: popup ? 35 : 105,
+      width: popup ? '17rem' : '30rem',
       align: 'center',
     },
     {
@@ -97,7 +97,7 @@ const Checkout: React.FC<CheckoutProps> = ({ popup }) => {
         compare: (a, b) => (a.price * a.quantity - b.price * b.quantity),
         multiple: 3,
       },
-      width: popup ? 30 : 80,
+      width: popup ? '14rem' : '25rem',
       align: 'center',
     },
     {
@@ -108,12 +108,12 @@ const Checkout: React.FC<CheckoutProps> = ({ popup }) => {
         <ConfigProvider theme={redTheme}>
           <Button
             type="link"
-            icon={<CloseSquareFilled style={{ fontSize: '32px' }} />}
+            icon={<CloseSquareFilled style={{ fontSize: "3.2rem" }} />}
             onClick={() => removeCartItem(key)}
           />
         </ConfigProvider>
       ),
-      width: popup ? 30 : 80,
+      width: popup ? '13rem' : '20rem',
       align: 'center',
     },
   ];
@@ -133,9 +133,9 @@ const Checkout: React.FC<CheckoutProps> = ({ popup }) => {
         theme={orangeTheme}
         renderEmpty={() => <Empty description="You cart is empty" />}
       >
-        <Table
+        <CheckoutTable
           style={{
-            maxWidth: popup ? "60rem" : "90rem",
+            maxWidth: popup ? "90rem" : "150rem",
           }}
           scroll={ popup ? { y: "35rem", scrollToFirstRowOnChange: true } : undefined}
           columns={columns}
@@ -143,27 +143,21 @@ const Checkout: React.FC<CheckoutProps> = ({ popup }) => {
           pagination={false}
           bordered
           sticky
-          summary={() => {
-            const { Summary: { Row, Cell } } = Table;
-            return (
-              <Row>
-                <Cell index={0}><b>Total</b></Cell>
-                <Cell index={1} colSpan={3} align="right"><b>{total}₽</b></Cell>
-                <Cell index={2}>
-                  <Button
+          summary={() => (
+              <CheckoutRow>
+                <CheckoutCell index={0}>Total</CheckoutCell>
+                <CheckoutCell index={1} colSpan={3} align="right">{total}₽</CheckoutCell>
+                <CheckoutCell index={2}>
+                  <CheckoutButton
                     type="link"
                     onClick={() => clearCartItems()}
-                    style={{
-                      fontWeight: "bold",
-                      textAlign: "center",
-                    }}
                   >
                     Clear
-                  </Button>
-                </Cell>
-              </Row>
-            );
-          }}
+                  </CheckoutButton>
+                </CheckoutCell>
+              </CheckoutRow>
+            )
+          }
         />
       </ConfigProvider>
     </Flex>

@@ -3,12 +3,12 @@ import styled from 'styled-components';
 
 export const LogoWrapper = styled(Flex)`
   user-select: none;
-  gap: .5rem;
+  gap: 1rem;
 `;
 
 export const LogoTitle = styled.span`
   font-family: 'Satisfy', 'Style Script', sans-serif;
-  font-size: 2.6rem;
+  font-size: 3.2rem;
   color: var(--black-brown);
 `;
 

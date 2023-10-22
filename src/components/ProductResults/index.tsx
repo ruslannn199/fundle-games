@@ -93,7 +93,7 @@ const ProductResults = () => {
       <ConfigProvider theme={orangeTheme}>
         <Select
           showSearch
-          style={{ width: 300, marginBottom: 32 }}
+          style={{ width: "42rem", marginBottom: "4rem" }}
           placeholder="Choose category"
           filterOption={filterOption}
           filterSort={filterSort}

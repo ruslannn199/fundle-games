@@ -1,5 +1,11 @@
 import { Form, Input, ConfigProvider, Flex } from 'antd';
-import { FlagOutlined, HomeFilled, HomeOutlined, InsertRowRightOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
+import {
+  FlagOutlined,
+  HomeFilled, HomeOutlined,
+  InsertRowRightOutlined,
+  MailOutlined,
+  UserOutlined
+} from '@ant-design/icons';
 import { orangeTheme } from '../../utils/themes';
 import { useEffect, useState } from 'react';
 import CountrySearch from '../CountrySearch';
@@ -8,7 +14,6 @@ import PayButton from '../PayButton';
 import { CardElement, useStripe } from '@stripe/react-stripe-js';
 import { StripeCardElementOptions } from '@stripe/stripe-js';
 import { useElements } from '@stripe/react-stripe-js';
-import { stripeApi } from '../../utils';
 import { useTypedSelector } from '../../hooks';
 import { FormTitle } from '../../styles/Form';
 
@@ -94,7 +99,7 @@ const PaymentDetails: React.FC = () => {
     iconStyle: 'solid',
     style: {
       base: {
-        fontSize: '16px',
+        fontSize: '1.6rem',
       },
     },
     hidePostalCode: true,
@@ -125,7 +130,7 @@ const PaymentDetails: React.FC = () => {
           <Input
             prefix={<UserOutlined className="form__icon" />}
             placeholder="Recipient's full name"
-            style={{ width: 300 }}
+            style={{ width: "56rem" }}
           />
         </Form.Item>
 
@@ -139,7 +144,7 @@ const PaymentDetails: React.FC = () => {
           <Input
             prefix={<HomeOutlined className="form__icon" />}
             placeholder="Address Line 1 (or company name)"
-            style={{ width: 300 }}
+            style={{ width: "56rem" }}
           />
         </Form.Item>
 
@@ -147,7 +152,7 @@ const PaymentDetails: React.FC = () => {
           <Input
             prefix={<HomeFilled className="form__icon" />}
             placeholder="Address Line 2 (optional)"
-            style={{ width: 300 }}
+            style={{ width: "56rem" }}
           />
         </Form.Item>
 
@@ -161,7 +166,7 @@ const PaymentDetails: React.FC = () => {
           <Input
             prefix={<InsertRowRightOutlined className="form__icon" />}
             placeholder="City"
-            style={{ width: 300 }}
+            style={{ width: "56rem" }}
           />
         </Form.Item>
 
@@ -175,7 +180,7 @@ const PaymentDetails: React.FC = () => {
           <Input
             prefix={<FlagOutlined className="form__icon" />}
             placeholder="State/province/region"
-            style={{ width: 300 }}
+            style={{ width: "56rem" }}
           />
         </Form.Item>
 
@@ -189,7 +194,7 @@ const PaymentDetails: React.FC = () => {
           <Input
             prefix={<MailOutlined className="form__icon" />}
             placeholder="Postal code/ZIP"
-            style={{ width: 300 }}
+            style={{ width: "56rem" }}
             pattern="[0-9]*"
           />
         </Form.Item>
@@ -210,7 +215,7 @@ const PaymentDetails: React.FC = () => {
           <Input
             prefix={<UserOutlined className="form__icon" />}
             placeholder="Name on Card"
-            style={{ width: 300 }}
+            style={{ width: "56rem" }}
           />
         </Form.Item>
 
@@ -224,7 +229,7 @@ const PaymentDetails: React.FC = () => {
           <Input
             prefix={<HomeOutlined className="form__icon" />}
             placeholder="Address Line 1 (or company name)"
-            style={{ width: 300 }}
+            style={{ width: "56rem" }}
           />
         </Form.Item>
 
@@ -232,7 +237,7 @@ const PaymentDetails: React.FC = () => {
           <Input
             prefix={<HomeFilled className="form__icon" />}
             placeholder="Address Line 2 (optional)"
-            style={{ width: 300 }}
+            style={{ width: "56rem" }}
           />
         </Form.Item>
 
@@ -246,7 +251,7 @@ const PaymentDetails: React.FC = () => {
           <Input
             prefix={<InsertRowRightOutlined className="form__icon" />}
             placeholder="City"
-            style={{ width: 300 }}
+            style={{ width: "56rem" }}
           />
         </Form.Item>
 
@@ -260,7 +265,7 @@ const PaymentDetails: React.FC = () => {
           <Input
             prefix={<FlagOutlined className="form__icon" />}
             placeholder="State/Province/Region"
-            style={{ width: 300 }}
+            style={{ width: "56rem" }}
           />
         </Form.Item>
 
@@ -274,7 +279,7 @@ const PaymentDetails: React.FC = () => {
           <Input
             prefix={<MailOutlined className="form__icon" />}
             placeholder="Postal code/ZIP"
-            style={{ width: 300 }}
+            style={{ width: "56rem" }}
             pattern="[0-9]*"
           />
         </Form.Item>

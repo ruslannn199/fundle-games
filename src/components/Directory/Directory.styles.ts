@@ -2,7 +2,7 @@ import { Button, Flex } from 'antd';
 import styled from 'styled-components';
 
 interface DirectoryItemProps {
-  backgroundImage: string;
+  image: string;
 }
 
 interface DirectoryTitleProps {
@@ -21,7 +21,7 @@ export const DirectoryItem = styled(Flex)<DirectoryItemProps>`
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background-image: url(${props => props.backgroundImage});
+  background-image: url(${props => props.image});
 
   &::after {
     content: '';
@@ -38,7 +38,7 @@ export const DirectoryItem = styled(Flex)<DirectoryItemProps>`
 export const DirectoryTitle = styled.h2<DirectoryTitleProps>`
   color: ${props => props.color || '#000'};
   -webkit-text-stroke: .1rem var(--tan);
-  font-size: 3.6rem;
+  font-size: 5rem;
   text-transform: uppercase;
   z-index: 2;
 `;

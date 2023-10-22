@@ -47,7 +47,7 @@ const AppHeader: React.FC = () => {
             <Logo />
           </Link>
           <ConfigProvider theme={blackTheme}>
-            <Search style={{ width: 304 }} enterButton onSearch={handleSearch} />
+            <Search style={{ width: "46rem" }} enterButton onSearch={handleSearch} />
           </ConfigProvider>
           <ConfigProvider theme={orangeTheme}>
             <NavigationMenuWrapper />

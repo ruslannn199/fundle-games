@@ -21,7 +21,7 @@ const Directory: React.FC = () => {
 
   return (
     <DirectoryWrapper justify="center" align="center">
-      <DirectoryItem vertical align="center" justify="center" backgroundImage={NewGamesImg}>
+      <DirectoryItem vertical align="center" justify="center" image={NewGamesImg}>
         <DirectoryTitle>Новинки</DirectoryTitle>
         <ConfigProvider theme={blackTheme}>
           <Link to="search/?category=new-products&page=1" onClick={() => redirect('New products')}>
@@ -31,7 +31,7 @@ const Directory: React.FC = () => {
           </Link>
         </ConfigProvider>
       </DirectoryItem>
-      <DirectoryItem vertical align="center" justify="center" backgroundImage={PopularGamesImg}>
+      <DirectoryItem vertical align="center" justify="center" image={PopularGamesImg}>
         <DirectoryTitle color="white">Популярные</DirectoryTitle>
         <ConfigProvider theme={blackTheme}>
           <Link to="search/?category=popular&page=1" onClick={() => redirect('Popular')}>

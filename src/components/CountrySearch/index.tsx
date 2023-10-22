@@ -2,7 +2,11 @@ import { Select } from 'antd';
 import { countryOptions } from '../../utils';
 import { DefaultOptionType } from 'antd/es/select';
 
-const CountrySearch: React.FC<Record<'onChange', (value: string) => void>> = ({ onChange }) => {
+interface CountrySearchProps {
+  onChange: (value: string) => void;
+}
+
+const CountrySearch: React.FC<CountrySearchProps> = ({ onChange }) => {
   const filterOption = (input: string, option?: { label: string; value: string }) =>
   (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
@@ -14,7 +18,7 @@ const CountrySearch: React.FC<Record<'onChange', (value: string) => void>> = ({ 
 
   return (
     <Select
-      style={{ width: 300 }}
+      style={{ width: "56rem" }}
       showSearch
       placeholder="Select country"
       filterOption={filterOption}
