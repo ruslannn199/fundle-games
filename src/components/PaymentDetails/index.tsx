@@ -68,7 +68,7 @@ const PaymentDetails: React.FC = () => {
               }
             },
           },
-          return_url: 'http://localhost:3000/',
+          return_url: 'http://localhost:3000/dashboard',
           shipping: {
             name: recipientName,
             address: {

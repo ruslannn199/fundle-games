@@ -1,11 +1,11 @@
 // Axios
 import axios from 'axios';
 // Types
-import type { FetchProductParams, ProductData, Products } from '../types/interfaces';
-import type { ApiResponse } from '../types/types';
+import type { FetchProductParams, ProductData, Products } from '../../types/interfaces';
+import type { ApiResponse } from '../../types/types';
 import type { AxiosResponse } from 'axios';
 // Utils
-import { makeComplexProductFetchURL, makeFetchURL } from '.';
+import { makeComplexProductFetchURL, makeFetchURL } from '../../utils';
 
 const filterFetchProductByParams = (params: FetchProductParams): string => {
   const { filters, persistProducts, pageSize } = params;

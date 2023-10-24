@@ -1,6 +1,6 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 import CategoriesActionsCreators, { ActionType } from './categories.actions';
-import { handleFetchCategories } from '../../utils';
+import { handleFetchCategories } from './categories.utils';
 import { CategoryData } from '../../types/interfaces';
 
 const { setMultipleCategories } = CategoriesActionsCreators;

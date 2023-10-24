@@ -8,6 +8,7 @@ import {
   CategoriesActionsCreators,
   CartActionCreators,
   StripeActionCreators,
+  OrdersActionsCreators,
 } from '../redux';
 
 export const useUserActions = () => {
@@ -49,5 +50,12 @@ export const useStripeActions = () => {
   const dispatch = useDispatch();
   return useMemo(() => {
     return bindActionCreators(StripeActionCreators, dispatch)
+  }, [dispatch]);
+}
+
+export const useOrdersActions = () => {
+  const dispatch = useDispatch();
+  return useMemo(() => {
+    return bindActionCreators(OrdersActionsCreators, dispatch)
   }, [dispatch]);
 }

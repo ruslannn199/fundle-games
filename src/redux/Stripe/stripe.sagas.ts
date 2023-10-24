@@ -1,14 +1,16 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
-import { StripeClientResponse } from '../../types/interfaces';
+import { Order, StripeClientResponse } from '../../types/interfaces';
 import { handleFetchClient } from './stripe.utils';
 import LoadingActionCreators from '../Loading/loading.actions';
 import StripeActionCreators, { ActionType, ConfirmCardPaymentStartAction, FetchClientStartAction, RetrievePaymentStartAction } from './stripe.actions';
 import { PaymentIntentResult } from '@stripe/stripe-js';
 import CartActionCreators from '../Cart/cart.actions';
+import OrdersActionsCreators from '../Orders/orders.actions';
 
 const { setClient, setPaymentStatus } = StripeActionCreators;
 const { clearCartItems } = CartActionCreators;
 const { toggleLoadStart } = LoadingActionCreators;
+const { saveOrderHistoryStart } = OrdersActionsCreators;
 
 export function* fetchClient({ payload }: FetchClientStartAction) {
   try {
@@ -55,7 +57,14 @@ export function* confirmCardPayment({
           handleActions: false,
         }
       );
-      console.log(result);
+      const configOrder: Order = {
+        orderTotal: total,
+        orderItems: cartData.map((({ id, thumbnail, productName, price, quantity }) => ({
+          id, thumbnail, productName, price, quantity
+        }))),
+        documentId: crypto.randomUUID(),
+      }
+      yield put(saveOrderHistoryStart(configOrder));
       yield put(clearCartItems());
     }
     yield put(toggleLoadStart(false));

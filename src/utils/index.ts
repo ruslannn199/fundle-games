@@ -1,9 +1,5 @@
 // Types
 import type { CurrentUser, ProductURLOptions } from '../types/interfaces';
-// Utils
-import { handleFetchProducts, handleAddProduct, handleDeleteProducts } from './products.utils';
-import { handleFetchCategories } from './categories.utils';
-import { handleAddToCart } from '../redux/Cart/cart.utils';
 import axios from 'axios';
 
 const checkUserIsAdmin = (currentUser: CurrentUser | null): boolean => {
@@ -23,14 +19,16 @@ const makeComplexProductFetchURL = (
     { pageSize, filters }: ProductURLOptions
   ): string => (
   `${
-    makeFetchURL('products?order=createdDate,desc')
+    filters?.query
+      ? makeFetchURL('products?')
+      : makeFetchURL('products?order=createdDate,desc')
   }${
     filters?.category
       ? `&filter=category,cs,${filters.category}`
       : ''
   }${
     filters?.query
-      ? `&filter1=productName,cs,${filters.query}&filter2=description,cs,${filters.query}`
+      ? `&search=${filters.query}`
       : ''
   }${
     filters?.currentPage
@@ -85,11 +83,6 @@ export {
   checkUserIsAdmin,
   makeFetchURL,
   makeComplexProductFetchURL,
-  handleFetchProducts,
-  handleFetchCategories,
-  handleDeleteProducts,
-  handleAddProduct,
-  handleAddToCart,
   convertToMySQLDateTime,
   convertToURLAddress,
   convertFromURLAddress,

@@ -1,9 +1,9 @@
 import { call, put } from 'redux-saga/effects';
-import { userAuth, docRefType, docSnapshotDataType } from '../types/types';
-import { auth, handleUserProfile } from './firebase.utils';
+import { userAuth, docRefType, docSnapshotDataType } from '../../types/types';
+import { auth, handleUserProfile } from '../../utils/firebase.utils';
 import { getDoc } from 'firebase/firestore';
 import { sendPasswordResetEmail } from 'firebase/auth';
-import ProductsActionCreators from '../redux/User/user.actions';
+import ProductsActionCreators from './user.actions';
 
 const { signInSuccess } = ProductsActionCreators;
 

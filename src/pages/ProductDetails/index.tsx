@@ -1,11 +1,11 @@
 // Components
 import { Flex } from 'antd';
-import ProductCard from '../../components/ProductCard';
+import Product from '../../components/Product';
 
 const ProductDetails: React.FC = () => {
   return (
     <Flex justify="center">
-      <ProductCard />
+      <Product />
     </Flex>
   );
 }

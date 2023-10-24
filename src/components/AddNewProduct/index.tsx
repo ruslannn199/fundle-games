@@ -46,6 +46,7 @@ const AddNewProduct: React.FC = () => {
   }: ProductFormData): void => {
     hideModal();
     addProductStart({
+      id: crypto.randomUUID(),
       category: productCategory,
       productName: productName,
       price: parseFloat(productPrice),
@@ -106,7 +107,7 @@ const AddNewProduct: React.FC = () => {
               <Select
                 showSearch
                 mode="tags"
-                style={{ width: "40rem" }}
+                style={{ width: "60rem" }}
                 placeholder="Choose category"
                 filterOption={(input, option): boolean => (typeof option?.label === 'string' && option.label.includes(input))}
                 filterSort={(optionA, optionB): number => {
@@ -125,7 +126,7 @@ const AddNewProduct: React.FC = () => {
           >
             <Input
               placeholder="Enter name"
-              style={{ width: "40rem" }}
+              style={{ width: "60rem" }}
               type="text"
             />
           </Form.Item>
@@ -136,7 +137,7 @@ const AddNewProduct: React.FC = () => {
           >
             <Input
               placeholder="Enter image URL"
-              style={{ width: "40rem" }}
+              style={{ width: "60rem" }}
               type="url"
             />
           </Form.Item>
@@ -147,7 +148,7 @@ const AddNewProduct: React.FC = () => {
           >
             <Input
               placeholder="Enter price"
-              style={{ width: "40rem" }}
+              style={{ width: "60rem" }}
               type="number"
               min={0}
               step={0.01}

@@ -3,7 +3,7 @@ import { EmailSignInStartAction, EmailSignUpStartAction, PasswordRecoveryStartAc
 import { GoogleProvider, auth, getCurrentUser } from '../../utils/firebase.utils';
 import { put, all, call, takeLatest } from 'redux-saga/effects';
 import { ActionType } from './user.actions';
-import { getSnapshotFromUserAuth, handleResetPasswordAPI } from '../../utils/user.utils';
+import { getSnapshotFromUserAuth, handleResetPasswordAPI } from './user.utils';
 import { userAuth } from '../../types/types';
 import UserActionsCreators from './user.actions';
 import LoadingActionCreators from '../Loading/loading.actions';

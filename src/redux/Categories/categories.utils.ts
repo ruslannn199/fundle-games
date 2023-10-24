@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { AxiosResponse } from 'axios';
-import { ApiResponse } from '../types/types';
-import { CategoryData } from '../types/interfaces';
-import { makeFetchURL } from '.';
+import { ApiResponse } from '../../types/types';
+import { CategoryData } from '../../types/interfaces';
+import { makeFetchURL } from '../../utils';
 
 export const handleFetchCategories = async () => {
   try {

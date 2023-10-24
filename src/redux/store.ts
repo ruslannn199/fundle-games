@@ -11,6 +11,7 @@ import cartReducer from './Cart/cart.reducer';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import stripeReducer from './Stripe/stripe.reducer';
+import ordersReducer from './Orders/orders.reducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   productsData: productsReducer,
   user: userReducer,
   stripe: stripeReducer,
+  ordersData: ordersReducer,
 });
 
 export const store = configureStore({

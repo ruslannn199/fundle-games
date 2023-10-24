@@ -2,12 +2,12 @@ import { takeLatest, put, all, call } from 'redux-saga/effects';
 import { AddProductStartAction, DeleteProductStartAction, FetchProductStartAction, FetchProductsStartAction } from './products.actions';
 import { auth } from '../../utils/firebase.utils';
 import type { ProductData, Products } from '../../types/interfaces';
-import { handleAddProduct, handleDeleteProducts, handleFetchProducts } from '../../utils';
+import { handleAddProduct, handleDeleteProducts, handleFetchProducts } from './products.utils';
 import ProductsActionCreators from './products.actions';
 import LoadingActionCreators from '../Loading/loading.actions';
 import { ActionType } from './products.actions';
 import { convertToMySQLDateTime } from '../../utils';
-import { handleFetchProduct } from '../../utils/products.utils';
+import { handleFetchProduct } from './products.utils';
 import { redirect } from 'react-router-dom';
 
 const { fetchProductsStart, setProduct, setMultipleProducts } = ProductsActionCreators;
@@ -21,6 +21,7 @@ export function* addProduct({ payload }: AddProductStartAction) {
 
       yield handleAddProduct({
         ...payload,
+        id: crypto.randomUUID(),
         productAdminUserID: auth.currentUser.uid,
         createdDate: timeStamp,
       });

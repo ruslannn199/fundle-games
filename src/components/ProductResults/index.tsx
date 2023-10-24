@@ -1,5 +1,5 @@
 // Components
-import Product from '../Product';
+import ProductCard from '../ProductCard';
 import { ConfigProvider, Flex, Row, Select, Spin } from 'antd';
 import Spinner from '../Spinner';
 import LoadMoreButton from '../LoadMore';
@@ -37,7 +37,6 @@ const ProductResults = () => {
     query: convertFromURLAddress(searchParams.get('query') || ''),
   }), [searchParams]);
 
-  // TODO implement php-rest-api search
   useEffect(() => {
     const persistProducts = filters.currentPage > 1 ? products.data : [];
     fetchProductsStart({
@@ -102,15 +101,15 @@ const ProductResults = () => {
           onSelect={handleFilter}
         />
       </ConfigProvider>
-      <Row gutter={[0, 32]} align="middle" style={{ width: "192rem" }}>
+      <Row gutter={[0, 32]} align="middle" style={{ width: "180rem" }}>
         {
           products
             .data
             .map((product: ProductData, position: number) => ((
-              <Product
+              <ProductCard
                 productConfig={product}
                 position={position}
-                key={product?.id}
+                key={product.id}
               />
             )))
         }

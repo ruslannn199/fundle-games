@@ -7,6 +7,7 @@ import { useCartActions, useProductsActions } from '../../hooks/useActions';
 import { useEffect } from 'react';
 import { CheckoutCell, CheckoutRow, CheckoutTable } from './Checkout.styles';
 import CheckoutCounter from '../CheckoutCounter';
+import { useLocation } from 'react-router-dom';
 
 interface CartTableColumns {
   key: string;
@@ -25,6 +26,7 @@ const Checkout: React.FC<CheckoutProps> = ({ popup }) => {
   const { product } = useTypedSelector((state) => (state.productsData));
   const { fetchProductStart, setProduct } = useProductsActions();
   const { addToCart, removeCartItem, reduceCartItem, clearCartItems } = useCartActions();
+  const location = useLocation();
 
   const handleDecrease = (id: string, quantity: number) => {
     if (quantity === 1) {
@@ -35,10 +37,12 @@ const Checkout: React.FC<CheckoutProps> = ({ popup }) => {
   }
 
   useEffect(() => {
-    if (product) {
-      addToCart(product);
+    if (location.pathname.includes('checkout')) {
+      if (product) {
+        addToCart(product);
+      }
+      return () => { setProduct(null) };
     }
-    return () => { setProduct(null) };
   }, [product]);
 
   const columns: ColumnsType<CartTableColumns> = [

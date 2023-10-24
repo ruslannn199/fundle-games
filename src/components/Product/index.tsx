@@ -1,38 +1,53 @@
 // Components
-import { Card, Col, Image } from 'antd';
-import { Link } from 'react-router-dom';
+import { Flex, Image } from 'antd';
 import AddToCart from '../AddToCart';
-// Types
-import type { ProductData } from '../../types/interfaces';
+// DOMSanitize
+import DOMPurify from 'isomorphic-dompurify';
+// Hooks
+import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useProductsActions, useTypedSelector } from '../../hooks';
 
-type ProductElementPropsFromData = Record<'productConfig', ProductData>;
+const Product: React.FC = () => {
+  const { productId } = useParams();
+  const { fetchProductStart, setProduct } = useProductsActions();
+  const { product } = useTypedSelector((state) => (state.productsData));
 
-interface ProductElementProps extends ProductElementPropsFromData {
-  position: number;
-}
+  useEffect(() => {
+    if (productId) {
+      fetchProductStart(productId);
+    }
+    return () => { setProduct(null) };
+  }, [fetchProductStart, productId]);
 
-const Product: React.FC<ProductElementProps> = ({ productConfig }) => {
-  const { Meta } = Card;
-  const { thumbnail, price, productName, id } = productConfig;
+  if (!product) return null;
 
-  return (!(thumbnail || productName || typeof price !== 'undefined'))
-    ? null
-    : (
-      <Col
-        md={6} sm={8} xs={12}
-        style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-        <Card
-          hoverable
-          style={{ width: "32rem", position: "relative" }}
-          cover={<Image alt={productName} src={thumbnail} />}
-          actions={[ <AddToCart product={productConfig} /> ]}
-        >
-          <Link to={`/products/${id}`} style={{ height: "6.1138rem" }}>
-            <Meta title={productName} description={`${price}₽`} />
-          </Link>
-        </Card>
-      </Col>
-    );
+  const cleanDescription = DOMPurify.sanitize(product.description);
+
+  return (
+    <Flex vertical align="center" style={{ padding: "10rem" }}>
+      <Flex justify="space-between" gap={10}>
+        <Flex vertical>
+          <h1>{product.productName}</h1>
+          <Image
+            width={400}
+            height={400}
+            src={product.thumbnail}
+            alt={product.productName}
+          />
+        </Flex>
+        <Flex vertical style={{ width: "24rem" }} align="flex-end">
+          <h4>Цена:</h4>
+          <h3>{product.price}₽</h3>
+          <AddToCart product={product} />
+        </Flex>
+      </Flex>
+      <div
+        style={{ alignSelf: "flex-start" }}
+        dangerouslySetInnerHTML={{ __html: cleanDescription }}
+      />
+    </Flex>
+  );
 }
 
 export default Product;

@@ -16,7 +16,7 @@ const Payment: React.FC = () => {
 
   useEffect(() => {
     if (cartItemsAmount < 1) {
-      navigate('/');
+      navigate('/dashboard');
     }
   }, [cartItemsAmount]);
 

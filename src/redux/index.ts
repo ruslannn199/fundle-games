@@ -4,6 +4,7 @@ import LoadingActionCreators from './Loading/loading.actions';
 import CategoriesActionsCreators from './Categories/categories.actions';
 import CartActionCreators from './Cart/cart.actions';
 import StripeActionCreators from './Stripe/stripe.actions';
+import OrdersActionsCreators from './Orders/orders.actions';
 
 export {
   UserActionCreators,
@@ -12,6 +13,7 @@ export {
   CategoriesActionsCreators,
   CartActionCreators,
   StripeActionCreators,
+  OrdersActionsCreators,
 };
 
 export * as default from './';

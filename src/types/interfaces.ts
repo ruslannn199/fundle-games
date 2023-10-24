@@ -27,21 +27,24 @@ export interface UserCredentials {
   confirmPassword: string;
 }
 
-export interface Products {
-  data: ProductData[];
-  isLastPage: boolean;
-}
-
-export interface ProductData {
-  category: string[];
+export interface ProductMainData {
   productName: string;
-  description: string;
   thumbnail: string;
   price: number;
   quantity: number;
-  id?: string;
+  id: string;
+}
+
+export interface ProductData extends ProductMainData {
+  category: string[];
+  description: string;
   productAdminUserID?: string;
   createdDate?: string;
+}
+
+export interface Products {
+  data: ProductData[];
+  isLastPage: boolean;
 }
 
 export interface ProductFormData {
@@ -107,4 +110,12 @@ export interface RetrievePaymentActionPayload extends FetchClientActionPayload {
 
 export interface ConfirmCardPaymentActionPayload extends RetrievePaymentActionPayload {
   cardPaymentData: RequiredConfirmCardPaymentData;
+}
+
+export interface Order {
+  documentId: string;
+  orderTotal: number;
+  orderItems: ProductMainData[];
+  orderCreatedDate?: string;
+  orderUserId?: string;
 }
