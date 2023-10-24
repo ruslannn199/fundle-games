@@ -2,7 +2,7 @@ import { PayloadAction, createReducer } from '@reduxjs/toolkit';
 import { Order } from '../../types/interfaces';
 import OrdersActionsCreators from './orders.actions';
 
-const { setUserOrderHistory } = OrdersActionsCreators;
+const { setUserOrderHistory, setOrderDetails } = OrdersActionsCreators;
 
 interface OrdersState {
   orderHistory: Order[];
@@ -19,6 +19,10 @@ const ordersReducer = createReducer(initialState, (builder) => {
     .addCase(
       setUserOrderHistory,
       (state, { payload }: PayloadAction<Order[]>) => ({ ...state, orderHistory: payload }),
+    )
+    .addCase(
+      setOrderDetails,
+      (state, { payload }: PayloadAction<Order>) => ({ ...state, orderDetails: payload }),
     )
 });
 

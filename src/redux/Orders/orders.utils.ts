@@ -15,3 +15,9 @@ export const handleGetUserOrderHistory = async (uuid: string): Promise<Order[]> 
   const { data: { records } }: AxiosResponse<ApiResponse<Order[]>> = await axios.get(url);
   return records;
 }
+
+export const handleGetOrderDetails = async (orderId: string): Promise<Order> => {
+  const url: string = makeFetchURL(`orders/${orderId}`);
+  const { data }: AxiosResponse<Order> = await axios.get(url);
+  return data;
+}

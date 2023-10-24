@@ -5,6 +5,8 @@ export enum ActionType {
   SAVE_ORDER_HISTORY_START = 'SAVE_ORDER_HISTORY_START',
   GET_USER_ORDER_HISTORY_START = 'GET_USER_ORDER_HISTORY_START',
   SET_USER_ORDER_HISTORY = 'SET_USER_ORDER_HISTORY',
+  GET_ORDER_DETAILS_START = 'GET_ORDER_DETAILS_START',
+  SET_ORDER_DETAILS = 'SET_ORDER_DETAILS',
 }
 
 export interface SaveOrderHistoryStartAction {
@@ -17,9 +19,16 @@ export interface GetUserOrderHistoryStartAction {
   payload: string;
 }
 
+export interface GetOrderDetailsStartAction {
+  type: ActionType.GET_ORDER_DETAILS_START;
+  payload: string;
+}
+
 const OrdersActionsCreators = {
   saveOrderHistoryStart: createAction<Order>(ActionType.SAVE_ORDER_HISTORY_START),
+  getOrderDetailsStart: createAction<string>(ActionType.GET_ORDER_DETAILS_START),
   getUserOrderHistoryStart: createAction<string>(ActionType.GET_USER_ORDER_HISTORY_START),
+  setOrderDetails: createAction<Order | null>(ActionType.SET_ORDER_DETAILS),
   setUserOrderHistory: createAction<Order[]>(ActionType.SET_USER_ORDER_HISTORY),
 }
 

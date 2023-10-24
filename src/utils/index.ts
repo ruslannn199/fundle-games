@@ -41,6 +41,10 @@ const convertToMySQLDateTime = (date: Date): string => (
   date.toISOString().slice(0, 19).replace('T', ' ')
 );
 
+const convertFromMySQLDateTime = (dateStringified: string): string => (
+  new Intl.DateTimeFormat('ru-RU').format(new Date(dateStringified))
+);
+
 const convertToURLAddress = (str: string): string => (
   str.toLowerCase().replaceAll(' ', '-')
 );
@@ -84,6 +88,7 @@ export {
   makeFetchURL,
   makeComplexProductFetchURL,
   convertToMySQLDateTime,
+  convertFromMySQLDateTime,
   convertToURLAddress,
   convertFromURLAddress,
   countryOptions,

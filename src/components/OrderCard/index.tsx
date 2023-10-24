@@ -1,13 +1,18 @@
-import { Flex } from 'antd';
+import { ConfigProvider, Flex } from 'antd';
 import { Order } from '../../types/interfaces';
-import { OrderCardItemsImage, OrderCardItemsInfo, OrderCardMore, OrderCardWrapper } from './OrderCart.styles';
+import { OrderCardDocumentId, OrderCardItemsImage, OrderCardItemsInfo, OrderCardMore, OrderCardNeutralLink, OrderCardTimestamp, OrderCardTotal, OrderCardWrapper } from './OrderCart.styles';
 import { Link } from 'react-router-dom';
+import { convertFromMySQLDateTime } from '../../utils';
+import Paragraph from 'antd/es/typography/Paragraph';
+import { orangeTheme } from '../../utils/themes';
 
 interface OrderCardProps extends React.RefAttributes<HTMLDivElement> {
-  items: Order;
+  items: Required<Order>;
 }
 
 const OrderCard: React.FC<OrderCardProps> = ({ items }) => {
+  const orderIdLink = `/order/${items.documentId}`;
+
   return (
     <OrderCardWrapper
       align="center"
@@ -15,19 +20,28 @@ const OrderCard: React.FC<OrderCardProps> = ({ items }) => {
       gap="5rem"
     >
       <Flex vertical gap="1rem" justify="flex-start" align="flex-start">
-        <h3>Заказ от {items.orderCreatedDate}</h3>
+        <OrderCardTimestamp to={orderIdLink}>Заказ от {convertFromMySQLDateTime(items.orderCreatedDate)}</OrderCardTimestamp>
+        <OrderCardNeutralLink to={orderIdLink}>
+          № заказа:
+          <ConfigProvider theme={orangeTheme}>
+            <OrderCardDocumentId copyable={{ text: items.documentId.replaceAll('-', ' ')}}>
+              {items.documentId.replaceAll('-', ' ')}
+            </OrderCardDocumentId>
+          </ConfigProvider>
+        </OrderCardNeutralLink>
       </Flex>
       <OrderCardItemsInfo vertical gap="1rem" align="flex-end">
-        <h3>{items.orderTotal}₽</h3>
+        <OrderCardTotal to={orderIdLink}>{items.orderTotal}₽</OrderCardTotal>
         <Flex gap="1rem">
           {...(items.orderItems
             .slice(0, 4)
             .map((item, index) => (
-              index < 3
-                ? <Link to={`/products/${item.id}`}>
-                    <OrderCardItemsImage src={item.thumbnail} alt="item" />
-                  </Link>
-                : <OrderCardMore>+{items.orderItems.length - 3}</OrderCardMore>
+              <OrderCardNeutralLink to={orderIdLink}>
+                {index < 3
+                  ? <OrderCardItemsImage src={item.thumbnail} alt="item" />
+                  : <OrderCardMore>+{items.orderItems.length - 3}</OrderCardMore>
+                }
+              </OrderCardNeutralLink>
           )))}
         </Flex>
       </OrderCardItemsInfo>

@@ -1,13 +1,13 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
-import OrdersActionsCreators, { ActionType, GetUserOrderHistoryStartAction, SaveOrderHistoryStartAction } from './orders.actions';
-import { handleGetUserOrderHistory, handleSaveOrder } from './orders.utils';
+import OrdersActionsCreators, { ActionType, GetOrderDetailsStartAction, GetUserOrderHistoryStartAction, SaveOrderHistoryStartAction } from './orders.actions';
+import { handleGetOrderDetails, handleGetUserOrderHistory, handleSaveOrder } from './orders.utils';
 import { auth } from '../../utils/firebase.utils';
 import { convertToMySQLDateTime } from '../../utils';
 import LoadingActionCreators from '../Loading/loading.actions';
 import { Order } from '../../types/interfaces';
 
 const { toggleLoadStart } = LoadingActionCreators;
-const { setUserOrderHistory } = OrdersActionsCreators;
+const { setUserOrderHistory, setOrderDetails } = OrdersActionsCreators;
 
 export function* saveOrderHistory({ payload }: SaveOrderHistoryStartAction) {
   try {
@@ -35,6 +35,17 @@ export function* getUserOrderHistory({ payload }: GetUserOrderHistoryStartAction
   }
 }
 
+export function* getOrderDetails({ payload }: GetOrderDetailsStartAction) {
+  try {
+    yield put(toggleLoadStart(true));
+    const order: Order = yield handleGetOrderDetails(payload);
+    yield put(setOrderDetails(order));
+    yield put(toggleLoadStart(false));
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 export function* onSaveOrderHistoryStart() {
   yield takeLatest(ActionType.SAVE_ORDER_HISTORY_START, saveOrderHistory);
 }
@@ -43,9 +54,14 @@ export function* onGetUserOrderHistoryStart() {
   yield takeLatest(ActionType.GET_USER_ORDER_HISTORY_START, getUserOrderHistory);
 }
 
+export function* onGetOrderDetailsStart() {
+  yield takeLatest(ActionType.GET_ORDER_DETAILS_START, getOrderDetails);
+}
+
 export default function* ordersSagas() {
   yield all([
     call(onSaveOrderHistoryStart),
     call(onGetUserOrderHistoryStart),
+    call(onGetOrderDetailsStart),
   ]);
 }

@@ -28,6 +28,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // Types
 import { NavigationItemsLabels } from './types/enums';
+import OrderDetails from './pages/OrderDetails';
 
 const { Content, Footer } = Layout;
 
@@ -76,17 +77,25 @@ const App: React.FC = () => {
               <Route
                 path="/dashboard"
                 element={
-                <WithAuth>
-                  <Dashboard />
-                </WithAuth>
+                  <WithAuth>
+                    <Dashboard />
+                  </WithAuth>
+                }
+              />
+              <Route
+                path="/order/:orderId"
+                element={
+                  <WithAuth>
+                    <OrderDetails />
+                  </WithAuth>
                 }
               />
               <Route
                 path="/admin"
                 element={
-                <WithAdminAuth>
-                  <Admin />
-                </WithAdminAuth>
+                  <WithAdminAuth>
+                    <Admin />
+                  </WithAdminAuth>
                 }
               />
               <Route
