@@ -1,5 +1,5 @@
 // Components
-import { Layout } from 'antd';
+import { ConfigProvider, Layout } from 'antd';
 import Header from './components/Header';
 import AdminToolbar from './components/AdminToolbar';
 // Hooks
@@ -28,7 +28,8 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // Types
 import { NavigationItemsLabels } from './types/enums';
-import OrderDetails from './pages/OrderDetails';
+import OrdersList from './pages/OrderList';
+import { fontTheme } from './utils/themes';
 
 const { Content, Footer } = Layout;
 
@@ -42,72 +43,74 @@ const App: React.FC = () => {
   return (
     <PersistGate persistor={persistor}>
       <Router>
-        <Layout style={{ minHeight: "100vh" }}>
-          <AdminToolbar />
-          <Header />
-          <Content>
-            <Routes>
-              <Route path="/" element={<Homepage />} />
-              <Route path="/search" element={<Search />} />
-              <Route
-                path="/products/:productId"
-                element={<ProductDetails />}
-              />
-              <Route path="/cart" element={<Cart />} />
-              <Route
-                path="/payment"
-                element={
-                  <WithCartItems>
-                    <Payment />
-                  </WithCartItems>
-                }
-              />
-              <Route
-                path={`/${NavigationItemsLabels.REGISTRATION}`}
-                element={<Registration />}
-              />
-              <Route
-                path={`/${NavigationItemsLabels.LOGIN}`}
-                element={<Login />}
-              />
-              <Route
-                path="/recovery"
-                element={<Recovery />}
-              />
-              <Route
-                path="/dashboard"
-                element={
-                  <WithAuth>
-                    <Dashboard />
-                  </WithAuth>
-                }
-              />
-              <Route
-                path="/order/:orderId"
-                element={
-                  <WithAuth>
-                    <OrderDetails />
-                  </WithAuth>
-                }
-              />
-              <Route
-                path="/admin"
-                element={
-                  <WithAdminAuth>
-                    <Admin />
-                  </WithAdminAuth>
-                }
-              />
-              <Route
-                path="/*"
-                element={<NotFound />}
-              />
-            </Routes>
-          </Content>
-          <Footer>
-            © Ruslan Kamenskiy 2023
-          </Footer>
-        </Layout>
+        <ConfigProvider theme={fontTheme}>
+          <Layout style={{ minHeight: "100vh" }}>
+            <AdminToolbar />
+            <Header />
+            <Content>
+              <Routes>
+                <Route path="/" element={<Homepage />} />
+                <Route path="/search" element={<Search />} />
+                <Route
+                  path="/products/:productId"
+                  element={<ProductDetails />}
+                />
+                <Route path="/cart" element={<Cart />} />
+                <Route
+                  path="/payment"
+                  element={
+                    <WithCartItems>
+                      <Payment />
+                    </WithCartItems>
+                  }
+                />
+                <Route
+                  path={`/${NavigationItemsLabels.REGISTRATION}`}
+                  element={<Registration />}
+                />
+                <Route
+                  path={`/${NavigationItemsLabels.LOGIN}`}
+                  element={<Login />}
+                />
+                <Route
+                  path="/recovery"
+                  element={<Recovery />}
+                />
+                <Route
+                  path="/dashboard"
+                  element={
+                    <WithAuth>
+                      <Dashboard />
+                    </WithAuth>
+                  }
+                />
+                <Route
+                  path="/order/:orderId"
+                  element={
+                    <WithAuth>
+                      <OrdersList />
+                    </WithAuth>
+                  }
+                />
+                <Route
+                  path="/admin"
+                  element={
+                    <WithAdminAuth>
+                      <Admin />
+                    </WithAdminAuth>
+                  }
+                />
+                <Route
+                  path="/*"
+                  element={<NotFound />}
+                />
+              </Routes>
+            </Content>
+            <Footer>
+              © Ruslan Kamenskiy 2023
+            </Footer>
+          </Layout>
+        </ConfigProvider>
       </Router>
     </PersistGate>
 )};

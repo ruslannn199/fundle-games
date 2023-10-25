@@ -8,6 +8,7 @@ export const OrderCardWrapper = styled(Flex)`
   border: 1px solid grey;
   border-radius: 2rem;
   padding: 3rem;
+  background-color: #fff;
 `;
 
 export const OrderCardNeutralLink = styled(Link)`
@@ -47,6 +48,8 @@ export const OrderCardItemsInfo = styled(Flex)`
 export const OrderCardItemsImage = styled.img`
   width: 12rem;
   height: 12rem;
+  outline: 2px solid #ccc;
+  border-radius: 2rem;
 `;
 
 export const OrderCardMore = styled.div`

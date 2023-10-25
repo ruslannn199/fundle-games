@@ -3,12 +3,14 @@ import { useOrdersActions } from '../../hooks/useActions';
 import { useTypedSelector } from '../../hooks';
 import { Spin } from 'antd';
 import Spinner from '../../components/Spinner';
-import OrderHistory from '../../components/OrderHistory';
+import OrderCard from '../../components/OrderCard';
+import { DashboardWrapper } from './Dashboard.styles';
 
 const Dashboard: React.FC = () => {
   const { isLoading } = useTypedSelector((state) => (state.loader));
   const { currentUser } = useTypedSelector((state) => (state.user));
   const { getUserOrderHistoryStart } = useOrdersActions();
+  const { orderHistory } = useTypedSelector((state) => (state.ordersData));
 
   useEffect(() => {
     if (currentUser) {
@@ -18,7 +20,9 @@ const Dashboard: React.FC = () => {
 
   return (
     <Spin spinning={isLoading} indicator={Spinner}>
-      <OrderHistory />
+      <DashboardWrapper vertical justify="center" align="center" gap="10rem">
+        {orderHistory.map((order, index) => (<OrderCard key={index} items={order} />))}
+      </DashboardWrapper>
     </Spin>
   );
 };

@@ -1,13 +1,11 @@
 import { ConfigProvider, Flex } from 'antd';
 import { Order } from '../../types/interfaces';
 import { OrderCardDocumentId, OrderCardItemsImage, OrderCardItemsInfo, OrderCardMore, OrderCardNeutralLink, OrderCardTimestamp, OrderCardTotal, OrderCardWrapper } from './OrderCart.styles';
-import { Link } from 'react-router-dom';
 import { convertFromMySQLDateTime } from '../../utils';
-import Paragraph from 'antd/es/typography/Paragraph';
 import { orangeTheme } from '../../utils/themes';
 
 interface OrderCardProps extends React.RefAttributes<HTMLDivElement> {
-  items: Required<Order>;
+  items: Order;
 }
 
 const OrderCard: React.FC<OrderCardProps> = ({ items }) => {
@@ -20,7 +18,9 @@ const OrderCard: React.FC<OrderCardProps> = ({ items }) => {
       gap="5rem"
     >
       <Flex vertical gap="1rem" justify="flex-start" align="flex-start">
-        <OrderCardTimestamp to={orderIdLink}>Заказ от {convertFromMySQLDateTime(items.orderCreatedDate)}</OrderCardTimestamp>
+        <OrderCardTimestamp to={orderIdLink}>
+          Заказ от {items.orderCreatedDate && convertFromMySQLDateTime(items.orderCreatedDate)}
+        </OrderCardTimestamp>
         <OrderCardNeutralLink to={orderIdLink}>
           № заказа:
           <ConfigProvider theme={orangeTheme}>
