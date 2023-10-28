@@ -8,6 +8,7 @@ import OrderDetails from '../../components/OrderDetails';
 
 const OrdersList: React.FC = () => {
   const { isLoading } = useTypedSelector((state) => (state.loader));
+  const { currentUser } = useTypedSelector((state) => (state.user));
   const { orderDetails } = useTypedSelector((state) => (state.ordersData));
   const { getOrderDetailsStart, setOrderDetails } = useOrdersActions();
   const { orderId } = useParams();
@@ -22,7 +23,11 @@ const OrdersList: React.FC = () => {
 
   return (
     <Spin spinning={isLoading} indicator={Spinner}>
-      { orderDetails ? <OrderDetails order={orderDetails} /> : null }
+      {
+        orderDetails && orderDetails.orderUserId === currentUser?.id
+          ? <OrderDetails order={orderDetails} />
+          : null
+      }
     </Spin>
   );
 }

@@ -12,7 +12,7 @@ const stripeApi = axios.create({
 });
 
 const makeFetchURL = (str: string): string => (
-  `http://localhost/fundle-games/api/records/${str}`
+  `https://fundle-games.infinityfreeapp.com/fundle-games/api/records/${str}`
 );
 
 const makeComplexProductFetchURL = (

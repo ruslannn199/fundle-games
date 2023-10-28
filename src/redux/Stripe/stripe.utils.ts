@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { FetchClientActionPayload, ProductData, StripeClientResponse } from '../../types/interfaces';
+import { FetchClientActionPayload, StripeClientResponse } from '../../types/interfaces';
 
 export const handleFetchClient = async ({ cartData, total }: FetchClientActionPayload) => {
   const { data }: AxiosResponse<StripeClientResponse> = await axios.post('http://localhost/fundle-games/checkout', {
