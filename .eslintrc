@@ -1,0 +1,30 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "react-app"
+  ],
+  "plugins": ["react", "react-hooks", "react-refresh"],
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "ignorePatterns": [
+    "dist",
+    ".eslintrc",
+    ".prettierrc"
+  ],
+  "env": {
+    "browser": true,
+    "es2020": true
+  },
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "react-refresh/only-export-components": [
+      "warn",
+      { "allowConstantExport": true }
+    ]
+  }
+}

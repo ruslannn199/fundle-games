@@ -50,7 +50,7 @@ export function* confirmCardPayment({
     yield put(toggleLoadStart(true));
     if (stripe) {
       const { clientSecret }: StripeClientResponse = yield handleFetchClient({ cartData, total });
-      const result: PaymentIntentResult = yield stripe.confirmCardPayment(
+      yield stripe.confirmCardPayment(
         clientSecret,
         cardPaymentData,
         {

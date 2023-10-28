@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { ConfirmCardPaymentActionPayload, FetchClientActionPayload, ProductData, RetrievePaymentActionPayload } from '../../types/interfaces';
+import { ConfirmCardPaymentActionPayload, FetchClientActionPayload, RetrievePaymentActionPayload } from '../../types/interfaces';
 
 export enum ActionType {
   CONFIRM_CARD_PAYMENT_START = 'CONFIRM_CARD_PAYMENT_START',

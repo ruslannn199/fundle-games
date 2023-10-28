@@ -18,7 +18,6 @@ const Admin: React.FC = () => {
   const { currentUser } = useTypedSelector((state) => (state.user));
   const { products } = useTypedSelector((state) => (state.productsData));
   const { isLoading } = useTypedSelector((state) => (state.loader));
-  const { emailSignOutStart } = useUserActions();
   const { fetchProductsStart } = useProductsActions();
 
   useEffect(() => {

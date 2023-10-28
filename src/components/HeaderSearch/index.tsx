@@ -1,13 +1,14 @@
 import { SearchProps } from 'antd/es/input';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { convertToURLAddress } from '../../utils';
 import { useCategoriesActions } from '../../hooks';
 import { BaseHeaderSearch } from './HeaderSearch.styles';
 
 const HeaderSearch: React.FC = () => {
   const { updateCategory } = useCategoriesActions();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSearch: SearchProps['onSearch'] = (value) => {
     if (location.pathname.includes('search')) {

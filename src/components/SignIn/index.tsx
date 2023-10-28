@@ -6,7 +6,6 @@ import {
   GoogleCircleFilled,
   QuestionCircleFilled
 } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
 // Hooks
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';

@@ -8,7 +8,7 @@ const { setMultipleCategories, updateCategory } = CategoriesActionsCreators;
 export interface CategoryState {
   categories: CategoryData[];
   category: string;
-};
+}
 
 const initialState: CategoryState = {
   categories: [{

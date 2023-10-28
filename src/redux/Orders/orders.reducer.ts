@@ -18,7 +18,7 @@ const ordersReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(
       setUserOrderHistory,
-      (state, { payload }: PayloadAction<Order[]>) => ({ ...state, orderHistory: payload.toSorted((a, b) => {
+      (state, { payload }: PayloadAction<Order[]>) => ({ ...state, orderHistory: [...payload].sort((a, b) => {
         if (a.orderCreatedDate && b.orderCreatedDate) {
           if (a.orderCreatedDate < b.orderCreatedDate) {
             return 1;

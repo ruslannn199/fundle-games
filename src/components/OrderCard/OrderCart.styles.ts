@@ -1,4 +1,4 @@
-import { Button, Flex } from 'antd';
+import { Flex } from 'antd';
 import Paragraph from 'antd/es/typography/Paragraph';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';

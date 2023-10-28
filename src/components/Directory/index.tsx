@@ -1,5 +1,5 @@
 // Components
-import { Button, ConfigProvider } from 'antd';
+import { ConfigProvider } from 'antd';
 import { Link } from 'react-router-dom';
 // Images
 import NewGamesImg from '../../assets/images/new-games.jpg';

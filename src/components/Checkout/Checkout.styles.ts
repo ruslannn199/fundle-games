@@ -1,4 +1,4 @@
-import { Button, Table } from 'antd';
+import { Table } from 'antd';
 import styled from 'styled-components';
 
 const { Summary: { Row, Cell } } = Table;

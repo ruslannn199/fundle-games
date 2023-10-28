@@ -17,7 +17,7 @@ const PayButton: React.FC<Record<'form', FormInstance>> = ({ form }) => {
           setSubmittable(false);
         }
       );
-  }, [values]);
+  }, [values, form]);
 
   return (
     <ConfigProvider theme={blackTheme}>

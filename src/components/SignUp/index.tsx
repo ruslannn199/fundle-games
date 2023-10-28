@@ -1,7 +1,6 @@
 // Components
-import { Button, ConfigProvider, Flex, Form, Input } from 'antd';
+import { ConfigProvider, Flex, Form, Input } from 'antd';
 import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
 // Hooks
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';

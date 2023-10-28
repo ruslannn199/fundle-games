@@ -1,5 +1,4 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 import userReducer from './User/user.reducer';
 import productsReducer from './Products/products.reducer';
@@ -44,7 +43,9 @@ export type RootState = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
 
-export default {
+const Root = {
   store,
   persistor,
-};
+}
+
+export default Root;

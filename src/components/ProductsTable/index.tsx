@@ -16,7 +16,7 @@ interface ProductTableColumns {
   price: number;
   category: string[];
   thumbnail: string;
-};
+}
 
 // TODO implement reset func to first page after adding new product
 const ProductsTable: React.FC<Record<'products', Products>> = ({ products }) => {
