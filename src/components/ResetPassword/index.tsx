@@ -25,7 +25,10 @@ const ResetPassword: React.FC = () => {
 
   const handleSubmit = async ({ email }: Record<'email', string>) => {
     try {
-      await sendPasswordResetEmail(auth, email, { url: 'http://localhost:3000/login' });
+      await sendPasswordResetEmail(auth, email, { url: import.meta.env.DEV
+        ? 'http://localhost:3000/login'
+        : 'https://fundle-games.infinityfreeapp.com/login'
+      });
       navigate('/');
     } catch {
       setError(true);

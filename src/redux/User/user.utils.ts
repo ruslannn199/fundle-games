@@ -33,6 +33,9 @@ export function* getSnapshotFromUserAuth(user: userAuth, moreData?: object) {
 
 // Reset password helper
 export const handleResetPasswordAPI = async (email: string): Promise<void> => {
-  const config = { url: 'http://localhost:3000/login' };
+  const config = { url: import.meta.env.DEV
+    ? 'http://localhost:3000/login'
+    : 'https://fundle-games.infinityfreeapp.com/login'
+  };
   return sendPasswordResetEmail(auth, email, config);
 }

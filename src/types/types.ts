@@ -50,3 +50,8 @@ export type ApiResponse<T> = {
   records: T;
   results: number;
 }
+
+export type ApiConfigResponse<T> = {
+  configField: string;
+  result: T;
+}

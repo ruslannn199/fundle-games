@@ -68,7 +68,9 @@ const PaymentDetails: React.FC = () => {
               }
             },
           },
-          return_url: 'http://localhost:3000/dashboard',
+          return_url: import.meta.env.DEV
+            ? 'http://localhost:3000/dashboard'
+            : 'https://fundle-games.infinityfreeapp.com/dashboard',
           shipping: {
             name: recipientName,
             address: {

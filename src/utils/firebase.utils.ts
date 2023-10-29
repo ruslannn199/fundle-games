@@ -3,21 +3,16 @@ import { FirebaseApp, initializeApp } from 'firebase/app';
 import { doc, setDoc, getDoc, initializeFirestore, persistentLocalCache, CACHE_SIZE_UNLIMITED } from 'firebase/firestore';
 import { getAuth, GoogleAuthProvider, onAuthStateChanged } from 'firebase/auth';
 // Types
-import type { firebaseConfig, docSnapshotDataType, docRefType } from '../types/types';
+import type { firebaseConfig, docSnapshotDataType, docRefType, ApiConfigResponse } from '../types/types';
 import type { Auth, User } from 'firebase/auth';
 import type { Firestore, DocumentReference } from 'firebase/firestore';
 import type { HandleUser } from '../types/interfaces';
+import axios, { AxiosResponse } from 'axios';
+import { makeFetchURL } from '.';
 
-export const localConfig: firebaseConfig = {
-  apiKey: import.meta.env.VITE_APP_API_KEY,
-  authDomain: import.meta.env.VITE_APP_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_APP_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_APP_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_APP_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_APP_APP_ID,
-}
+export const localConfig: AxiosResponse<ApiConfigResponse<firebaseConfig>> = await axios.get(makeFetchURL('config/firebaseConfig'));
 
-const app: FirebaseApp = initializeApp(localConfig);
+const app: FirebaseApp = initializeApp(localConfig.data.result);
 
 export const auth: Auth = getAuth();
 export const db: Firestore = initializeFirestore(app, {

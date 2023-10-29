@@ -2,17 +2,15 @@
 import type { CurrentUser, ProductURLOptions } from '../types/interfaces';
 import axios from 'axios';
 
-const checkUserIsAdmin = (currentUser: CurrentUser | null): boolean => {
-  return !!(currentUser && Array.isArray(currentUser.userRoles)
-    && currentUser.userRoles.includes('admin'));
-};
-
-const stripeApi = axios.create({
-  baseURL: import.meta.env.VITE_APP_API_URL,
-});
+const checkUserIsAdmin = (currentUser: CurrentUser | null): boolean => (
+  !!(currentUser && Array.isArray(currentUser.userRoles)
+    && currentUser.userRoles.includes('admin'))
+);
 
 const makeFetchURL = (str: string): string => (
-  `https://fundle-games.infinityfreeapp.com/fundle-games/api/records/${str}`
+  import.meta.env.DEV
+    ? `http://localhost/fundle-games/api/records/${str}`
+    : `https://fundle-games.infinityfreeapp.com/fundle-games/api/records/${str}`
 );
 
 const makeComplexProductFetchURL = (
@@ -83,7 +81,6 @@ const countryOptions = (): Record<'label' | 'value', string>[] => {
 }
 
 export {
-  stripeApi,
   checkUserIsAdmin,
   makeFetchURL,
   makeComplexProductFetchURL,
