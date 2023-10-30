@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   html {
-    font-size: .521vw;
+    font-size: 10px;
   }
 
   html,

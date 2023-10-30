@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import devices from '../../styles/Devices';
 
 export const HomePageWrapper = styled.div`
   position: relative;

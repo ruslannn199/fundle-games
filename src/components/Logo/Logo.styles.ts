@@ -8,11 +8,11 @@ export const LogoWrapper = styled(Flex)`
 
 export const LogoTitle = styled.span`
   font-family: 'Satisfy', 'Style Script', sans-serif;
-  font-size: 3.2rem;
+  font-size: 2.6rem;
   color: var(--black-brown);
 `;
 
 export const LogoImage = styled.img`
-  width: 4rem;
-  height: 4rem;
+  width: 3.2rem;
+  height: 3.2rem;
 `;

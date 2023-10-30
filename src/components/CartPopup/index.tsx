@@ -17,7 +17,6 @@ const CartPopup: React.FC = () => {
         title="Cart"
         trigger="hover"
         content={<Checkout popup />}
-        style={{ height: "10rem" }}
       >
         <CartPopupLink to="/cart">
           <ShoppingCart />
@@ -25,11 +24,7 @@ const CartPopup: React.FC = () => {
         </CartPopupLink>
       </Popover>
     )
-    : (
-      <div style={{ height: "10rem" }}>
-        <ShoppingCart />
-      </div>
-    )
+    : <ShoppingCart />
 }
 
 export default CartPopup;

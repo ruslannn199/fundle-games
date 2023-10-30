@@ -16,6 +16,7 @@ import type { FilterFunc, SelectHandler } from 'rc-select/lib/Select';
 // Utils
 import { convertFromURLAddress, convertToURLAddress } from '../../utils';
 import { useCategoriesActions } from '../../hooks/useActions';
+import { ProductCardRow } from './ProductResults.styles';
 
 const ProductResults = () => {
   const defaultOptionName = 'Show all';
@@ -92,7 +93,7 @@ const ProductResults = () => {
       <ConfigProvider theme={orangeTheme}>
         <Select
           showSearch
-          style={{ width: "42rem", marginBottom: "4rem" }}
+          style={{ width: "26rem", marginBottom: "3rem" }}
           placeholder="Choose category"
           filterOption={filterOption}
           filterSort={filterSort}
@@ -101,7 +102,7 @@ const ProductResults = () => {
           onSelect={handleFilter}
         />
       </ConfigProvider>
-      <Row gutter={[0, 32]} align="middle" style={{ width: "180rem" }}>
+      <ProductCardRow gutter={[0, 32]} align="middle" justify="center">
         {
           products
             .data
@@ -113,7 +114,7 @@ const ProductResults = () => {
               />
             )))
         }
-      </Row>
+      </ProductCardRow>
       <ConfigProvider theme={blackTheme}>
         <Flex align="center" justify="center">
           {products.isLastPage ? null : <LoadMoreButton onLoadMore={ () => increasePage() } />}

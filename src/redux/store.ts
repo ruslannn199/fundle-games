@@ -17,7 +17,7 @@ const sagaMiddleware = createSagaMiddleware();
 const configStorage = {
   key: 'root',
   storage,
-  whitelist: ['cartData'],
+  whitelist: ['cartData', 'user'],
 }
 
 const rootReducer = combineReducers({

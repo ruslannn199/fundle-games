@@ -37,8 +37,8 @@ export const DirectoryItem = styled(Flex)<DirectoryItemProps>`
 
 export const DirectoryTitle = styled.h2<DirectoryTitleProps>`
   color: ${props => props.color || '#000'};
-  -webkit-text-stroke: .1rem var(--tan);
-  font-size: 5rem;
+  -webkit-text-stroke: .1rem #eee;
+  font-size: 3.8rem;
   text-transform: uppercase;
   z-index: 2;
 `;

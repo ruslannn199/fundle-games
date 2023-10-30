@@ -7,4 +7,5 @@ export const GuestMenuItemLink = styled(Link)`
   align-items: center;
   justify-content: center;
   flex-wrap: nowrap;
+  height: 6.4rem;
 `;
