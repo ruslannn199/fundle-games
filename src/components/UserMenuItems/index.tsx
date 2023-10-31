@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom';
 import { LogoutOutlined, EditTwoTone } from '@ant-design/icons';
 import UserDropdown from '../UserDropdown';
 import CartPopup from '../CartPopup';
+import { Flex } from 'antd';
 // Themes
 import { orange } from '../../utils/themes';
 // Types
 import { NavigationItemsLabels } from '../../types/enums';
-import { Flex, type MenuProps } from 'antd';
+import type { MenuProps } from 'antd';
 
 const UserMenuItems: MenuProps['items'] = [
   {

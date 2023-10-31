@@ -6,9 +6,6 @@ interface NavigationProps {
   $collapsed?: boolean;
 }
 
-export const NavigationMenuWrapper = styled.div`
-`;
-
 export const Navigation = styled(Menu)<NavigationProps>`
   display: flex;
   align-items: center;
@@ -16,14 +13,7 @@ export const Navigation = styled(Menu)<NavigationProps>`
   line-height: normal;
 
   @media ${devices.md} {
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100vh;
-    width: 32rem;
-    transform: translateX(${({ $collapsed }) => ($collapsed ? '100%' : '0%')});
-    flex-direction: column;
-    transition: .3s;
+    display: none;
   }
 `;
 

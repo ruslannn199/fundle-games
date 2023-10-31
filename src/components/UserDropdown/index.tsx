@@ -10,10 +10,10 @@ const UserDropdown: React.FC = () => {
 
   return currentUser
     ? (
-    <UserDropdownTitle>
-      <UserDropdownImage src={LogoImg} alt="profile avatar" />
-      {currentUser.displayName || "User"}
-    </UserDropdownTitle>
+      <UserDropdownTitle>
+        <UserDropdownImage src={LogoImg} alt="profile avatar" />
+        {currentUser.displayName || "User"}
+      </UserDropdownTitle>
     )
     : null;
 }
