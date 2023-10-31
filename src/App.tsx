@@ -1,7 +1,6 @@
 // Components
 import { ConfigProvider, Layout } from 'antd';
 import Header from './components/Header';
-import AdminToolbar from './components/AdminToolbar';
 // Hooks
 import { useEffect } from 'react';
 import { useUserActions } from './hooks';
@@ -44,8 +43,7 @@ const App: React.FC = () => {
     <PersistGate persistor={persistor}>
       <Router>
         <ConfigProvider theme={fontTheme}>
-          <Layout style={{ minHeight: "100vh" }}>
-            <AdminToolbar />
+          <Layout style={{ minHeight: "100vh", paddingTop: "8rem" }}>
             <Header />
             <Content>
               <Routes>

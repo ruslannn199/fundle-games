@@ -7,8 +7,6 @@ interface NavigationProps {
 }
 
 export const NavigationMenuWrapper = styled.div`
-  @media ${devices.md} {
-  }
 `;
 
 export const Navigation = styled(Menu)<NavigationProps>`

@@ -4,30 +4,35 @@ import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { ConfigProvider, Flex } from 'antd';
 import Logo from '../Logo';
+import NavigationMenu from '../NavigationMenu';
+import HeaderSearch from '../HeaderSearch';
 // Themes
 import { blackTheme, orangeTheme } from '../../utils/themes';
 // Utils
-import { HeaderWrapper } from './Header.styles';
-import NavigationMenu from '../NavigationMenu';
-import HeaderSearch from '../HeaderSearch';
+import { HeaderWrapper, NavigationWrapper } from './Header.styles';
+import AdminToolbar from '../AdminToolbar';
 
 const AppHeader: React.FC = () => {
   const location = useLocation();
+  const isAdminPage = location.pathname.includes('admin');
 
-  return !location.pathname.includes('admin')
+  return !isAdminPage
     ? (
       <HeaderWrapper>
-        <Flex align="center" justify="space-between">
-          <Link to="/">
-            <Logo />
-          </Link>
-          <ConfigProvider theme={blackTheme}>
-            <HeaderSearch />
-          </ConfigProvider>
-          <ConfigProvider theme={orangeTheme}>
-            <NavigationMenu />
-          </ConfigProvider>
-        </Flex>
+        <AdminToolbar />
+        <NavigationWrapper>
+          <Flex align="center" justify="space-between">
+            <Link to="/">
+              <Logo />
+            </Link>
+            <ConfigProvider theme={blackTheme}>
+              <HeaderSearch />
+            </ConfigProvider>
+            <ConfigProvider theme={orangeTheme}>
+              <NavigationMenu />
+            </ConfigProvider>
+          </Flex>
+        </NavigationWrapper>
       </HeaderWrapper>
     )
     : null;

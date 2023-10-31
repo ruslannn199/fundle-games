@@ -1,6 +1,5 @@
 // Types
 import type { CurrentUser, ProductURLOptions } from '../types/interfaces';
-import axios from 'axios';
 
 const checkUserIsAdmin = (currentUser: CurrentUser | null): boolean => (
   !!(currentUser && Array.isArray(currentUser.userRoles)

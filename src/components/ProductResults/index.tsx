@@ -1,12 +1,14 @@
 // Components
 import ProductCard from '../ProductCard';
-import { ConfigProvider, Flex, Row, Select, Spin } from 'antd';
+import { ConfigProvider, Flex, Select, Spin } from 'antd';
 import Spinner from '../Spinner';
 import LoadMoreButton from '../LoadMore';
+import { ProductCardRow } from './ProductResults.styles';
 // Hooks
 import { useEffect, useMemo } from 'react';
 import { useProductsActions, useTypedSelector } from '../../hooks';
 import { useSearchParams } from 'react-router-dom';
+import { useCategoriesActions } from '../../hooks/useActions';
 // Themes
 import { blackTheme, orangeTheme } from '../../utils/themes';
 // Types
@@ -15,8 +17,6 @@ import type { DefaultOptionType, SelectProps } from 'antd/es/select';
 import type { FilterFunc, SelectHandler } from 'rc-select/lib/Select';
 // Utils
 import { convertFromURLAddress, convertToURLAddress } from '../../utils';
-import { useCategoriesActions } from '../../hooks/useActions';
-import { ProductCardRow } from './ProductResults.styles';
 
 const ProductResults = () => {
   const defaultOptionName = 'Show all';

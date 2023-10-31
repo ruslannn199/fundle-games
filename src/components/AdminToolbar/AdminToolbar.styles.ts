@@ -7,9 +7,8 @@ export const AdminToolbarWrapper = styled(Flex)`
   background-color: #000;
   margin: 0 auto;
   padding: .5rem 1rem;
-  position: sticky;
-  top: 0;
   z-index: 3;
+  line-height: normal;
 `;
 
 export const AdminToolbarLink = styled(Link)`

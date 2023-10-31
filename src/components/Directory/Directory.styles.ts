@@ -1,5 +1,6 @@
 import { Button, Flex } from 'antd';
 import styled from 'styled-components';
+import devices from '../../styles/Devices';
 
 interface DirectoryItemProps {
   image: string;
@@ -11,6 +12,10 @@ interface DirectoryTitleProps {
 
 export const DirectoryWrapper = styled(Flex)`
   height: 100%;
+
+  @media ${devices.sm} {
+    flex-direction: column;
+  }
 `;
 
 export const DirectoryItem = styled(Flex)<DirectoryItemProps>`
@@ -33,6 +38,10 @@ export const DirectoryItem = styled(Flex)<DirectoryItemProps>`
     height: 100%;
     z-index: 1;
   }
+
+  @media ${devices.sm} {
+    width: 90%;
+  }
 `;
 
 export const DirectoryTitle = styled.h2<DirectoryTitleProps>`
@@ -41,6 +50,10 @@ export const DirectoryTitle = styled.h2<DirectoryTitleProps>`
   font-size: 3.8rem;
   text-transform: uppercase;
   z-index: 2;
+
+  @media ${devices.md} {
+    font-size: 3rem;
+  }
 `;
 
 export const DirectoryButton = styled(Button)`
