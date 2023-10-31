@@ -1,11 +1,10 @@
 import { Button, ConfigProvider, Empty, Flex, Image } from 'antd';
 import { useTypedSelector } from '../../hooks';
-import { ColumnsType } from 'antd/es/table';
+import Table, { ColumnsType } from 'antd/es/table';
 import { CloseSquareFilled, MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { orangeTheme, redTheme } from '../../utils/themes';
 import { useCartActions, useProductsActions } from '../../hooks/useActions';
 import { useEffect } from 'react';
-import { CheckoutCell, CheckoutRow, CheckoutTable } from './Checkout.styles';
 import CheckoutCounter from '../CheckoutCounter';
 import { useLocation } from 'react-router-dom';
 
@@ -44,6 +43,8 @@ const Checkout: React.FC<CheckoutProps> = ({ popup }) => {
       return () => { setProduct(null) };
     }
   }, [product]);
+
+  const { Summary: { Row, Cell } } = Table;
 
   const columns: ColumnsType<CartTableColumns> = [
     {
@@ -139,7 +140,7 @@ const Checkout: React.FC<CheckoutProps> = ({ popup }) => {
         theme={orangeTheme}
         renderEmpty={() => <Empty description="You cart is empty" />}
       >
-        <CheckoutTable
+        <Table
           style={{
             maxWidth: popup ? "90rem" : "150rem",
           }}
@@ -150,15 +151,14 @@ const Checkout: React.FC<CheckoutProps> = ({ popup }) => {
           bordered
           sticky
           summary={() => (
-              <CheckoutRow>
-                <CheckoutCell index={0}>Total</CheckoutCell>
-                <CheckoutCell index={1} colSpan={3} align="right">{total}₽</CheckoutCell>
-                <CheckoutCell index={2} align="center">
+              <Row style={{ fontWeight: 'bold' }}>
+                <Cell index={0}>Total</Cell>
+                <Cell index={1} colSpan={3} align="right">{total}₽</Cell>
+                <Cell index={2} align="center">
                   <Button
                     type="link"
                     onClick={() => clearCartItems()}
                     style={{
-                      fontSize: "2rem",
                       fontWeight: "bold",
                       textAlign: "center",
                       padding: 0,
@@ -166,8 +166,8 @@ const Checkout: React.FC<CheckoutProps> = ({ popup }) => {
                   >
                     Clear
                   </Button>
-                </CheckoutCell>
-              </CheckoutRow>
+                </Cell>
+              </Row>
             )
           }
         />

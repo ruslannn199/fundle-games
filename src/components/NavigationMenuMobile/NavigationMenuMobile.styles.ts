@@ -1,5 +1,5 @@
 import { LogoutOutlined } from '@ant-design/icons';
-import { Flex } from 'antd';
+import { Button, Flex } from 'antd';
 import styled from 'styled-components';
 
 export const NavigationMenuMobileWrapper = styled(Flex)`
@@ -19,12 +19,18 @@ export const NavigationMenuMobileImage = styled.img`
   border-radius: 50%;
 `;
 
-export const NavigationMenuMobileLogout = styled(LogoutOutlined)`
+export const NavigationMenuMobileButton = styled(Button)`
+  display: flex;
+  align-items: center;
+  padding: .5rem;
   color: var(--orange);
-  font-size: 3.2rem;
 
   &:hover,
   &:active {
     color: var(--tan);
+  }
+
+  & * {
+    font-size: 3.2rem;
   }
 `;
