@@ -21,17 +21,15 @@ const AppHeader: React.FC = () => {
       <HeaderWrapper>
         <AdminToolbar />
         <NavigationWrapper>
-          <Flex align="center" justify="space-between">
-            <Link to="/">
-              <Logo />
-            </Link>
-            <ConfigProvider theme={blackTheme}>
-              <HeaderSearch />
-            </ConfigProvider>
-            <ConfigProvider theme={orangeTheme}>
-              <NavigationMenu />
-            </ConfigProvider>
-          </Flex>
+          <Link to="/">
+            <Logo />
+          </Link>
+          <ConfigProvider theme={blackTheme}>
+            <HeaderSearch />
+          </ConfigProvider>
+          <ConfigProvider theme={orangeTheme}>
+            <NavigationMenu />
+          </ConfigProvider>
         </NavigationWrapper>
       </HeaderWrapper>
     )

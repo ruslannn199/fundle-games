@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import devices from '../../styles/Devices';
 
 export const BaseHeaderSearch = styled(Search)`
-  width: 40rem;
   display: flex;
   height: 6.4rem;
   align-items: center;

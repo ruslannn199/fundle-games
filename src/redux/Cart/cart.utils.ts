@@ -44,7 +44,18 @@ export const handleAddToCart = ({
     ...prevCartItems,
     { ...nextCartItem, quantity: quantityIncrement }
   ];
-};
+}
+
+export const handleAppendToCart = (prevCartItem: ProductData[], id: string) => (
+  prevCartItem.map((cartItem: ProductData) => (
+    cartItem.id === id
+      ? {
+        ...cartItem,
+        quantity: cartItem.quantity + 1,
+      }
+      : cartItem
+  ))
+);
 
 export const handleRemoveCartItem = (prevCartItems: ProductData[], id: string) => (
   prevCartItems.filter((cartItem: ProductData) => (cartItem.id !== id))

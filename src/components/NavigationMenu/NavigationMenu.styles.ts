@@ -8,9 +8,7 @@ interface NavigationProps {
 
 export const Navigation = styled(Menu)<NavigationProps>`
   display: flex;
-  align-items: center;
   justify-content: center;
-  line-height: normal;
 
   @media ${devices.md} {
     display: none;

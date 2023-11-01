@@ -10,6 +10,7 @@ const GlobalStyle = createGlobalStyle`
     --pale-yellow: #fbf8be;
     --beige: #ddc3a5;
     --black-brown: #201e20;
+    --gray: #d7d7d7;
     --tan: #e0a96d;
     --orange: #fa0;
   }

@@ -13,5 +13,4 @@ export const CartModalWrapper = styled(Flex)`
   left: 35%;
   top: 15%;
   font-weight: bold;
-  /* font-size: 2rem; */
 `;
