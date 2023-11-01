@@ -20,7 +20,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <Spin spinning={isLoading} indicator={Spinner}>
-      <DashboardWrapper vertical justify="center" align="center" gap="10rem">
+      <DashboardWrapper vertical justify="center" align="center">
         {orderHistory.map((order, index) => (<OrderCard key={index} items={order} />))}
       </DashboardWrapper>
     </Spin>

@@ -1,21 +1,34 @@
 import { ConfigProvider, Flex } from 'antd';
 import { Order } from '../../types/interfaces';
-import { OrderCardDocumentId, OrderCardItemsImage, OrderCardItemsInfo, OrderCardMore, OrderCardNeutralLink, OrderCardTimestamp, OrderCardTotal, OrderCardWrapper } from './OrderCart.styles';
+import {
+  OrderCardDocumentId,
+  OrderCardItemsImage,
+  OrderCardItemsInfo,
+  OrderCardMore,
+  OrderCardNeutralLink,
+  OrderCardTimestamp,
+  OrderCardTotal,
+  OrderCardWrapper } from './OrderCard.styles';
 import { convertFromMySQLDateTime } from '../../utils';
 import { orangeTheme } from '../../utils/themes';
+import { useWindowDimensions } from '../../hooks';
 
 interface OrderCardProps extends React.RefAttributes<HTMLDivElement> {
   items: Order;
 }
 
 const OrderCard: React.FC<OrderCardProps> = ({ items }) => {
+  const { width } = useWindowDimensions();
+
   const orderIdLink = `/order/${items.documentId}`;
+  const isMobile = width <= 768;
+  const maximumAmountOfImages = 3;
 
   return (
     <OrderCardWrapper
-      align="center"
+      align={isMobile ? "flex-start" : "center"}
       justify="space-between"
-      gap="5rem"
+      vertical={isMobile}
     >
       <Flex vertical gap="1rem" justify="flex-start" align="flex-start">
         <OrderCardTimestamp to={orderIdLink}>
@@ -30,16 +43,16 @@ const OrderCard: React.FC<OrderCardProps> = ({ items }) => {
           </ConfigProvider>
         </OrderCardNeutralLink>
       </Flex>
-      <OrderCardItemsInfo vertical gap="1rem" align="flex-end">
+      <OrderCardItemsInfo vertical gap="1rem" align={isMobile ? "flex-start" : "flex-end"}>
         <OrderCardTotal to={orderIdLink}>{items.orderTotal}₽</OrderCardTotal>
         <Flex gap="1rem">
           {...(items.orderItems
-            .slice(0, 4)
+            .slice(0, maximumAmountOfImages + 1)
             .map((item, index) => (
               <OrderCardNeutralLink to={orderIdLink}>
-                {index < 3
+                {index < maximumAmountOfImages
                   ? <OrderCardItemsImage src={item.thumbnail} alt="item" />
-                  : <OrderCardMore>+{items.orderItems.length - 3}</OrderCardMore>
+                  : <OrderCardMore>+{items.orderItems.length - maximumAmountOfImages}</OrderCardMore>
                 }
               </OrderCardNeutralLink>
           )))}

@@ -1,7 +1,14 @@
 import { Flex } from 'antd';
 import { ProductMainData } from '../../types/interfaces';
-import { OrderDetailsItemAmount, OrderDetailsItemImage, OrderDetailsItemImageLink, OrderDetailsItemInfo, OrderDetailsItemWrapper } from './OrderDetailsItem.styles';
-import { FormLink } from '../../styles/Form';
+import {
+  OrderDetailsItemAmount,
+  OrderDetailsItemBold,
+  OrderDetailsItemImage,
+  OrderDetailsItemImageLink,
+  OrderDetailsItemInfo,
+  OrderDetailsItemLink,
+  OrderDetailsItemWrapper
+} from './OrderDetailsItem.styles';
 
 interface OrderDetailsItemProps extends React.RefAttributes<HTMLDivElement> {
   item: ProductMainData;
@@ -15,10 +22,10 @@ const OrderDetailsItem: React.FC<OrderDetailsItemProps> = ({
       <OrderDetailsItemImageLink to={`/products/${id}`}>
         <OrderDetailsItemImage src={thumbnail} alt={productName} />
       </OrderDetailsItemImageLink>
-      <Flex align="flex-end" justify="space-between">
-        <OrderDetailsItemInfo vertical style={{ width: "80rem" }} gap="4rem">
-          <FormLink to={`/products/${id}`}>{productName}</FormLink>
-          <b>{price}₽</b>
+      <Flex align="flex-end" justify="space-between" style={{ width: "100%" }}>
+        <OrderDetailsItemInfo vertical>
+          <OrderDetailsItemLink to={`/products/${id}`}>{productName}</OrderDetailsItemLink>
+          <OrderDetailsItemBold>{price}₽</OrderDetailsItemBold>
         </OrderDetailsItemInfo>
         <Flex align="flex-end">
           <OrderDetailsItemAmount>{quantity}шт.</OrderDetailsItemAmount>

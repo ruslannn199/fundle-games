@@ -1,39 +1,45 @@
 import { ConfigProvider, Flex } from 'antd';
 import { Order } from '../../types/interfaces';
 import { orangeTheme } from '../../utils/themes';
-import { OrderDetailsDocumentId, OrderDetailsSubTitle, OrderDetailsTitle, OrderDetailsWrapper } from './OrderDetails.styles';
+import { OrderDetailsDateInfo, OrderDetailsDocumentId, OrderDetailsSubTitle, OrderDetailsText, OrderDetailsTitle, OrderDetailsWrapper } from './OrderDetails.styles';
 import { convertFromMySQLDateTime } from '../../utils';
 import OrderDetailsItem from '../OrderDetailsItem';
+import { useWindowDimensions } from '../../hooks';
 
 interface OrderDetailsProps extends React.RefAttributes<HTMLDivElement> {
   order: Order;
 }
 
-const OrderDetails: React.FC<OrderDetailsProps> = ({ order }) => {
+const OrderDetails: React.FC<OrderDetailsProps> = ({ order: {
+  documentId, orderCreatedDate, orderItems, orderTotal
+}}) => {
+  const { width } = useWindowDimensions();
+  const isMobile = width <= 768;
+
   return (
-    <OrderDetailsWrapper vertical justify="center" gap="3rem">
+    <OrderDetailsWrapper vertical justify="center">
       <ConfigProvider theme={orangeTheme}>
-        <Flex align="center">
+        <Flex align={isMobile ? "flex-start" : "center"} vertical={isMobile}>
           <OrderDetailsTitle>Заказ №</OrderDetailsTitle>
           <OrderDetailsDocumentId
-            copyable={{ text: order.documentId }}
-            style={{ margin: 0, fontSize: "3rem" }}
+            copyable={{ text: documentId }}
+            style={{ margin: 0 }}
           >
-            {order.documentId.replaceAll('-', ' ')}
+            {documentId.replaceAll('-', ' ')}
           </OrderDetailsDocumentId>
         </Flex>
       </ConfigProvider>
-      <Flex vertical justify="center" gap="3rem">
+      <OrderDetailsDateInfo vertical justify="center">
         <OrderDetailsSubTitle>Дата покупки</OrderDetailsSubTitle>
-        {order.orderCreatedDate && convertFromMySQLDateTime(order.orderCreatedDate)}
-      </Flex>
+        <OrderDetailsText>{orderCreatedDate && convertFromMySQLDateTime(orderCreatedDate)}</OrderDetailsText>
+      </OrderDetailsDateInfo>
       <Flex vertical justify="center" gap="4rem">
-        {...(order.orderItems.map((item, index) => (
+        {...(orderItems.map((item, index) => (
           <OrderDetailsItem key={index} item={item} />
         )))}
       </Flex>
       <h3>
-        Итого: {order.orderTotal}₽
+        Итого: {orderTotal}₽
       </h3>
     </OrderDetailsWrapper>
   );

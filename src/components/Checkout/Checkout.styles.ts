@@ -26,5 +26,5 @@ export const CheckoutTotal = styled.h2`
 `;
 
 export const CheckoutEmpty = styled(Empty)`
-  width: 70rem;
+  width: 90%;
 `;
