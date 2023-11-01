@@ -6,20 +6,19 @@ import AddToCart from '../AddToCart';
 import type { ProductData } from '../../types/interfaces';
 import { CardImage, ProductCardColumn, ProductCardWrapper } from './ProductCard.styles';
 
-interface ProductElementProps extends React.RefAttributes<HTMLDivElement> {
+interface ProductCardProps extends React.RefAttributes<HTMLDivElement> {
   productConfig: ProductData;
   position: number;
 }
 
-const ProductCard: React.FC<ProductElementProps> = ({ productConfig }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ productConfig }) => {
   const { Meta } = Card;
-  const { thumbnail, price, productName, id } = productConfig;
+  const { id, thumbnail, price, productName } = productConfig;
 
-  return (!(thumbnail || productName || typeof price !== 'undefined'))
-    ? null
-    : (
+  return (thumbnail && productName && typeof price !== 'undefined')
+    ? (
       <ProductCardColumn
-        lg={6} md={8} sm={12} xs={24}
+        lg={{ span: 5, offset: 1 }} md={{ span: 7, offset: 1 }} sm={{ span: 10, offset: 2 }} xs={{ span: 18, offset: 6 }}
       >
         <ProductCardWrapper
           hoverable
@@ -31,7 +30,8 @@ const ProductCard: React.FC<ProductElementProps> = ({ productConfig }) => {
           </Link>
         </ProductCardWrapper>
       </ProductCardColumn>
-    );
+    )
+    : null
 }
 
 export default ProductCard;

@@ -1,9 +1,9 @@
 // Components
 import ProductCard from '../ProductCard';
-import { ConfigProvider, Flex, Select, Spin } from 'antd';
+import { ConfigProvider, Flex, Spin } from 'antd';
 import Spinner from '../Spinner';
 import LoadMoreButton from '../LoadMore';
-import { ProductCardRow } from './ProductResults.styles';
+import { ProductCardRow, ProductResultsSelect, ProductResultsWrapper } from './ProductResults.styles';
 // Hooks
 import { useEffect, useMemo } from 'react';
 import { useProductsActions, useTypedSelector } from '../../hooks';
@@ -88,39 +88,40 @@ const ProductResults = () => {
   }
 
   return (
-    <Spin spinning={isLoading} indicator={Spinner}>
-      <h1>{!products.data.length ? "No search results" : "Browse products"}</h1>
-      <ConfigProvider theme={orangeTheme}>
-        <Select
-          showSearch
-          style={{ width: "26rem", marginBottom: "3rem" }}
-          placeholder="Choose category"
-          filterOption={filterOption}
-          filterSort={filterSort}
-          options={options}
-          defaultValue={category}
-          onSelect={handleFilter}
-        />
-      </ConfigProvider>
-      <ProductCardRow gutter={[0, 32]} align="middle" justify="center">
-        {
-          products
-            .data
-            .map((product: ProductData, position: number) => ((
-              <ProductCard
-                productConfig={product}
-                position={position}
-                key={product.id}
-              />
-            )))
-        }
-      </ProductCardRow>
-      <ConfigProvider theme={blackTheme}>
-        <Flex align="center" justify="center">
-          {products.isLastPage ? null : <LoadMoreButton onLoadMore={ () => increasePage() } />}
-        </Flex>
-      </ConfigProvider>
-    </Spin>
+    <ProductResultsWrapper vertical>
+      <Spin spinning={isLoading} indicator={Spinner}>
+        <h1>{!products.data.length ? "Нет результатов" : "Поиск по товарам"}</h1>
+        <ConfigProvider theme={orangeTheme}>
+          <ProductResultsSelect
+            showSearch
+            placeholder="Choose category"
+            filterOption={filterOption}
+            filterSort={filterSort}
+            options={options}
+            defaultValue={category}
+            onSelect={handleFilter}
+          />
+        </ConfigProvider>
+        <ProductCardRow gutter={[0, 32]}>
+          {
+            products
+              .data
+              .map((product: ProductData, position: number) => ((
+                <ProductCard
+                  productConfig={product}
+                  position={position}
+                  key={product.id}
+                />
+              )))
+          }
+        </ProductCardRow>
+        <ConfigProvider theme={blackTheme}>
+          <Flex align="center" justify="center">
+            {products.isLastPage ? null : <LoadMoreButton onLoadMore={ () => increasePage() } />}
+          </Flex>
+        </ConfigProvider>
+      </Spin>
+    </ProductResultsWrapper>
   );
 }
 
