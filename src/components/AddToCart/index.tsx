@@ -18,7 +18,7 @@ const AddToCart: React.FC<Record<'product', ProductData>> = ({ product }) => {
         type="primary"
         onClick={() => handleAddToCart(product)}
       >
-        Add to Cart
+        Купить
       </Button>
     </ConfigProvider>
   );
