@@ -1,12 +1,15 @@
 import { Select } from 'antd';
 import { countryOptions } from '../../utils';
 import { DefaultOptionType } from 'antd/es/select';
+import { useWindowDimensions } from '../../hooks';
 
 interface CountrySearchProps {
   onChange: (value: string) => void;
 }
 
 const CountrySearch: React.FC<CountrySearchProps> = ({ onChange }) => {
+  const { width } = useWindowDimensions();
+
   const filterOption = (input: string, option?: { label: string; value: string }) =>
   (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
@@ -18,14 +21,14 @@ const CountrySearch: React.FC<CountrySearchProps> = ({ onChange }) => {
 
   return (
     <Select
-      style={{ width: "56rem" }}
       showSearch
       placeholder="Select country"
       filterOption={filterOption}
       filterSort={filterSort}
       options={countryOptions()}
       onChange={onChange}
-      defaultValue={"Russia"}
+      defaultValue="Russia"
+      style={{ width: width > 576 ? "40rem" : "100%" }}
     />
   );
 }
