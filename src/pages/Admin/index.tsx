@@ -1,24 +1,24 @@
 // Components
-import { ConfigProvider, Spin } from 'antd';
+import { ConfigProvider, FloatButton, Spin } from 'antd';
 import ProductsTable from '../../components/ProductsTable';
 import Spinner from '../../components/Spinner';
+import AddNewProduct from '../../components/AddNewProduct';
 // Hooks
-import { useUserActions, useTypedSelector, useProductsActions } from '../../hooks';
+import { useTypedSelector, useProductsActions } from '../../hooks';
 import { useEffect } from 'react';
 // Styles
-import { AdminDashboard, AdminDisplayName, AdminMenu, AdminWrapper } from './Admin.styles';
+import { AdminDashboard, AdminWrapper } from './Admin.styles';
 // Themes
 import { orangeTheme } from '../../utils/themes';
-// Types
-import { AdminItemsLabels } from '../../types/enums';
-import { UserOutlined } from '@ant-design/icons';
-import AddNewProduct from '../../components/AddNewProduct';
+import { useNavigate } from 'react-router-dom';
+import { HomeOutlined } from '@ant-design/icons';
 
 const Admin: React.FC = () => {
   const { currentUser } = useTypedSelector((state) => (state.user));
   const { products } = useTypedSelector((state) => (state.productsData));
   const { isLoading } = useTypedSelector((state) => (state.loader));
   const { fetchProductsStart } = useProductsActions();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchProductsStart({
@@ -29,27 +29,18 @@ const Admin: React.FC = () => {
     });
   }, [fetchProductsStart]);
 
+  const goHome = () => {
+    navigate('/');
+  }
+
   return currentUser
     ? (
       <AdminWrapper align="flex-start" justify="center">
         <ConfigProvider theme={orangeTheme}>
-          <AdminMenu
-            disabledOverflow={true}
-            mode="vertical"
-            items={[
-              {
-                label: (
-                  <AdminDisplayName>{currentUser.displayName}</AdminDisplayName>
-                ),
-                key: AdminItemsLabels.INFO,
-                icon: <UserOutlined />,
-              },
-              {
-                label: <AddNewProduct />,
-                key: AdminItemsLabels.ADD_NEW_PRODUCT,
-              }
-            ]}
-          />
+          <FloatButton.Group>
+            <FloatButton icon={<HomeOutlined />} onClick={goHome} tooltip="На главную" />
+            <AddNewProduct float />
+          </FloatButton.Group>
         </ConfigProvider>
         <AdminDashboard vertical align="flex-start" justify="center">
           <Spin indicator={Spinner} spinning={isLoading}>

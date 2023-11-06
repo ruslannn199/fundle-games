@@ -1,5 +1,5 @@
 // Components
-import { Button, ConfigProvider, Modal, Form, Input, Select } from 'antd';
+import { Button, ConfigProvider, Modal, Form, Input, Select, FloatButton } from 'antd';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 // Hooks
@@ -11,9 +11,13 @@ import { blackTheme, orangeTheme } from '../../utils/themes';
 import { ProductFormFields } from '../../types/enums';
 import type { ProductFormData } from '../../types/interfaces';
 import type { SelectProps } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 
+interface AddNewProductProps {
+  float?: boolean;
+}
 
-const AddNewProduct: React.FC = () => {
+const AddNewProduct: React.FC<AddNewProductProps> = ({ float }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [ckeditorText, setCkeditorText] = useState<string>('');
   const { addProductStart } = useProductsActions();
@@ -60,12 +64,11 @@ const AddNewProduct: React.FC = () => {
 
   return (
     <ConfigProvider theme={blackTheme}>
-      <Button
-        type="primary"
-        onClick={showModal}
-      >
-        ADD NEW PRODUCT
-      </Button>
+      {
+        float
+          ? <FloatButton type="primary" onClick={showModal} tooltip="Добавить новый продукт" icon={<PlusOutlined />} />
+          : <Button type="primary" onClick={showModal}>Добавить новый продукт</Button>
+      }
       <Modal
         title="ADD NEW PRODUCT"
         open={open}
@@ -93,7 +96,7 @@ const AddNewProduct: React.FC = () => {
           form={form}
           name={ProductFormFields.FORM_NAME}
           onFinish={handleSubmit}
-          validateMessages={{ required: "Please, fill this field" }}
+          validateMessages={{ required: "Пожалуйста, заполните это поле." }}
           labelCol={{ span: 8 }}
           wrapperCol={{ span: 32 }}
         >

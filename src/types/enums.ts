@@ -6,13 +6,6 @@ export enum NavigationItemsLabels {
   CART = 'cart',
 }
 
-export enum AdminItemsLabels {
-  INFO = 'Info',
-  HOME = 'Home',
-  SIGN_OUT = 'Sign Out',
-  ADD_NEW_PRODUCT = 'ADD_NEW_PRODUCT',
-}
-
 export enum ProductFormFields {
   FORM_NAME = 'productForm',
   PRODUCT_NAME = 'productName',
