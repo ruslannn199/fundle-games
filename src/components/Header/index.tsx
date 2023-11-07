@@ -2,7 +2,7 @@
 import { useLocation } from 'react-router-dom';
 // Components
 import { Link } from 'react-router-dom';
-import { ConfigProvider, Flex } from 'antd';
+import { ConfigProvider } from 'antd';
 import Logo from '../Logo';
 import NavigationMenu from '../NavigationMenu';
 import HeaderSearch from '../HeaderSearch';

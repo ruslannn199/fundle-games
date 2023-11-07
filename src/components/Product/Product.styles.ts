@@ -2,6 +2,10 @@ import { Flex } from 'antd';
 import styled from 'styled-components';
 import devices from '../../styles/Devices';
 
+export const ProductWrapper = styled(Flex)`
+  background-color: #fff;
+`;
+
 export const ProductContent = styled(Flex)`
   width: 95%;
   max-width: 150rem;
@@ -63,12 +67,16 @@ export const ProductDescription = styled.div`
   }
 
   img {
+    display: inline;
     max-width: 100%;
     height: auto;
   }
 
-  strong {
-    display: block;
-    margin: 2rem 0;
+  a {
+    color: var(--orange);
+
+    &:hover {
+      color: var(--tan);
+    }
   }
 `;

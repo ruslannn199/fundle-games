@@ -7,7 +7,7 @@ const OrderButton: React.FC = () => {
     <ConfigProvider theme={blackTheme}>
       <Link to="/payment">
         <Button type="primary" size="large">
-          Order now
+          Сделать заказ
         </Button>
       </Link>
     </ConfigProvider>

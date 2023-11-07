@@ -13,7 +13,7 @@ const Checkout: React.FC = () => {
   const { setProduct } = useProductsActions();
   const { addToCart } = useCartActions();
   const location = useLocation();
-  const isCheckoutPage = location.pathname.includes('checkout');
+  const isCheckoutPage = location.pathname.includes('cart');
 
   useEffect(() => {
     if (isCheckoutPage) {
@@ -27,14 +27,14 @@ const Checkout: React.FC = () => {
   return (
     cartItems.length
       ? (
-        <CheckoutWrapper vertical align="center">
+        <CheckoutWrapper $scroll={!isCheckoutPage} vertical align="center">
           {...(cartItems.map((item) => (<CheckoutItem productData={item} />)))}
           <CheckoutTotalWrapper align="center" gap=".7rem" justify="flex-end">
             Итого:<CheckoutTotal>{total}₽</CheckoutTotal>
           </CheckoutTotalWrapper>
         </CheckoutWrapper>
       )
-      : <CheckoutEmpty description="You cart is empty" />
+      : <CheckoutEmpty description="Ваша корзина пуста" />
   );
 }
 

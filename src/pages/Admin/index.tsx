@@ -38,6 +38,7 @@ const Admin: React.FC = () => {
       <AdminWrapper align="flex-start" justify="center">
         <ConfigProvider theme={orangeTheme}>
           <FloatButton.Group>
+            <FloatButton.BackTop visibilityHeight={1200} tooltip="Наверх" />
             <FloatButton icon={<HomeOutlined />} onClick={goHome} tooltip="На главную" />
             <AddNewProduct float />
           </FloatButton.Group>

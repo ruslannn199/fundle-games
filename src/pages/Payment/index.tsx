@@ -11,7 +11,7 @@ const Payment: React.FC = () => {
   const { clientSecret } = useTypedSelector((state) => (state.stripe));
   const { cartItems, total, cartItemsAmount } = useTypedSelector((state) => (state.cartData));
   const { fetchClientStart } = useStripeActions();
-  const [stripePromise] = useState(() => loadStripe(publishableKeys));
+  const [stripePromise] = useState(() => loadStripe(publishableKeys, { locale: 'ru' }));
   const navigate = useNavigate();
 
   useEffect(() => {

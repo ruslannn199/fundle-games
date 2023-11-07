@@ -1,10 +1,11 @@
-import { Form, Input, ConfigProvider, Flex, Spin } from 'antd';
+import { Form, Input, ConfigProvider, Flex, Spin, Tooltip } from 'antd';
 import {
   FlagOutlined,
   HomeFilled,
   HomeOutlined,
   InsertRowRightOutlined,
   MailOutlined,
+  QuestionCircleFilled,
   UserOutlined
 } from '@ant-design/icons';
 import { orangeTheme } from '../../utils/themes';
@@ -111,6 +112,7 @@ const PaymentDetails: React.FC = () => {
     <ConfigProvider theme={orangeTheme}>
       <Spin spinning={isLoading} indicator={Spinner}>
         <Form
+          id='payment'
           form={form}
           initialValues={{ remember: true }}
           labelCol={{ span: 8 }}
@@ -119,20 +121,20 @@ const PaymentDetails: React.FC = () => {
           autoComplete="on"
           name="Payment"
         >
-          <FormTitle level={2}>Your order</FormTitle>
+          <FormTitle level={2}>Ваш заказ</FormTitle>
 
-          <FormTitle level={3}>Shipping address</FormTitle>
+          <FormTitle level={3}>Адрес получателя</FormTitle>
 
           <Form.Item
             name="recipientName"
             rules={[{
               required: true,
-              message: "Please, put recipient's name",
+              message: "Пожалуйста, заполните имя получателя",
             }]}
           >
             <Input
               prefix={<UserOutlined className="form__icon" />}
-              placeholder="Recipient's full name"
+              placeholder="ФИО получателя"
             />
           </Form.Item>
 
@@ -140,19 +142,19 @@ const PaymentDetails: React.FC = () => {
             name="recipientLine1"
             rules={[{
               required: true,
-              message: "Please, put main recipient's address",
+              message: "Пожалуйста, заполните полный адрес получателя",
             }]}
           >
             <Input
               prefix={<HomeOutlined className="form__icon" />}
-              placeholder="Address Line 1 (or company name)"
+              placeholder="Адрес 1 (или название компании)"
             />
           </Form.Item>
 
           <Form.Item name="recipientLine2">
             <Input
               prefix={<HomeFilled className="form__icon" />}
-              placeholder="Address Line 2 (optional)"
+              placeholder="Адрес 2 (необязательно)"
             />
           </Form.Item>
 
@@ -160,12 +162,12 @@ const PaymentDetails: React.FC = () => {
             name="recipientCity"
             rules={[{
               required: true,
-              message: "Please, put recipient's city",
+              message: "Пожалуйста, заполните город получателя",
             }]}
           >
             <Input
               prefix={<InsertRowRightOutlined className="form__icon" />}
-              placeholder="City"
+              placeholder="Город"
             />
           </Form.Item>
 
@@ -173,12 +175,12 @@ const PaymentDetails: React.FC = () => {
             name="recipientState"
             rules={[{
               required: true,
-              message: "Please, put recipient's state",
+              message: "Пожалуйста, заполните регион получателя",
             }]}
           >
             <Input
               prefix={<FlagOutlined className="form__icon" />}
-              placeholder="State/province/region"
+              placeholder="Область/штат/регион"
             />
           </Form.Item>
 
@@ -186,12 +188,12 @@ const PaymentDetails: React.FC = () => {
             name="recipientPostalCode"
             rules={[{
               required: true,
-              message: "Please, put recipient's postal code",
+              message: "Пожалуйста, заполните почтовый индекс получателя",
             }]}
           >
             <Input
               prefix={<MailOutlined className="form__icon" />}
-              placeholder="Postal code/ZIP"
+              placeholder="Почтовый индекс/ZIP"
               pattern="[0-9]*"
             />
           </Form.Item>
@@ -200,18 +202,18 @@ const PaymentDetails: React.FC = () => {
             <CountrySearch onChange={handleRecipientCountryChange} />
           </Form.Item>
 
-          <FormTitle level={3}>Billing address</FormTitle>
+          <FormTitle level={3}>Платёжный адрес</FormTitle>
 
           <Form.Item
             name="billerName"
             rules={[{
               required: true,
-              message: "Please, put biller's name",
+              message: "Пожалуйста, заполните имя на карте",
             }]}
           >
             <Input
               prefix={<UserOutlined className="form__icon" />}
-              placeholder="Name on Card"
+              placeholder="Имя на карте"
             />
           </Form.Item>
 
@@ -219,19 +221,19 @@ const PaymentDetails: React.FC = () => {
             name="billerLine1"
             rules={[{
               required: true,
-              message: "Please, put biller's main address",
+              message: "Пожалуйста, заполните полный адрес плательщика",
             }]}
           >
             <Input
               prefix={<HomeOutlined className="form__icon" />}
-              placeholder="Address Line 1 (or company name)"
+              placeholder="Адрес 1 (или название компании)"
             />
           </Form.Item>
 
           <Form.Item name="billerLine2">
             <Input
               prefix={<HomeFilled className="form__icon" />}
-              placeholder="Address Line 2 (optional)"
+              placeholder="Адрес 2 (необязательно)"
             />
           </Form.Item>
 
@@ -239,12 +241,12 @@ const PaymentDetails: React.FC = () => {
             name="billerCity"
             rules={[{
               required: true,
-              message: "Please, put biller's city",
+              message: "Пожалуйста, заполните город плательщика",
             }]}
           >
             <Input
               prefix={<InsertRowRightOutlined className="form__icon" />}
-              placeholder="City"
+              placeholder="Город"
             />
           </Form.Item>
 
@@ -252,12 +254,12 @@ const PaymentDetails: React.FC = () => {
             name="billerState"
             rules={[{
               required: true,
-              message: "Please, put biller's state",
+              message: "Пожалуйста, заполните регион плательщика",
             }]}
           >
             <Input
               prefix={<FlagOutlined className="form__icon" />}
-              placeholder="State/Province/Region"
+              placeholder="Область/штат/регион"
             />
           </Form.Item>
 
@@ -265,12 +267,12 @@ const PaymentDetails: React.FC = () => {
             name="billerPostalCode"
             rules={[{
               required: true,
-              message: "Please, put biller's postal code",
+              message: "Пожалуйста, заполните почтовый индекс получателя",
             }]}
           >
             <Input
               prefix={<MailOutlined className="form__icon" />}
-              placeholder="Postal code/ZIP"
+              placeholder="Почтовый индекс/ZIP"
               pattern="[0-9]*"
             />
           </Form.Item>
@@ -280,7 +282,14 @@ const PaymentDetails: React.FC = () => {
           </Form.Item>
 
           <Form.Item>
-            <h2>Card details</h2>
+            <h2>Банковская&nbsp;карта&nbsp;
+              <Tooltip
+                title="4242 4242 4242 4242 и любые реквизиты для тестовой оплаты"
+                trigger={["click", "hover", "contextMenu"]}
+                >
+                  <QuestionCircleFilled />
+              </Tooltip>
+            </h2>
             <CardElement
               options={configCardElement}
             />

@@ -3,15 +3,14 @@ import { ConfigProvider } from 'antd';
 // Hooks
 import { useEffect } from 'react';
 import { useUserActions } from './hooks';
-// Pages
-import Layout from './pages/Layout';
 // Persistor
 import { persistor } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 // Routes
-import { BrowserRouter as Router } from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
 // Types
 import { fontTheme } from './utils/themes';
+import { router } from './utils/router';
 
 const App: React.FC = () => {
   const { checkUserSession } = useUserActions();
@@ -22,11 +21,9 @@ const App: React.FC = () => {
 
   return (
     <PersistGate persistor={persistor}>
-      <Router>
-        <ConfigProvider theme={fontTheme}>
-          <Layout />
-        </ConfigProvider>
-      </Router>
+      <ConfigProvider theme={fontTheme}>
+        <RouterProvider router={router} />
+      </ConfigProvider>
     </PersistGate>
 )};
 

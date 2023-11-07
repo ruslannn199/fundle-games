@@ -7,7 +7,7 @@ import DOMPurify from 'isomorphic-dompurify';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useProductsActions, useTypedSelector, useWindowDimensions } from '../../hooks';
-import { ProductHero, ProductDescription, ProductOfferInfo, ProductContent } from './Product.styles';
+import { ProductHero, ProductDescription, ProductOfferInfo, ProductContent, ProductWrapper } from './Product.styles';
 
 const Product: React.FC = () => {
   const { productId } = useParams();
@@ -28,7 +28,7 @@ const Product: React.FC = () => {
   const cleanDescription = DOMPurify.sanitize(product.description);
 
   return (
-    <Flex vertical align="center">
+    <ProductWrapper vertical align="center">
       <ProductContent justify="space-between" gap="1rem" vertical={width < 992}>
         <ProductHero vertical>
           <h1>{product.productName}</h1>
@@ -48,7 +48,7 @@ const Product: React.FC = () => {
       <ProductDescription
         dangerouslySetInnerHTML={{ __html: cleanDescription }}
       />
-    </Flex>
+    </ProductWrapper>
   );
 }
 

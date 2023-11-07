@@ -22,7 +22,7 @@ const PayButton: React.FC<Record<'form', FormInstance>> = ({ form }) => {
   return (
     <ConfigProvider theme={blackTheme}>
       <Button type="primary" htmlType="submit" disabled={!submittable}>
-        Pay now
+        Оплатить
       </Button>
     </ConfigProvider>
   );
