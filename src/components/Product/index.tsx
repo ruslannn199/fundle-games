@@ -8,13 +8,16 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useProductsActions, useTypedSelector, useWindowDimensions } from '../../hooks';
 import { ProductHero, ProductDescription, ProductOfferInfo, ProductContent, ProductWrapper } from './Product.styles';
+import Spinner from '../Spinner';
 
 const Product: React.FC = () => {
-  const { productId } = useParams();
-  const { fetchProductStart, setProduct } = useProductsActions();
   const { product } = useTypedSelector((state) => (state.productsData));
+  const { loadingQueue } = useTypedSelector((state) => (state.loader));
+  const { fetchProductStart, setProduct } = useProductsActions();
+  const { productId } = useParams();
   const { width } = useWindowDimensions();
   const heroImageSize = width > 992 ? '40rem' : '100%';
+  const isLoading = !!loadingQueue.length;
 
   useEffect(() => {
     if (productId) {

@@ -6,6 +6,7 @@ import AddToCart from '../AddToCart';
 import type { ProductData } from '../../types/interfaces';
 import { CardImage, ProductCardColumn, ProductCardWrapper } from './ProductCard.styles';
 import { useTypedSelector } from '../../hooks';
+import { useEffect } from 'react';
 
 interface ProductCardProps extends React.RefAttributes<HTMLDivElement> {
   productConfig: ProductData;
@@ -13,9 +14,11 @@ interface ProductCardProps extends React.RefAttributes<HTMLDivElement> {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ productConfig }) => {
-  const { Meta } = Card;
-  const { id, thumbnail, price, productName } = productConfig;
   const { loadingQueue } = useTypedSelector((state) => (state.loader));
+  const { id, thumbnail, price, productName } = productConfig;
+  const { Meta } = Card;
+
+  const isLoading = !!loadingQueue.length;
 
   return (thumbnail && productName && typeof price !== 'undefined')
     ? (
@@ -25,9 +28,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ productConfig }) => {
         <ProductCardWrapper
           hoverable
           cover={
-            <Skeleton loading={Boolean(loadingQueue.length)}>
+            <Skeleton loading={isLoading}>
               {
-                loadingQueue.length
+                isLoading
                   ? <Skeleton.Image active style={{ height: "6.1138rem" }} />
                   : <CardImage alt={productName} src={thumbnail} />
               }
@@ -35,7 +38,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ productConfig }) => {
           }
           actions={[ <AddToCart product={productConfig} /> ]}
         >
-          <Skeleton loading={Boolean(loadingQueue.length)} active>
+          <Skeleton loading={isLoading} active>
             <Link to={`/products/${id}`} style={{ height: "6.1138rem" }}>
               <Meta title={productName} description={`${price}₽`} />
             </Link>

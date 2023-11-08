@@ -23,7 +23,7 @@
     "noImplicitAny": true,
     "noFallthroughCasesInSwitch": true,
     "types": ["node", "dompurify"],
-    "noEmit": true,
+    "noEmit": true
   },
   "include": ["src", "client.d.ts"],
   "exclude": ["node_modules", "build", "tsconfig.json"]

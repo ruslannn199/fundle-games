@@ -14,7 +14,6 @@ import CountrySearch from '../CountrySearch';
 import { orderFields } from '../../types/types';
 import PayButton from '../PayButton';
 import { CardElement, useStripe } from '@stripe/react-stripe-js';
-import { StripeCardElementOptions } from '@stripe/stripe-js';
 import { useElements } from '@stripe/react-stripe-js';
 import { useStripeActions, useTypedSelector } from '../../hooks';
 import { FormTitle } from '../../styles/Form';
@@ -100,7 +99,7 @@ const PaymentDetails: React.FC = () => {
     setRecipientCountry(value);
   }
 
-  const configCardElement: StripeCardElementOptions = {
+  const configCardElement = {
     iconStyle: 'solid',
     style: {
       base: {

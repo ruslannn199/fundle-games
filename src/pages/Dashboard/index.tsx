@@ -11,6 +11,7 @@ const Dashboard: React.FC = () => {
   const { currentUser } = useTypedSelector((state) => (state.user));
   const { getUserOrderHistoryStart } = useOrdersActions();
   const { orderHistory } = useTypedSelector((state) => (state.ordersData));
+  const isLoading = !!loadingQueue.length;
 
   useEffect(() => {
     if (currentUser) {
@@ -19,11 +20,11 @@ const Dashboard: React.FC = () => {
   }, [getUserOrderHistoryStart, currentUser]);
 
   return (
-    <Spin spinning={Boolean(loadingQueue.length)} indicator={Spinner}>
+    <Spinner spinning={isLoading}>
       <DashboardWrapper vertical justify="center" align="center">
         {orderHistory.map((order, index) => (<OrderCard key={index} items={order} />))}
       </DashboardWrapper>
-    </Spin>
+    </Spinner>
   );
 };
 

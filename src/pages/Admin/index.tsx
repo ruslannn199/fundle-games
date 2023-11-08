@@ -19,6 +19,7 @@ const Admin: React.FC = () => {
   const { loadingQueue } = useTypedSelector((state) => (state.loader));
   const { fetchProductsStart } = useProductsActions();
   const navigate = useNavigate();
+  const isLoading = !!loadingQueue.length;
 
   useEffect(() => {
     fetchProductsStart({
@@ -44,9 +45,9 @@ const Admin: React.FC = () => {
           </FloatButton.Group>
         </ConfigProvider>
         <AdminDashboard vertical align="flex-start" justify="center">
-          <Spin indicator={Spinner} spinning={Boolean(loadingQueue.length)}>
+          <Spinner spinning={isLoading}>
             <ProductsTable products={products} />
-          </Spin>
+          </Spinner>
         </AdminDashboard>
       </AdminWrapper>
     )

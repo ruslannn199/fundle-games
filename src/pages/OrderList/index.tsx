@@ -12,6 +12,7 @@ const OrdersList: React.FC = () => {
   const { orderDetails } = useTypedSelector((state) => (state.ordersData));
   const { getOrderDetailsStart, setOrderDetails } = useOrdersActions();
   const { orderId } = useParams();
+  const isLoading = !!loadingQueue.length;
 
   useEffect(() => {
     if (orderId) {
@@ -22,13 +23,13 @@ const OrdersList: React.FC = () => {
   }, [getOrderDetailsStart, orderId, setOrderDetails]);
 
   return (
-    <Spin spinning={Boolean(loadingQueue.length)} indicator={Spinner}>
+    <Spinner spinning={isLoading}>
       {
         orderDetails && orderDetails.orderUserId === currentUser?.id
           ? <OrderDetails order={orderDetails} />
           : null
       }
-    </Spin>
+    </Spinner>
   );
 }
 
