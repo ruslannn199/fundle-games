@@ -1,4 +1,4 @@
-import { Form, Input, ConfigProvider, Flex, Spin, Tooltip } from 'antd';
+import { Form, Input, ConfigProvider, Flex, Tooltip } from 'antd';
 import {
   FlagOutlined,
   HomeFilled,
@@ -18,7 +18,7 @@ import { StripeCardElementOptions } from '@stripe/stripe-js';
 import { useElements } from '@stripe/react-stripe-js';
 import { useStripeActions, useTypedSelector } from '../../hooks';
 import { FormTitle } from '../../styles/Form';
-import Spinner from '../Spinner';
+import PaymentDetailsSkeleton from '../PaymentDetailsSkeleton';
 
 const PaymentDetails: React.FC = () => {
   const { loadingQueue } = useTypedSelector((state) => (state.loader));
@@ -29,6 +29,8 @@ const PaymentDetails: React.FC = () => {
   const [form] = Form.useForm<orderFields>();
   const elements = useElements();
   const stripe = useStripe();
+
+  const isLoading = !!loadingQueue.length;
 
   useEffect(() => {
     retrievePaymentStart({ stripe, cartData: cartItems, total });
@@ -110,198 +112,139 @@ const PaymentDetails: React.FC = () => {
 
   return (
     <ConfigProvider theme={orangeTheme}>
-      <Spin spinning={Boolean(loadingQueue.length)} indicator={Spinner}>
-        <Form
-          id='payment'
-          form={form}
-          initialValues={{ remember: true }}
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 32 }}
-          onFinish={handleFormSubmit}
-          autoComplete="on"
-          name="Payment"
-        >
-          <FormTitle level={2}>Ваш заказ</FormTitle>
-
-          <FormTitle level={3}>Адрес получателя</FormTitle>
-
-          <Form.Item
-            name="recipientName"
-            rules={[{
-              required: true,
-              message: "Пожалуйста, заполните имя получателя",
-            }]}
-          >
-            <Input
-              prefix={<UserOutlined className="form__icon" />}
-              placeholder="ФИО получателя"
-            />
-          </Form.Item>
-
-          <Form.Item
-            name="recipientLine1"
-            rules={[{
-              required: true,
-              message: "Пожалуйста, заполните полный адрес получателя",
-            }]}
-          >
-            <Input
-              prefix={<HomeOutlined className="form__icon" />}
-              placeholder="Адрес 1 (или название компании)"
-            />
-          </Form.Item>
-
-          <Form.Item name="recipientLine2">
-            <Input
-              prefix={<HomeFilled className="form__icon" />}
-              placeholder="Адрес 2 (необязательно)"
-            />
-          </Form.Item>
-
-          <Form.Item
-            name="recipientCity"
-            rules={[{
-              required: true,
-              message: "Пожалуйста, заполните город получателя",
-            }]}
-          >
-            <Input
-              prefix={<InsertRowRightOutlined className="form__icon" />}
-              placeholder="Город"
-            />
-          </Form.Item>
-
-          <Form.Item
-            name="recipientState"
-            rules={[{
-              required: true,
-              message: "Пожалуйста, заполните регион получателя",
-            }]}
-          >
-            <Input
-              prefix={<FlagOutlined className="form__icon" />}
-              placeholder="Область/штат/регион"
-            />
-          </Form.Item>
-
-          <Form.Item
-            name="recipientPostalCode"
-            rules={[{
-              required: true,
-              message: "Пожалуйста, заполните почтовый индекс получателя",
-            }]}
-          >
-            <Input
-              prefix={<MailOutlined className="form__icon" />}
-              placeholder="Почтовый индекс/ZIP"
-              pattern="[0-9]*"
-            />
-          </Form.Item>
-
-          <Form.Item>
-            <CountrySearch onChange={handleRecipientCountryChange} />
-          </Form.Item>
-
-          <FormTitle level={3}>Платёжный адрес</FormTitle>
-
-          <Form.Item
-            name="billerName"
-            rules={[{
-              required: true,
-              message: "Пожалуйста, заполните имя на карте",
-            }]}
-          >
-            <Input
-              prefix={<UserOutlined className="form__icon" />}
-              placeholder="Имя на карте"
-            />
-          </Form.Item>
-
-          <Form.Item
-            name="billerLine1"
-            rules={[{
-              required: true,
-              message: "Пожалуйста, заполните полный адрес плательщика",
-            }]}
-          >
-            <Input
-              prefix={<HomeOutlined className="form__icon" />}
-              placeholder="Адрес 1 (или название компании)"
-            />
-          </Form.Item>
-
-          <Form.Item name="billerLine2">
-            <Input
-              prefix={<HomeFilled className="form__icon" />}
-              placeholder="Адрес 2 (необязательно)"
-            />
-          </Form.Item>
-
-          <Form.Item
-            name="billerCity"
-            rules={[{
-              required: true,
-              message: "Пожалуйста, заполните город плательщика",
-            }]}
-          >
-            <Input
-              prefix={<InsertRowRightOutlined className="form__icon" />}
-              placeholder="Город"
-            />
-          </Form.Item>
-
-          <Form.Item
-            name="billerState"
-            rules={[{
-              required: true,
-              message: "Пожалуйста, заполните регион плательщика",
-            }]}
-          >
-            <Input
-              prefix={<FlagOutlined className="form__icon" />}
-              placeholder="Область/штат/регион"
-            />
-          </Form.Item>
-
-          <Form.Item
-            name="billerPostalCode"
-            rules={[{
-              required: true,
-              message: "Пожалуйста, заполните почтовый индекс получателя",
-            }]}
-          >
-            <Input
-              prefix={<MailOutlined className="form__icon" />}
-              placeholder="Почтовый индекс/ZIP"
-              pattern="[0-9]*"
-            />
-          </Form.Item>
-
-          <Form.Item>
-            <CountrySearch onChange={handleBillingCountryChange} />
-          </Form.Item>
-
-          <Form.Item>
-            <h2>Банковская&nbsp;карта&nbsp;
-              <Tooltip
-                title="4242 4242 4242 4242 и любые реквизиты для тестовой оплаты"
-                trigger={["click", "hover", "contextMenu"]}
-                >
-                  <QuestionCircleFilled />
-              </Tooltip>
-            </h2>
-            <CardElement
-              options={configCardElement}
-            />
-          </Form.Item>
-
-          <Form.Item>
-            <Flex justify="center">
-              <PayButton form={form} />
-            </Flex>
-          </Form.Item>
-        </Form>
-      </Spin>
+      {
+        isLoading
+          ? (
+            <PaymentDetailsSkeleton />
+          )
+          : (
+            <Form
+              id="payment"
+              form={form}
+              initialValues={{ remember: true }}
+              labelCol={{ span: 8 }}
+              wrapperCol={{ span: 32 }}
+              onFinish={handleFormSubmit}
+              autoComplete="on"
+              name="Payment"
+            >
+              <FormTitle level={2}>Ваш заказ</FormTitle>
+      
+              <FormTitle level={3}>Адрес получателя</FormTitle>
+      
+              <Form.Item
+                name="recipientName"
+                rules={[{ required: true, message: "Пожалуйста, заполните имя получателя" }]}
+              >
+                <Input prefix={<UserOutlined />} placeholder="ФИО получателя" />
+              </Form.Item>
+      
+              <Form.Item
+                name="recipientLine1"
+                rules={[{ required: true, message: "Пожалуйста, заполните полный адрес получателя" }]}
+              >
+                <Input prefix={<HomeOutlined />} placeholder="Адрес 1 (или название компании)" />
+              </Form.Item>
+      
+              <Form.Item name="recipientLine2">
+                <Input
+                  prefix={<HomeFilled />}
+                  placeholder="Адрес 2 (необязательно)"
+                />
+              </Form.Item>
+      
+              <Form.Item
+                name="recipientCity"
+                rules={[{ required: true, message: "Пожалуйста, заполните город получателя" }]}
+              >
+                <Input prefix={<InsertRowRightOutlined />} placeholder="Город" />
+              </Form.Item>
+      
+              <Form.Item
+                name="recipientState"
+                rules={[{ required: true, message: "Пожалуйста, заполните регион получателя" }]}
+              >
+                <Input prefix={<FlagOutlined />} placeholder="Область/штат/регион" />
+              </Form.Item>
+      
+              <Form.Item
+                name="recipientPostalCode"
+                rules={[{ required: true, message: "Пожалуйста, заполните почтовый индекс получателя" }]}
+              >
+                <Input prefix={<MailOutlined />} placeholder="Почтовый индекс/ZIP" pattern="[0-9]*" />
+              </Form.Item>
+      
+              <Form.Item>
+                <CountrySearch onChange={handleRecipientCountryChange} />
+              </Form.Item>
+      
+              <FormTitle level={3}>Платёжный адрес</FormTitle>
+      
+              <Form.Item
+                name="billerName"
+                rules={[{ required: true, message: "Пожалуйста, заполните имя на карте" }]}
+              >
+                <Input prefix={<UserOutlined />} placeholder="Имя на карте" />
+              </Form.Item>
+      
+              <Form.Item
+                name="billerLine1"
+                rules={[{ required: true, message: "Пожалуйста, заполните полный адрес плательщика" }]}
+              >
+                <Input prefix={<HomeOutlined />} placeholder="Адрес 1 (или название компании)" />
+              </Form.Item>
+      
+              <Form.Item name="billerLine2">
+                <Input prefix={<HomeFilled />} placeholder="Адрес 2 (необязательно)" />
+              </Form.Item>
+      
+              <Form.Item
+                name="billerCity"
+                rules={[{ required: true, message: "Пожалуйста, заполните город плательщика" }]}
+              >
+                <Input prefix={<InsertRowRightOutlined />} placeholder="Город" />
+              </Form.Item>
+      
+              <Form.Item
+                name="billerState"
+                rules={[{ required: true, message: "Пожалуйста, заполните регион плательщика" }]}
+              >
+                <Input prefix={<FlagOutlined />} placeholder="Область/штат/регион" />
+              </Form.Item>
+      
+              <Form.Item
+                name="billerPostalCode"
+                rules={[{ required: true, message: "Пожалуйста, заполните почтовый индекс получателя" }]}
+              >
+                <Input prefix={<MailOutlined />} placeholder="Почтовый индекс/ZIP" pattern="[0-9]*" />
+              </Form.Item>
+      
+              <Form.Item>
+                <CountrySearch onChange={handleBillingCountryChange} />
+              </Form.Item>
+      
+              <Form.Item>
+                <h2>Банковская&nbsp;карта&nbsp;
+                  <Tooltip
+                    title="4242 4242 4242 4242 и любые реквизиты для тестовой оплаты"
+                    trigger={["click", "hover", "contextMenu"]}
+                    >
+                      <QuestionCircleFilled />
+                  </Tooltip>
+                </h2>
+                <CardElement
+                  options={configCardElement}
+                />
+              </Form.Item>
+      
+              <Form.Item>
+                <Flex justify="center">
+                  <PayButton form={form} />
+                </Flex>
+              </Form.Item>
+            </Form>
+          )
+      }
     </ConfigProvider>
   );
 }
