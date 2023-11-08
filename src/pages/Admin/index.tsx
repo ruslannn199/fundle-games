@@ -16,7 +16,7 @@ import { HomeOutlined } from '@ant-design/icons';
 const Admin: React.FC = () => {
   const { currentUser } = useTypedSelector((state) => (state.user));
   const { products } = useTypedSelector((state) => (state.productsData));
-  const { isLoading } = useTypedSelector((state) => (state.loader));
+  const { loadingQueue } = useTypedSelector((state) => (state.loader));
   const { fetchProductsStart } = useProductsActions();
   const navigate = useNavigate();
 
@@ -44,7 +44,7 @@ const Admin: React.FC = () => {
           </FloatButton.Group>
         </ConfigProvider>
         <AdminDashboard vertical align="flex-start" justify="center">
-          <Spin indicator={Spinner} spinning={isLoading}>
+          <Spin indicator={Spinner} spinning={Boolean(loadingQueue.length)}>
             <ProductsTable products={products} />
           </Spin>
         </AdminDashboard>

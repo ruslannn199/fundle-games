@@ -11,13 +11,13 @@ import { handleFetchProduct } from './products.utils';
 import { redirect } from 'react-router-dom';
 
 const { fetchProductsStart, setProduct, setMultipleProducts } = ProductsActionCreators;
-const { toggleLoadStart } = LoadingActionCreators;
+const { addLoadStart, removeLoadStart } = LoadingActionCreators;
 
 export function* addProduct({ payload }: AddProductStartAction) {
   try {
     const timeStamp = convertToMySQLDateTime(new Date());
     if (auth.currentUser) {
-      yield put(toggleLoadStart(true));
+      yield put(addLoadStart('addProduct'));
 
       yield handleAddProduct({
         ...payload,
@@ -32,28 +32,34 @@ export function* addProduct({ payload }: AddProductStartAction) {
         },
         pageSize: 50,
       }));
+      yield put(removeLoadStart('addProduct'));
     }
   } catch (err) {
     if (err instanceof Error) console.error(err.message);
+    yield put(removeLoadStart('addProduct'));
   }
 }
 
 export function* fetchProducts({ payload }: FetchProductsStartAction) {
   try {
-    yield put(toggleLoadStart(true));
+    yield put(addLoadStart('fetchProducts'));
     const productData: Products = yield handleFetchProducts(payload);
     yield put(setMultipleProducts(productData));
-    yield put(toggleLoadStart(false));
+    yield put(removeLoadStart('fetchProducts'));
   } catch (err) {
     if (err instanceof Error) console.error(err.message);
+    yield put(removeLoadStart('fetchProducts'));
   }
 }
 
 export function* fetchProduct({ payload }: FetchProductStartAction) {
   try {
+    yield put(addLoadStart('fetchProduct'));
     const product: ProductData = yield handleFetchProduct(payload);
     yield put(setProduct(product));
+    yield put(removeLoadStart('fetchProduct'));
   } catch {
+    yield put(removeLoadStart('fetchProduct'));
     redirect('/404');
   }
 }
@@ -61,7 +67,7 @@ export function* fetchProduct({ payload }: FetchProductStartAction) {
 export function* deleteProduct({ payload }: DeleteProductStartAction) {
   try {
     if (payload) {
-      yield put(toggleLoadStart(true));
+      yield put(addLoadStart('deleteProduct'));
       yield handleDeleteProducts(payload);
       yield put(fetchProductsStart({
         filters: {
@@ -69,9 +75,11 @@ export function* deleteProduct({ payload }: DeleteProductStartAction) {
         },
         pageSize: 50,
       }));
+      yield put(removeLoadStart('deleteProduct'));
     }
   } catch (err) {
     if (err instanceof Error) console.error(err.message);
+    yield put(removeLoadStart('deleteProduct'));
   }
 }
 

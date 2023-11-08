@@ -2,17 +2,18 @@ import { call, put, takeLatest, all } from 'redux-saga/effects';
 import { ActionType } from './loading.actions';
 import LoadingActionCreators from './loading.actions';
 
-const { toggleLoadStart } = LoadingActionCreators;
+const { addLoadStart, removeLoadStart } = LoadingActionCreators;
 
 const delay = (time: number) => (new Promise((resolve) => (setTimeout(resolve, time))));
 
-export function* setFakeLoading () {
+export function* setFakeLoading() {
   try {
-    yield put(toggleLoadStart(true));
+    yield put(addLoadStart('fakeLoading'));
     yield call(delay, 2000);
-    yield put(toggleLoadStart(false));
+    yield put(removeLoadStart('fakeLoading'));
   } catch (err) {
     console.error(err);
+    yield put(removeLoadStart('fakeLoading'));
   }
 }
 
@@ -22,6 +23,6 @@ export function* onFakeLoadingStart() {
 
 export default function* loadingSagas() {
   yield all([
-    call(onFakeLoadingStart)
+    call(onFakeLoadingStart),
   ]);
 }

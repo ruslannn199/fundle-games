@@ -7,7 +7,7 @@ import OrderCard from '../../components/OrderCard';
 import { DashboardWrapper } from './Dashboard.styles';
 
 const Dashboard: React.FC = () => {
-  const { isLoading } = useTypedSelector((state) => (state.loader));
+  const { loadingQueue } = useTypedSelector((state) => (state.loader));
   const { currentUser } = useTypedSelector((state) => (state.user));
   const { getUserOrderHistoryStart } = useOrdersActions();
   const { orderHistory } = useTypedSelector((state) => (state.ordersData));
@@ -16,10 +16,10 @@ const Dashboard: React.FC = () => {
     if (currentUser) {
       getUserOrderHistoryStart(currentUser.id);
     }
-  }, [getUserOrderHistoryStart]);
+  }, [getUserOrderHistoryStart, currentUser]);
 
   return (
-    <Spin spinning={isLoading} indicator={Spinner}>
+    <Spin spinning={Boolean(loadingQueue.length)} indicator={Spinner}>
       <DashboardWrapper vertical justify="center" align="center">
         {orderHistory.map((order, index) => (<OrderCard key={index} items={order} />))}
       </DashboardWrapper>

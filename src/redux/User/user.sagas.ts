@@ -9,30 +9,32 @@ import UserActionsCreators from './user.actions';
 import LoadingActionCreators from '../Loading/loading.actions';
 
 const { userError, signOutSuccess, recoverPasswordSuccess } = UserActionsCreators;
-const { toggleLoadStart } = LoadingActionCreators;
+const { addLoadStart, removeLoadStart } = LoadingActionCreators;
 
 // Worker sagas
 export function* emailSignIn({
   payload: { email, password }
 }: EmailSignInStartAction) {
   try {
-    yield put(toggleLoadStart(true));
+    yield put(addLoadStart('signIn'));
     const { user } = yield signInWithEmailAndPassword(auth, email, password);
     yield getSnapshotFromUserAuth(user);
-    yield put(toggleLoadStart(false));
+    yield put(removeLoadStart('signIn'));
   } catch (err) {
     if (err instanceof Error) yield put(userError([err.message]));
+    yield put(removeLoadStart('signIn'));
   }
 }
 
 export function* emailSignOut() {
   try {
-    yield put(toggleLoadStart(true));
+    yield put(addLoadStart('signOut'));
     yield signOut(auth);
     yield put(signOutSuccess(null));
-    yield put(toggleLoadStart(false));
+    yield put(removeLoadStart('signOut'));
   } catch (err) {
     if (err instanceof Error) yield put(userError([err.message]));
+    yield put(removeLoadStart('signOut'));
   }
 }
 
@@ -40,12 +42,13 @@ export function* emailSignUp({
   payload: { email, password, displayName },
 }: EmailSignUpStartAction) {
   try {
-    yield put(toggleLoadStart(true));
+    yield put(addLoadStart('signUp'));
     const { user } = yield createUserWithEmailAndPassword(auth, email, password);
     yield getSnapshotFromUserAuth(user, { displayName });
-    yield put(toggleLoadStart(false));
+    yield put(removeLoadStart('signUp'));
   } catch (err) {
     if (err instanceof Error) yield put(userError([err.message]));
+    yield put(removeLoadStart('signUp'));
   }
 }
 
@@ -70,12 +73,13 @@ export function* recoverPassword({ payload }: PasswordRecoveryStartAction) {
 
 export function* googleSignIn() {
   try {
-    yield put(toggleLoadStart(true));
+    yield put(addLoadStart('googleSignIn'));
     const { user } = yield signInWithPopup(auth, GoogleProvider);
     yield getSnapshotFromUserAuth(user);
-    yield put(toggleLoadStart(false));
+    yield put(removeLoadStart('googleSignIn'));
   } catch (err) {
     console.error(err);
+    yield put(removeLoadStart('googleSignIn'));
   }
 }
 

@@ -1,4 +1,3 @@
-import { LogoutOutlined } from '@ant-design/icons';
 import { Button, Flex } from 'antd';
 import styled from 'styled-components';
 

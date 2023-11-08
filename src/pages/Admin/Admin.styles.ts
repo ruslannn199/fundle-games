@@ -1,4 +1,4 @@
-import { Flex, Menu } from 'antd';
+import { Flex } from 'antd';
 import styled from 'styled-components'
 
 export const AdminWrapper = styled(Flex)`

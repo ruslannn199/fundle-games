@@ -22,7 +22,7 @@ const Checkout: React.FC = () => {
       }
       return () => { setProduct(null) };
     }
-  }, [product, setProduct]);
+  }, [product, setProduct, addToCart, isCheckoutPage]);
 
   return (
     cartItems.length

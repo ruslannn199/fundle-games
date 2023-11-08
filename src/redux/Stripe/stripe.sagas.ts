@@ -9,23 +9,24 @@ import OrdersActionsCreators from '../Orders/orders.actions';
 
 const { setClient, setPaymentStatus } = StripeActionCreators;
 const { clearCartItems } = CartActionCreators;
-const { toggleLoadStart } = LoadingActionCreators;
+const { addLoadStart, removeLoadStart } = LoadingActionCreators;
 const { saveOrderHistoryStart } = OrdersActionsCreators;
 
 export function* fetchClient({ payload }: FetchClientStartAction) {
   try {
-    yield put(toggleLoadStart(true));
+    yield put(addLoadStart('getClient'));
     const client: StripeClientResponse = yield handleFetchClient(payload);
     yield put(setClient(client.clientSecret));
-    yield put(toggleLoadStart(false));
+    yield put(removeLoadStart('getClient'));
   } catch (err) {
     console.error(err);
+    yield put(removeLoadStart('getClient'));
   }
 }
 
 export function* retrievePayment({ payload: { stripe, cartData, total } }: RetrievePaymentStartAction) {
   try {
-    yield put(toggleLoadStart(true));
+    yield put(addLoadStart('retrievePayment'));
     if (stripe) {
       const { clientSecret }: StripeClientResponse = yield handleFetchClient({ cartData, total });
       if (clientSecret) {
@@ -37,9 +38,10 @@ export function* retrievePayment({ payload: { stripe, cartData, total } }: Retri
         }
       }
     }
-    yield put(toggleLoadStart(false));
+    yield put(removeLoadStart('retrievePayment'));
   } catch (err) {
     console.error(err);
+    yield put(removeLoadStart('retrievePayment'));
   }
 }
 
@@ -47,7 +49,7 @@ export function* confirmCardPayment({
   payload: { cardPaymentData, stripe, cartData, total }
 }: ConfirmCardPaymentStartAction) {
   try {
-    yield put(toggleLoadStart(true));
+    yield put(addLoadStart('confirmCardPayment'));
     if (stripe) {
       const { clientSecret }: StripeClientResponse = yield handleFetchClient({ cartData, total });
       yield stripe.confirmCardPayment(
@@ -67,9 +69,10 @@ export function* confirmCardPayment({
       yield put(saveOrderHistoryStart(configOrder));
       yield put(clearCartItems());
     }
-    yield put(toggleLoadStart(false));
+    yield put(removeLoadStart('confirmCardPayment'));
   } catch (err) {
     console.error(err);
+    yield put(removeLoadStart('confirmCardPayment'));
   }
 }
 

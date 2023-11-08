@@ -6,43 +6,46 @@ import { convertToMySQLDateTime } from '../../utils';
 import LoadingActionCreators from '../Loading/loading.actions';
 import { Order } from '../../types/interfaces';
 
-const { toggleLoadStart } = LoadingActionCreators;
+const { addLoadStart, removeLoadStart } = LoadingActionCreators;
 const { setUserOrderHistory, setOrderDetails } = OrdersActionsCreators;
 
 export function* saveOrderHistory({ payload }: SaveOrderHistoryStartAction) {
   try {
-    yield put(toggleLoadStart(true));
+    yield put(addLoadStart('saveOrderHistory'));
     const timestamp = convertToMySQLDateTime(new Date());
     yield handleSaveOrder({
       ...payload,
       orderUserId: auth.currentUser?.uid || crypto.randomUUID(),
       orderCreatedDate: timestamp,
     });
-    yield put(toggleLoadStart(false));
+    yield put(removeLoadStart('saveOrderHistory'));
   } catch (err) {
     console.error(err);
+    yield put(removeLoadStart('saveOrderHistory'));
   }
 }
 
 export function* getUserOrderHistory({ payload }: GetUserOrderHistoryStartAction) {
   try {
-    yield put(toggleLoadStart(true));
+    yield put(addLoadStart('getOrderHistory'));
     const history: Order[] = yield handleGetUserOrderHistory(payload);
     yield put(setUserOrderHistory(history));
-    yield put(toggleLoadStart(false));
+    yield put(removeLoadStart('getOrderHistory'));
   } catch (err) {
     console.error(err);
+    yield put(removeLoadStart('getOrderHistory'));
   }
 }
 
 export function* getOrderDetails({ payload }: GetOrderDetailsStartAction) {
   try {
-    yield put(toggleLoadStart(true));
+    yield put(addLoadStart('getOrderDetails'));
     const order: Order = yield handleGetOrderDetails(payload);
     yield put(setOrderDetails(order));
-    yield put(toggleLoadStart(false));
+    yield put(removeLoadStart('getOrderDetails'));
   } catch (err) {
     console.error(err);
+    yield put(removeLoadStart('getOrderDetails'));
   }
 }
 

@@ -21,7 +21,7 @@ import { FormTitle } from '../../styles/Form';
 import Spinner from '../Spinner';
 
 const PaymentDetails: React.FC = () => {
-  const { isLoading } = useTypedSelector((state) => (state.loader));
+  const { loadingQueue } = useTypedSelector((state) => (state.loader));
   const { cartItems, total } = useTypedSelector((state) => (state.cartData));
   const { retrievePaymentStart, confirmCardPaymentStart } = useStripeActions();
   const [recipientCountry, setRecipientCountry] = useState<string>('RU');
@@ -32,7 +32,7 @@ const PaymentDetails: React.FC = () => {
 
   useEffect(() => {
     retrievePaymentStart({ stripe, cartData: cartItems, total });
-  }, [stripe]);
+  }, [stripe, cartItems, total, retrievePaymentStart]);
 
   const handleFormSubmit = (values: orderFields) => {
     const {
@@ -110,7 +110,7 @@ const PaymentDetails: React.FC = () => {
 
   return (
     <ConfigProvider theme={orangeTheme}>
-      <Spin spinning={isLoading} indicator={Spinner}>
+      <Spin spinning={Boolean(loadingQueue.length)} indicator={Spinner}>
         <Form
           id='payment'
           form={form}

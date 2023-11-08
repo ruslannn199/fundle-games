@@ -1,7 +1,6 @@
 // Components
 import ProductCard from '../ProductCard';
-import { ConfigProvider, Flex, Spin } from 'antd';
-import Spinner from '../Spinner';
+import { ConfigProvider, Flex } from 'antd';
 import LoadMoreButton from '../LoadMore';
 import { ProductCardRow, ProductResultsSelect, ProductResultsWrapper } from './ProductResults.styles';
 // Hooks
@@ -18,14 +17,13 @@ import type { FilterFunc, SelectHandler } from 'rc-select/lib/Select';
 // Utils
 import { convertFromURLAddress, convertToURLAddress } from '../../utils';
 
-const ProductResults = () => {
+const ProductResults: React.FC = () => {
   const defaultOptionName = 'Show all';
 
   const { fetchProductsStart } = useProductsActions();
   const { fetchCategoriesStart } = useCategoriesActions();
   const { categories, category } = useTypedSelector((state) => (state.category));
   const { products } = useTypedSelector((state) => (state.productsData));
-  const { isLoading } = useTypedSelector((state) => (state.loader));
   const [searchParams, setSearchParams] = useSearchParams();
 
   const options: SelectProps['options'] = useMemo(() => (
@@ -89,38 +87,36 @@ const ProductResults = () => {
 
   return (
     <ProductResultsWrapper vertical>
-      <Spin spinning={isLoading} indicator={Spinner}>
-        <h1>{!products.data.length ? "Нет результатов" : "Поиск по товарам"}</h1>
-        <ConfigProvider theme={orangeTheme}>
-          <ProductResultsSelect
-            showSearch
-            placeholder="Choose category"
-            filterOption={filterOption}
-            filterSort={filterSort}
-            options={options}
-            defaultValue={category}
-            onSelect={handleFilter}
-          />
-        </ConfigProvider>
-        <ProductCardRow gutter={[0, 32]}>
-          {
-            products
-              .data
-              .map((product: ProductData, position: number) => ((
-                <ProductCard
-                  productConfig={product}
-                  position={position}
-                  key={product.id}
-                />
-              )))
-          }
-        </ProductCardRow>
-        <ConfigProvider theme={blackTheme}>
-          <Flex align="center" justify="center">
-            {products.isLastPage ? null : <LoadMoreButton onLoadMore={ () => increasePage() } />}
-          </Flex>
-        </ConfigProvider>
-      </Spin>
+      <h1>{!products.data.length ? "Нет результатов" : "Поиск по товарам"}</h1>
+      <ConfigProvider theme={orangeTheme}>
+        <ProductResultsSelect
+          showSearch
+          placeholder="Choose category"
+          filterOption={filterOption}
+          filterSort={filterSort}
+          options={options}
+          defaultValue={category}
+          onSelect={handleFilter}
+        />
+      </ConfigProvider>
+      <ProductCardRow gutter={[0, 32]}>
+        {
+          products
+            .data
+            .map((product: ProductData, position: number) => ((
+              <ProductCard
+                productConfig={product}
+                position={position}
+                key={product.id}
+              />
+            )))
+        }
+      </ProductCardRow>
+      <ConfigProvider theme={blackTheme}>
+        <Flex align="center" justify="center">
+          {products.isLastPage ? null : <LoadMoreButton onLoadMore={ () => increasePage() } />}
+        </Flex>
+      </ConfigProvider>
     </ProductResultsWrapper>
   );
 }

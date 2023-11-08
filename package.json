@@ -40,7 +40,8 @@
     "start": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "server": "cd E:/XAMPP/htdocs/fundle-games && php -S localhost:8080"
+    "server": "cd E:/XAMPP/htdocs/fundle-games && php -S localhost:8080",
+    "eslint": "npx eslint src"
   },
   "browserslist": {
     "production": [

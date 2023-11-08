@@ -25,6 +25,7 @@
     "react-refresh/only-export-components": [
       "warn",
       { "allowConstantExport": true }
-    ]
+    ],
+    "no-template-curly-in-string": "off"
   }
 }

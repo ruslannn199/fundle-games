@@ -1,5 +1,5 @@
 // Components
-import { Button, ConfigProvider, Image, Table, Tag } from 'antd';
+import { Button, ConfigProvider, Table, Tag } from 'antd';
 // Hooks
 import { useProductsActions } from '../../hooks';
 // Themes

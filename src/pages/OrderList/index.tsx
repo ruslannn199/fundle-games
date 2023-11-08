@@ -7,7 +7,7 @@ import Spinner from '../../components/Spinner';
 import OrderDetails from '../../components/OrderDetails';
 
 const OrdersList: React.FC = () => {
-  const { isLoading } = useTypedSelector((state) => (state.loader));
+  const { loadingQueue } = useTypedSelector((state) => (state.loader));
   const { currentUser } = useTypedSelector((state) => (state.user));
   const { orderDetails } = useTypedSelector((state) => (state.ordersData));
   const { getOrderDetailsStart, setOrderDetails } = useOrdersActions();
@@ -19,10 +19,10 @@ const OrdersList: React.FC = () => {
 
       return () => { setOrderDetails(null) };
     }
-  }, [getOrderDetailsStart]);
+  }, [getOrderDetailsStart, orderId, setOrderDetails]);
 
   return (
-    <Spin spinning={isLoading} indicator={Spinner}>
+    <Spin spinning={Boolean(loadingQueue.length)} indicator={Spinner}>
       {
         orderDetails && orderDetails.orderUserId === currentUser?.id
           ? <OrderDetails order={orderDetails} />

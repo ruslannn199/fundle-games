@@ -18,11 +18,11 @@ const Payment: React.FC = () => {
     if (cartItemsAmount < 1) {
       navigate('/dashboard');
     }
-  }, [cartItemsAmount]);
+  }, [cartItemsAmount, navigate]);
 
   useEffect(() => {
     fetchClientStart({ cartData: cartItems, total });
-  }, [fetchClientStart]);
+  }, [fetchClientStart, cartItems, total]);
 
   return (
     clientSecret

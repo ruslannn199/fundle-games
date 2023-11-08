@@ -1,5 +1,5 @@
 // Components
-import { Flex, Image } from 'antd';
+import { Image } from 'antd';
 import AddToCart from '../AddToCart';
 // DOMSanitize
 import DOMPurify from 'isomorphic-dompurify';
@@ -21,7 +21,7 @@ const Product: React.FC = () => {
       fetchProductStart(productId);
     }
     return () => { setProduct(null) };
-  }, [fetchProductStart, productId]);
+  }, [fetchProductStart, productId, setProduct]);
 
   if (!product) return null;
 
