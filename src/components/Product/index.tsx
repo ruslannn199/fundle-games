@@ -1,14 +1,15 @@
 // Components
 import { Image } from 'antd';
 import AddToCart from '../AddToCart';
+import { ProductHero, ProductDescription, ProductOfferInfo, ProductContent, ProductWrapper } from './Product.styles';
+// Images
+import ImagePlaceholder from '../../assets/images/placeholder.png';
 // DOMSanitize
 import DOMPurify from 'isomorphic-dompurify';
 // Hooks
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useProductsActions, useTypedSelector, useWindowDimensions } from '../../hooks';
-import { ProductHero, ProductDescription, ProductOfferInfo, ProductContent, ProductWrapper } from './Product.styles';
-import Spinner from '../Spinner';
 
 const Product: React.FC = () => {
   const { product } = useTypedSelector((state) => (state.productsData));
@@ -36,6 +37,7 @@ const Product: React.FC = () => {
         <ProductHero vertical>
           <h1>{product.productName}</h1>
           <Image
+            preview={{ src: ImagePlaceholder }}
             width={heroImageSize}
             height={heroImageSize}
             src={product.thumbnail}

@@ -20,11 +20,11 @@ const Dashboard: React.FC = () => {
   }, [getUserOrderHistoryStart, currentUser]);
 
   return (
-    <Spinner spinning={isLoading}>
+    // <Spinner spinning={isLoading}>
       <DashboardWrapper vertical justify="center" align="center">
         {orderHistory.map((order, index) => (<OrderCard key={index} items={order} />))}
       </DashboardWrapper>
-    </Spinner>
+    // </Spinner>
   );
 };
 

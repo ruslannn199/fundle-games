@@ -1,4 +1,3 @@
-import { Spin } from 'antd';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useOrdersActions } from '../../hooks/useActions';
@@ -7,12 +6,10 @@ import Spinner from '../../components/Spinner';
 import OrderDetails from '../../components/OrderDetails';
 
 const OrdersList: React.FC = () => {
-  const { loadingQueue } = useTypedSelector((state) => (state.loader));
   const { currentUser } = useTypedSelector((state) => (state.user));
   const { orderDetails } = useTypedSelector((state) => (state.ordersData));
   const { getOrderDetailsStart, setOrderDetails } = useOrdersActions();
   const { orderId } = useParams();
-  const isLoading = !!loadingQueue.length;
 
   useEffect(() => {
     if (orderId) {
@@ -23,13 +20,9 @@ const OrdersList: React.FC = () => {
   }, [getOrderDetailsStart, orderId, setOrderDetails]);
 
   return (
-    <Spinner spinning={isLoading}>
-      {
-        orderDetails && orderDetails.orderUserId === currentUser?.id
-          ? <OrderDetails order={orderDetails} />
-          : null
-      }
-    </Spinner>
+    orderDetails && orderDetails.orderUserId === currentUser?.id
+      ? <OrderDetails order={orderDetails} />
+      : null
   );
 }
 

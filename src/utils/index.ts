@@ -63,10 +63,11 @@ const convertFromURLAddress = (str: string): string => (
 
 const countriesList = new Map<string, string>();
 countriesList
-  .set('RU', 'Russia').set('FI', 'Finland').set('GE', 'Georgia').set('RO', 'Romania').set('US', 'United States')
-  .set('KZ', 'Kazakhstan').set('GB', 'United Kingdom').set('DE', 'Germany').set('FR', 'France').set('IT', 'Italy')
-  .set('ES', 'Spain').set('PL', 'Poland').set('BY', 'Belarus').set('EE', 'Estonia').set('LV', 'Latvia')
-  .set('LT', 'Lithuania').set('AM', 'Armenia').set('AZ', 'Azerbaijan').set('MD', 'Moldavia').set('AT', 'Austria');
+  .set('RU', 'Россия').set('FI', 'Финляндия').set('GE', 'Грузия').set('RO', 'Румыния').set('US', 'США')
+  .set('KZ', 'Казахстан').set('GB', 'Соединённое королевство').set('DE', 'Германия').set('FR', 'Франция')
+  .set('ES', 'Испания').set('PL', 'Польша').set('BY', 'Беларусь').set('EE', 'Эстония').set('LV', 'Латвия')
+  .set('LT', 'Литва').set('AM', 'Армения').set('AZ', 'Азербайджан').set('MD', 'Молдавия').set('AT', 'Австрия')
+  .set('IT', 'Италия').set('UZ', 'Узбекистан').set('TJ', 'Таджикистан').set('KG', 'Кыргызстан').set('UK', 'Украина');
 
 const countryOptions = (): Record<'label' | 'value', string>[] => {
   const options = [];

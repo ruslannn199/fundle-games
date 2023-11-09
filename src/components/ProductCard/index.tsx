@@ -1,12 +1,12 @@
 // Components
-import { Card, Skeleton } from 'antd';
+import { Card, Flex, Skeleton } from 'antd';
 import { Link } from 'react-router-dom';
 import AddToCart from '../AddToCart';
+import { CardImage, ProductCardColumn, ProductCardWrapper } from './ProductCard.styles';
+// Hooks
+import { useTypedSelector, useWindowDimensions } from '../../hooks';
 // Types
 import type { ProductData } from '../../types/interfaces';
-import { CardImage, ProductCardColumn, ProductCardWrapper } from './ProductCard.styles';
-import { useTypedSelector } from '../../hooks';
-import { useEffect } from 'react';
 
 interface ProductCardProps extends React.RefAttributes<HTMLDivElement> {
   productConfig: ProductData;
@@ -15,8 +15,10 @@ interface ProductCardProps extends React.RefAttributes<HTMLDivElement> {
 
 const ProductCard: React.FC<ProductCardProps> = ({ productConfig }) => {
   const { loadingQueue } = useTypedSelector((state) => (state.loader));
+  const { width } = useWindowDimensions();
   const { id, thumbnail, price, productName } = productConfig;
   const { Meta } = Card;
+  const isMobile = width <= 576;
 
   const isLoading = !!loadingQueue.length;
 
@@ -28,21 +30,40 @@ const ProductCard: React.FC<ProductCardProps> = ({ productConfig }) => {
         <ProductCardWrapper
           hoverable
           cover={
-            <Skeleton loading={isLoading}>
-              {
-                isLoading
-                  ? <Skeleton.Image active style={{ height: "6.1138rem" }} />
-                  : <CardImage alt={productName} src={thumbnail} />
-              }
-            </Skeleton>
+            isLoading
+              ? (
+                <Skeleton.Image style={{
+                  width: isMobile ? "100%" : "20rem",
+                  height: isMobile ? "20rem" : "20rem",
+                }} active />
+              )
+              : (
+                <CardImage
+                  alt={productName}
+                  src={thumbnail}
+                  placeholder={<Skeleton.Image style={{
+                    width: isMobile ? "100%" : "20rem",
+                    height: isMobile ? "20rem" : "20rem",
+                  }} />}
+                />
+              )
           }
           actions={[ <AddToCart product={productConfig} /> ]}
         >
-          <Skeleton loading={isLoading} active>
-            <Link to={`/products/${id}`} style={{ height: "6.1138rem" }}>
-              <Meta title={productName} description={`${price}₽`} />
-            </Link>
-          </Skeleton>
+          {
+            isLoading
+              ? (
+                <Flex vertical gap=".8rem">
+                  <Skeleton.Input size="small" active />
+                  <Skeleton.Input size="small" active />
+                </Flex>
+              )
+              : (
+                <Link to={`/products/${id}`} style={{ height: "6.1138rem" }}>
+                  <Meta title={productName} description={`${price}₽`} />
+                </Link>
+              )
+          }
         </ProductCardWrapper>
       </ProductCardColumn>
     )

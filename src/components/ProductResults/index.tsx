@@ -114,7 +114,7 @@ const ProductResults: React.FC = () => {
       </ProductCardRow>
       <ConfigProvider theme={blackTheme}>
         <Flex align="center" justify="center">
-          {products.isLastPage ? null : <LoadMoreButton onLoadMore={ () => increasePage() } />}
+          {products.isLastPage ? null : <LoadMoreButton onLoadMore={increasePage} />}
         </Flex>
       </ConfigProvider>
     </ProductResultsWrapper>

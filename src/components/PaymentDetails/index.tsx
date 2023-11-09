@@ -18,6 +18,7 @@ import { useElements } from '@stripe/react-stripe-js';
 import { useStripeActions, useTypedSelector } from '../../hooks';
 import { FormTitle } from '../../styles/Form';
 import PaymentDetailsSkeleton from '../PaymentDetailsSkeleton';
+import { StripeCardElementOptions } from '@stripe/stripe-js';
 
 const PaymentDetails: React.FC = () => {
   const { loadingQueue } = useTypedSelector((state) => (state.loader));
@@ -99,7 +100,7 @@ const PaymentDetails: React.FC = () => {
     setRecipientCountry(value);
   }
 
-  const configCardElement = {
+  const configCardElement: StripeCardElementOptions = {
     iconStyle: 'solid',
     style: {
       base: {

@@ -45,9 +45,9 @@ const Admin: React.FC = () => {
           </FloatButton.Group>
         </ConfigProvider>
         <AdminDashboard vertical align="flex-start" justify="center">
-          <Spinner spinning={isLoading}>
+          {/* <Spinner spinning={isLoading}> */}
             <ProductsTable products={products} />
-          </Spinner>
+          {/* </Spinner> */}
         </AdminDashboard>
       </AdminWrapper>
     )

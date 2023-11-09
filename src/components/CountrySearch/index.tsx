@@ -27,7 +27,7 @@ const CountrySearch: React.FC<CountrySearchProps> = ({ onChange }) => {
       filterSort={filterSort}
       options={countryOptions()}
       onChange={onChange}
-      defaultValue="Russia"
+      defaultValue="Россия"
       style={{ width: width > 576 ? "40rem" : "100%" }}
     />
   );
