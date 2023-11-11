@@ -17,15 +17,15 @@ const PaymentDetailsSkeleton: React.FC = () => {
         width: isMobile ? "25rem" : "100%",
         marginBottom: "1.2rem",
       }} />
-      {[...new Array(formItemsInSectionAmount)].map(() => (
-        <Skeleton.Input size="small" active style={{ width: isMobile ? "40rem" : "100%" }} />
+      {[...new Array(formItemsInSectionAmount)].map((item, key) => (
+        <Skeleton.Input size="small" key={key} active style={{ width: isMobile ? "40rem" : "100%" }} />
       ))}
       <Skeleton.Input active style={{
         width: isMobile ? "25rem" : "100%",
         margin: "2.4rem 0 1.2rem",
       }} />
-      {[...new Array(formItemsInSectionAmount)].map(() => (
-        <Skeleton.Input size="small" active style={{ width: isMobile ? "40rem" : "100%" }} />
+      {[...new Array(formItemsInSectionAmount)].map((item, key) => (
+        <Skeleton.Input size="small" key={key} active style={{ width: isMobile ? "40rem" : "100%" }} />
       ))}
     </PaymentDetailsSkeletonWrapper>
   );

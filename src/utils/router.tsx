@@ -1,58 +1,115 @@
-// HOC
-import WithAdminAuth from '../hoc/withAdminAuth';
-import WithAuth from '../hoc/withAuth';
-import WithCartItems from '../hoc/withCartItems';
+// Pages
 import Layout from '../pages/Layout';
-// // Pages
-// import Homepage from '../pages/Homepage';
-// import Search from '../pages/Search';
-// import ProductDetails from '../pages/ProductDetails';
-// import Cart from '../pages/Cart';
-// import Payment from '../pages/Payment';
-// import Registration from '../pages/Registration';
-// import Login from '../pages/Login';
-// import Recovery from '../pages/Recovery';
-// import Dashboard from '../pages/Dashboard';
-// import OrdersList from '../pages/OrderList';
-// import Admin from '../pages/Admin';
-// import NotFound from '../pages/NotFound';
-// Router
+import ErrorPage from '../pages/ErrorPage';
+// Routing
 import { createBrowserRouter } from 'react-router-dom';
 // Types
 import { NavigationItemsLabels } from '../types/enums';
-import { Suspense, lazy } from 'react';
-import Spinner from '../components/Spinner';
-
-const Homepage = lazy(() => import('../pages/Homepage'));
-const Search = lazy(() => import('../pages/Search'));
-const ProductDetails = lazy(() => import('../pages/ProductDetails'));
-const Cart = lazy(() => import('../pages/Cart'));
-const Payment = lazy(() => import('../pages/Payment'));
-const Registration = lazy(() => import('../pages/Registration'));
-const Login = lazy(() => import('../pages/Login'));
-const Recovery = lazy(() => import('../pages/Recovery'));
-const Dashboard = lazy(() => import('../pages/Dashboard'));
-const OrdersList = lazy(() => import('../pages/OrderList'));
-const Admin = lazy(() => import('../pages/Admin'));
-const NotFound = lazy(() => import('../pages/NotFound'));
 
 export const router = createBrowserRouter([
   {
     path: '/',
     element: <Layout />,
+    errorElement: <ErrorPage />,
     children: [
-    { path: '', element: <Homepage /> },
-    { path: 'search', element: <Search /> },
-    { path: 'products/:productId', element: <ProductDetails /> },
-    { path: 'cart', element: <Cart /> },
-    { path: 'payment', element: <WithCartItems><Payment /></WithCartItems> },
-    { path: `${NavigationItemsLabels.REGISTRATION}`, element: <Registration /> },
-    { path: `${NavigationItemsLabels.LOGIN}`, element: <Login /> },
-    { path: 'recovery', element: <Recovery /> },
-    { path: 'dashboard', element: <WithAuth><Dashboard /></WithAuth> },
-    { path: 'order/:orderId', element: <WithAuth><OrdersList /></WithAuth> },
-    { path: 'admin', element: <WithAdminAuth><Admin /></WithAdminAuth> },
-    { path: '*', element: <NotFound /> }
+      {
+        path: '',
+        lazy: async () => {
+          const Homepage = (await import('../pages/Homepage')).default;
+          return { Component: Homepage };
+        },
+      },
+      {
+        path: 'search',
+        lazy: async () => {
+          const Search = (await import('../pages/Search')).default;
+          return { Component: Search };
+        },
+      },
+      {
+        path: 'products/:productId',
+        lazy: async () => {
+          const ProductDetails = (await import('../pages/ProductDetails')).default;
+          return { Component: ProductDetails };
+        },
+      },
+      {
+        path: 'cart',
+        lazy: async () => {
+          const Cart = (await import('../pages/Cart')).default;
+          return { Component: Cart };
+        },
+      },
+      {
+        path: 'payment',
+        lazy: async() => {
+          const Payment = (await import('../pages/Payment')).default;
+          return { Component: Payment };
+        },
+      },
+      {
+        path: `${NavigationItemsLabels.REGISTRATION}`,
+        lazy: async () => {
+          const Registration = (await import('../pages/Registration')).default;
+          return { Component: Registration };
+        },
+      },
+      {
+        path: `${NavigationItemsLabels.LOGIN}`,
+        lazy: async () => {
+          const Login = (await import('../pages/Login')).default;
+          return { Component: Login };
+        },
+      },
+      {
+        path: 'recovery',
+        lazy: async () => {
+          const Recovery = (await import('../pages/Recovery')).default;
+          return { Component: Recovery };
+        },
+      },
+      {
+        path: 'dashboard',
+        lazy: async () => {
+          const Dashboard = (await import('../pages/Dashboard')).default;
+          return { Component: Dashboard };
+        }
+      },
+      {
+        path: 'order/:orderId',
+        lazy: async () => {
+          const OrderList = (await import('../pages/OrderList')).default;
+          return { Component: OrderList };
+        }
+      },
+      {
+        path: 'admin',
+        lazy: async () => {
+          const Admin = (await import('../pages/Admin')).default;
+          return { Component: Admin };
+        }
+      },
+      {
+        path: 'error',
+        lazy: async () => {
+          const ErrorPage = (await import('../pages/ErrorPage')).default;
+          return { Component: ErrorPage };
+        },
+      },
+      {
+        path: 'success',
+        lazy: async () => {
+          const Success = (await import('../pages/Success')).default;
+          return { Component: Success };
+        },
+      },
+      {
+        path: '*',
+        lazy: async () => {
+          const NotFound = (await import('../pages/NotFound')).default;
+          return { Component: NotFound };
+        },
+      },
     ]
   }
 ]);

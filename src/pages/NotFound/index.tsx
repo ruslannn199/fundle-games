@@ -7,11 +7,11 @@ const NotFound: React.FC = () => {
     <Result
       status="404"
       title="404"
-      subTitle="Sorry, the page you visited does not exist."
+      subTitle="Извините, страница, которую вы пытаетесь посетить, не существует."
       extra={
         <ConfigProvider theme={blackTheme}>
           <Link to="/">
-            <Button type="primary">Back Home</Button>
+            <Button type="primary">На главную</Button>
           </Link>
         </ConfigProvider>
       }

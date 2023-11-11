@@ -6,6 +6,7 @@ import StripeActionCreators, { ActionType, ConfirmCardPaymentStartAction, FetchC
 import { PaymentIntentResult } from '@stripe/stripe-js';
 import CartActionCreators from '../Cart/cart.actions';
 import OrdersActionsCreators from '../Orders/orders.actions';
+import { redirect } from 'react-router-dom';
 
 const { setClient, setPaymentStatus } = StripeActionCreators;
 const { clearCartItems } = CartActionCreators;
@@ -70,9 +71,11 @@ export function* confirmCardPayment({
       yield put(clearCartItems());
     }
     yield put(removeLoadStart('confirmCardPayment'));
+    redirect('/success');
   } catch (err) {
     console.error(err);
     yield put(removeLoadStart('confirmCardPayment'));
+    redirect('/error');
   }
 }
 

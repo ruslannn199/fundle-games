@@ -1,25 +1,23 @@
 // Components
-import { ConfigProvider, FloatButton, Spin } from 'antd';
-import ProductsTable from '../../components/ProductsTable';
-import Spinner from '../../components/Spinner';
 import AddNewProduct from '../../components/AddNewProduct';
+import { ConfigProvider, FloatButton } from 'antd';
+import { HomeOutlined } from '@ant-design/icons';
+import ProductsTable from '../../components/ProductsTable';
 // Hooks
-import { useTypedSelector, useProductsActions } from '../../hooks';
+import { useTypedSelector, useProductsActions, useAdminAuth } from '../../hooks';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 // Styles
 import { AdminDashboard, AdminWrapper } from './Admin.styles';
 // Themes
 import { orangeTheme } from '../../utils/themes';
-import { useNavigate } from 'react-router-dom';
-import { HomeOutlined } from '@ant-design/icons';
 
 const Admin: React.FC = () => {
+  useAdminAuth();
   const { currentUser } = useTypedSelector((state) => (state.user));
   const { products } = useTypedSelector((state) => (state.productsData));
-  const { loadingQueue } = useTypedSelector((state) => (state.loader));
   const { fetchProductsStart } = useProductsActions();
   const navigate = useNavigate();
-  const isLoading = !!loadingQueue.length;
 
   useEffect(() => {
     fetchProductsStart({

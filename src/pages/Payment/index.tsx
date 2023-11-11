@@ -4,10 +4,12 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { publishableKeys } from '../../stripe/config';
 import { useEffect, useState } from 'react';
-import { useTypedSelector, useStripeActions } from '../../hooks';
+import { useTypedSelector, useStripeActions, useCartItems, useAuth } from '../../hooks';
 import { useNavigate } from 'react-router-dom';
 
 const Payment: React.FC = () => {
+  useAuth();
+  useCartItems();
   const { clientSecret } = useTypedSelector((state) => (state.stripe));
   const { cartItems, total, cartItemsAmount } = useTypedSelector((state) => (state.cartData));
   const { fetchClientStart } = useStripeActions();

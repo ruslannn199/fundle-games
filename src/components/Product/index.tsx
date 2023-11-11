@@ -13,12 +13,10 @@ import { useProductsActions, useTypedSelector, useWindowDimensions } from '../..
 
 const Product: React.FC = () => {
   const { product } = useTypedSelector((state) => (state.productsData));
-  const { loadingQueue } = useTypedSelector((state) => (state.loader));
   const { fetchProductStart, setProduct } = useProductsActions();
   const { productId } = useParams();
   const { width } = useWindowDimensions();
   const heroImageSize = width > 992 ? '40rem' : '100%';
-  const isLoading = !!loadingQueue.length;
 
   useEffect(() => {
     if (productId) {

@@ -1,4 +1,4 @@
-import { Card, Col, Image, Skeleton } from 'antd';
+import { Card, Col, Image } from 'antd';
 import styled from 'styled-components';
 import devices from '../../styles/Devices';
 
