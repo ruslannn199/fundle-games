@@ -1,4 +1,6 @@
+// Hooks
 import { useTypedSelector } from '../../hooks';
+// Styles
 import { CartModalWrapper } from './CartModal.styles';
 
 const CartModal: React.FC = () => {

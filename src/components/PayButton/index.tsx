@@ -1,8 +1,15 @@
+// Components
 import { Button, ConfigProvider, Form, FormInstance } from 'antd';
-import { blackTheme } from '../../utils/themes';
+// Hooks
 import { useEffect, useState } from 'react';
+// Themes
+import { blackTheme } from '../../utils/themes';
 
-const PayButton: React.FC<Record<'form', FormInstance>> = ({ form }) => {
+interface PayButtonProps {
+  form: FormInstance
+}
+
+const PayButton: React.FC<PayButtonProps> = ({ form }) => {
   const [submittable, setSubmittable] = useState<boolean>(false);
   const values = Form.useWatch([], form);
   

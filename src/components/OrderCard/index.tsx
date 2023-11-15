@@ -1,5 +1,8 @@
+// Components
 import { ConfigProvider, Flex } from 'antd';
-import { Order } from '../../types/interfaces';
+// Hooks
+import { useWindowDimensions } from '../../hooks';
+// Styles
 import {
   OrderCardDocumentId,
   OrderCardItemsImage,
@@ -9,9 +12,12 @@ import {
   OrderCardTimestamp,
   OrderCardTotal,
   OrderCardWrapper } from './OrderCard.styles';
-import { convertFromMySQLDateTime } from '../../utils';
+// Themes
 import { orangeTheme } from '../../utils/themes';
-import { useWindowDimensions } from '../../hooks';
+// Types
+import type { Order } from '../../types/interfaces';
+// Utils
+import { convertFromMySQLDateTime } from '../../utils';
 
 interface OrderCardProps extends React.RefAttributes<HTMLDivElement> {
   items: Order;

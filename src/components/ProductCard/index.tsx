@@ -2,9 +2,10 @@
 import { Card, Flex, Skeleton } from 'antd';
 import { Link } from 'react-router-dom';
 import AddToCart from '../AddToCart';
-import { CardImage, ProductCardColumn, ProductCardWrapper } from './ProductCard.styles';
 // Hooks
 import { useTypedSelector, useWindowDimensions } from '../../hooks';
+// Styles
+import { CardImage, ProductCardColumn, ProductCardWrapper } from './ProductCard.styles';
 // Types
 import type { ProductData } from '../../types/interfaces';
 

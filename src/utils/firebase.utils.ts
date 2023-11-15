@@ -1,3 +1,5 @@
+// Axios
+import axios, { AxiosResponse } from 'axios';
 // Firebase
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import { doc, setDoc, getDoc, initializeFirestore, persistentLocalCache, CACHE_SIZE_UNLIMITED } from 'firebase/firestore';
@@ -7,7 +9,7 @@ import type { firebaseConfig, docSnapshotDataType, docRefType, ApiConfigResponse
 import type { Auth, User } from 'firebase/auth';
 import type { Firestore, DocumentReference } from 'firebase/firestore';
 import type { HandleUser } from '../types/interfaces';
-import axios, { AxiosResponse } from 'axios';
+// Utils
 import { makeFetchURL } from '.';
 
 export const localConfig: AxiosResponse<ApiConfigResponse<firebaseConfig>> = await axios.get(makeFetchURL('config/firebaseConfig'));

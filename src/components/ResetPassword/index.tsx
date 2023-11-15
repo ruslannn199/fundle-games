@@ -8,9 +8,10 @@ import { auth } from '../../utils/firebase.utils';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useTypedSelector } from '../../hooks';
+// Styles
+import { FormButton, FormTitle } from '../../styles/Form';
 // Themes
 import { blackTheme, orangeTheme } from '../../utils/themes';
-import { FormButton, FormTitle } from '../../styles/Form';
 
 const ResetPassword: React.FC = () => {
   const [form] = Form.useForm<Record<'email', string>>();

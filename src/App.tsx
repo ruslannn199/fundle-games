@@ -8,9 +8,9 @@ import { persistor } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 // Routes
 import { RouterProvider } from 'react-router-dom';
+import { router } from './utils/router';
 // Types
 import { fontTheme } from './utils/themes';
-import { router } from './utils/router';
 
 const App: React.FC = () => {
   const { checkUserSession } = useUserActions();

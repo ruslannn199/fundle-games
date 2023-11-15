@@ -1,6 +1,8 @@
+// Components
 import { Button, ConfigProvider } from 'antd';
-import { blackTheme } from '../../utils/themes';
 import { Link } from 'react-router-dom';
+// Themes
+import { blackTheme } from '../../utils/themes';
 
 const OrderButton: React.FC = () => {
   return (

@@ -10,13 +10,14 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useTypedSelector, useUserActions } from '../../hooks';
+// Styles
+import { FormButton, FormLink, FormTitle } from '../../styles/Form';
+import { SignInActionsWrapper, SignInRecoveryWrapper } from './SignIn.styles';
 // Themes
 import { blackTheme, orangeTheme } from '../../utils/themes';
 // Types
 import type { loginFields } from '../../types/types';
 import { NavigationItemsLabels } from '../../types/enums';
-import { FormButton, FormLink, FormTitle } from '../../styles/Form';
-import { SignInActionsWrapper, SignInRecoveryWrapper } from './SignIn.styles';
 
 const SignIn: React.FC = () => {
   const [, setErrors] = useState<string[]>([]);

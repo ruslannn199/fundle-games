@@ -1,15 +1,16 @@
 // Components
 import { Image } from 'antd';
 import AddToCart from '../AddToCart';
-import { ProductHero, ProductDescription, ProductOfferInfo, ProductContent, ProductWrapper } from './Product.styles';
-// Images
-import ImagePlaceholder from '../../assets/images/placeholder.png';
 // DOMSanitize
 import DOMPurify from 'isomorphic-dompurify';
 // Hooks
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useProductsActions, useTypedSelector, useWindowDimensions } from '../../hooks';
+// Images
+import ImagePlaceholder from '../../assets/images/placeholder.png';
+// Styles
+import { ProductHero, ProductDescription, ProductOfferInfo, ProductContent, ProductWrapper } from './Product.styles';
 
 const Product: React.FC = () => {
   const { product } = useTypedSelector((state) => (state.productsData));

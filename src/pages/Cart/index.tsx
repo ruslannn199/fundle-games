@@ -1,6 +1,8 @@
+// Components
 import { Flex } from 'antd';
 import Checkout from '../../components/Checkout';
 import OrderButton from '../../components/OrderButton';
+// Hooks
 import { useTypedSelector } from '../../hooks';
 
 const Cart: React.FC = () => {

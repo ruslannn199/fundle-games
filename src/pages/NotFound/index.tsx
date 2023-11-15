@@ -1,5 +1,7 @@
+// Components
 import { Button, ConfigProvider, Result } from 'antd';
 import { Link } from 'react-router-dom';
+// Themes
 import { blackTheme } from '../../utils/themes';
 
 const NotFound: React.FC = () => {

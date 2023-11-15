@@ -1,9 +1,17 @@
+// Components
 import { Button, ConfigProvider } from 'antd';
-import { blackTheme } from '../../utils/themes';
-import type { ProductData } from '../../types/interfaces';
+// Hooks
 import { useCartActions } from '../../hooks/useActions';
+// Themes
+import { blackTheme } from '../../utils/themes';
+// Types
+import type { ProductData } from '../../types/interfaces';
 
-const AddToCart: React.FC<Record<'product', ProductData>> = ({ product }) => {
+interface AddToCartProps {
+  product: ProductData;
+}
+
+const AddToCart: React.FC<AddToCartProps> = ({ product }) => {
   const { addToCart } = useCartActions();
 
   const handleAddToCart = (product?: ProductData) => {

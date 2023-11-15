@@ -6,11 +6,11 @@ import { ConfigProvider } from 'antd';
 import Logo from '../Logo';
 import NavigationMenu from '../NavigationMenu';
 import HeaderSearch from '../HeaderSearch';
+import AdminToolbar from '../AdminToolbar';
+// Styles
+import { HeaderWrapper, NavigationWrapper } from './Header.styles';
 // Themes
 import { blackTheme, orangeTheme } from '../../utils/themes';
-// Utils
-import { HeaderWrapper, NavigationWrapper } from './Header.styles';
-import AdminToolbar from '../AdminToolbar';
 
 const AppHeader: React.FC = () => {
   const location = useLocation();

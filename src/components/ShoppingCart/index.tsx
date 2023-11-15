@@ -1,3 +1,4 @@
+// Components
 import { ShoppingCartOutlined } from '@ant-design/icons';
 
 const ShoppingCart: React.FC = () => (

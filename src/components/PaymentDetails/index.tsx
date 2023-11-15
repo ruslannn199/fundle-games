@@ -1,3 +1,4 @@
+// Components
 import { Form, Input, ConfigProvider, Flex, Tooltip } from 'antd';
 import {
   FlagOutlined,
@@ -8,17 +9,22 @@ import {
   QuestionCircleFilled,
   UserOutlined
 } from '@ant-design/icons';
-import { orangeTheme } from '../../utils/themes';
-import { useEffect, useState } from 'react';
 import CountrySearch from '../CountrySearch';
-import { orderFields } from '../../types/types';
 import PayButton from '../PayButton';
-import { CardElement, useStripe } from '@stripe/react-stripe-js';
+import { CardElement } from '@stripe/react-stripe-js';
+import PaymentDetailsSkeleton from '../PaymentDetailsSkeleton';
+// Hooks
+import { useEffect, useState } from 'react';
+import { useStripe } from '@stripe/react-stripe-js';
 import { useElements } from '@stripe/react-stripe-js';
 import { useStripeActions, useTypedSelector } from '../../hooks';
+// Styles
 import { FormTitle } from '../../styles/Form';
-import PaymentDetailsSkeleton from '../PaymentDetailsSkeleton';
-import { StripeCardElementOptions } from '@stripe/stripe-js';
+// Themes
+import { orangeTheme } from '../../utils/themes';
+// Types
+import type { orderFields } from '../../types/types';
+import type { StripeCardElementOptions } from '@stripe/stripe-js';
 
 const PaymentDetails: React.FC = () => {
   const { loadingQueue } = useTypedSelector((state) => (state.loader));

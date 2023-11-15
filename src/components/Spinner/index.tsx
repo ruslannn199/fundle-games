@@ -1,6 +1,8 @@
+// Components
 import { ConfigProvider } from 'antd';
-import { blackTheme } from '../../utils/themes';
 import { SpinnerDot, SpinnerIndicator, SpinnerWrapper } from './Spinner.styles';
+// Themes
+import { blackTheme } from '../../utils/themes';
 
 interface SpinnerProps {
   spinning: boolean;

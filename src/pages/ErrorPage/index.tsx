@@ -1,6 +1,8 @@
-import { Button, ConfigProvider, Result } from 'antd'
-import { blackTheme } from '../../utils/themes'
-import { Link } from 'react-router-dom'
+// Components
+import { Button, ConfigProvider, Result } from 'antd';
+import { Link } from 'react-router-dom';
+// Themes
+import { blackTheme } from '../../utils/themes';
 
 const ErrorPage: React.FC = () => {
   return (

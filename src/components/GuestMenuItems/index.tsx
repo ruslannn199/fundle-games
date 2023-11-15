@@ -1,9 +1,10 @@
 // Components
 import { UserAddOutlined, UserOutlined } from '@ant-design/icons';
+// Styles
+import { GuestMenuItemLink } from './GuestMenuItems.styles';
 // Types
 import type { MenuProps } from 'antd';
 import { NavigationItemsLabels } from '../../types/enums';
-import { GuestMenuItemLink } from './GuestMenuItems.styles';
 
 const GuestMenuItems: MenuProps['items'] = [
   {

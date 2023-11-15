@@ -1,9 +1,10 @@
 // Components
-import { Navigation } from './NavigationMenu.styles';
 import UserMenuItems from '../UserMenuItems';
 import GuestMenuItems from '../GuestMenuItems';
 // Hooks
 import { useTypedSelector, useUserActions } from '../../hooks';
+// Styles
+import { Navigation } from './NavigationMenu.styles';
 // Types
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import { NavigationItemsLabels } from '../../types/enums';

@@ -1,11 +1,14 @@
+// Components
 import { Flex } from 'antd';
 import PaymentDetails from '../../components/PaymentDetails';
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
-import { publishableKeys } from '../../stripe/config';
+// Hooks
 import { useEffect, useState } from 'react';
 import { useTypedSelector, useStripeActions, useCartItems, useAuth } from '../../hooks';
 import { useNavigate } from 'react-router-dom';
+// Stripe
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import { publishableKeys } from '../../stripe/config';
 
 const Payment: React.FC = () => {
   useAuth();

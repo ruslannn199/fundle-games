@@ -1,8 +1,10 @@
+// Components
+import OrderDetails from '../../components/OrderDetails';
+// Hooks
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useOrdersActions } from '../../hooks/useActions';
 import { useAuth, useTypedSelector } from '../../hooks';
-import OrderDetails from '../../components/OrderDetails';
 
 const OrdersList: React.FC = () => {
   useAuth();

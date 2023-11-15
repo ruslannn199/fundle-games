@@ -5,12 +5,13 @@ import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useTypedSelector, useUserActions } from '../../hooks';
+// Styles
+import { FormButton, FormLink, FormTitle } from '../../styles/Form';
 // Themes
 import { blackTheme, orangeTheme } from '../../utils/themes';
 // Types
 import { NavigationItemsLabels } from '../../types/enums';
 import type { registrationFields } from '../../types/types';
-import { FormButton, FormLink, FormTitle } from '../../styles/Form';
 
 const SignUp: React.FC = () => {
   const [error, setError] = useState<boolean>(false);

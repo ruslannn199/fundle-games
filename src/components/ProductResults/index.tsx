@@ -2,12 +2,13 @@
 import ProductCard from '../ProductCard';
 import { ConfigProvider, Flex } from 'antd';
 import LoadMoreButton from '../LoadMore';
-import { ProductCardRow, ProductResultsSelect, ProductResultsWrapper } from './ProductResults.styles';
 // Hooks
 import { useEffect, useMemo } from 'react';
 import { useProductsActions, useTypedSelector } from '../../hooks';
 import { useSearchParams } from 'react-router-dom';
 import { useCategoriesActions } from '../../hooks/useActions';
+// Styles
+import { ProductCardRow, ProductResultsSelect, ProductResultsWrapper } from './ProductResults.styles';
 // Themes
 import { blackTheme, orangeTheme } from '../../utils/themes';
 // Types

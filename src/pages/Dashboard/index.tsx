@@ -1,7 +1,10 @@
+// Components
+import OrderCard from '../../components/OrderCard';
+// Hooks
 import { useEffect } from 'react';
 import { useOrdersActions } from '../../hooks/useActions';
 import { useAuth, useTypedSelector } from '../../hooks';
-import OrderCard from '../../components/OrderCard';
+// Styles
 import { DashboardWrapper } from './Dashboard.styles';
 
 const Dashboard: React.FC = () => {

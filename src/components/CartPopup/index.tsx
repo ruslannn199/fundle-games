@@ -1,11 +1,15 @@
+// Components
 import { Flex, Popover } from 'antd';
-import { useLocation } from 'react-router-dom';
 import Checkout from '../Checkout';
 import ShoppingCart from '../ShoppingCart';
-import { useWindowDimensions } from '../../hooks';
-import { NavigationItemsLabels } from '../../types/enums';
 import CartModal from '../CartModal';
+// Hooks
+import { useLocation } from 'react-router-dom';
+import { useWindowDimensions } from '../../hooks';
+// Styles
 import { CartPopupLink } from './CartPopup.styles';
+// Types
+import { NavigationItemsLabels } from '../../types/enums';
 
 const CartPopup: React.FC = () => {
   const location = useLocation();

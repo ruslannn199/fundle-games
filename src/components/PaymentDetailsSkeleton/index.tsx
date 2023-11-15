@@ -1,5 +1,8 @@
+// Components
 import { Skeleton } from 'antd';
+// Hooks
 import { useWindowDimensions } from '../../hooks';
+// Styles
 import { PaymentDetailsSkeletonWrapper } from './PaymentDetailsSkeleton.styles'
 
 const PaymentDetailsSkeleton: React.FC = () => {

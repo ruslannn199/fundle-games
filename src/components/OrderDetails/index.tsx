@@ -1,10 +1,23 @@
-import { ConfigProvider, Flex, Skeleton } from 'antd';
-import { Order } from '../../types/interfaces';
-import { orangeTheme } from '../../utils/themes';
-import { OrderDetailsDateInfo, OrderDetailsDocumentId, OrderDetailsSubTitle, OrderDetailsText, OrderDetailsTitle, OrderDetailsWrapper } from './OrderDetails.styles';
-import { convertFromMySQLDateTime } from '../../utils';
+// Components
 import OrderDetailsItem from '../OrderDetailsItem';
+import { ConfigProvider, Flex, Skeleton } from 'antd';
+// Hooks
 import { useTypedSelector, useWindowDimensions } from '../../hooks';
+// Styles
+import {
+  OrderDetailsDateInfo,
+  OrderDetailsDocumentId,
+  OrderDetailsSubTitle,
+  OrderDetailsText,
+  OrderDetailsTitle,
+  OrderDetailsWrapper
+} from './OrderDetails.styles';
+// Themes
+import { orangeTheme } from '../../utils/themes';
+// Types
+import type { Order } from '../../types/interfaces';
+// Utils
+import { convertFromMySQLDateTime } from '../../utils';
 
 interface OrderDetailsProps extends React.RefAttributes<HTMLDivElement> {
   order: Order;

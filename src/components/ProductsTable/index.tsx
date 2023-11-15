@@ -2,12 +2,13 @@
 import { Button, ConfigProvider, Table, Tag } from 'antd';
 // Hooks
 import { useProductsActions } from '../../hooks';
+// Styles
+import { ProductTableImage } from './ProductTable.styles';
 // Themes
 import { blackTheme } from '../../utils/themes';
 // Types
 import type { Products } from '../../types/interfaces';
 import type { ColumnsType } from 'antd/es/table';
-import { ProductTableImage } from './ProductTable.styles';
 
 interface ProductTableProps {
   products: Products;

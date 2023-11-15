@@ -1,6 +1,8 @@
 // Components
 import { ConfigProvider } from 'antd';
 import { Link } from 'react-router-dom';
+// Hooks
+import { useCategoriesActions, useLoadingActions } from '../../hooks';
 // Images
 import NewGamesImg from '../../assets/images/new-games.jpg';
 import PopularGamesImg from '../../assets/images/popular-games.webp';
@@ -8,7 +10,6 @@ import PopularGamesImg from '../../assets/images/popular-games.webp';
 import { DirectoryButton, DirectoryItem, DirectoryTitle, DirectoryWrapper } from './Directory.styles';
 // Themes
 import { blackTheme } from '../../utils/themes';
-import { useCategoriesActions, useLoadingActions } from '../../hooks';
 
 const Directory: React.FC = () => {
   const { setFakeLoadingStart } = useLoadingActions();

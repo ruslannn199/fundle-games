@@ -1,10 +1,15 @@
-import { useTypedSelector, useUserActions, useWindowDimensions } from '../../hooks';
-import { NavigationMenuMobileImage, NavigationMenuMobileButton, NavigationMenuMobileWrapper } from './NavigationMenuMobile.styles';
-import LogoImg from '../../assets/images/logo.png';
+// Components
 import { Link } from 'react-router-dom';
-import { NavigationItemsLabels } from '../../types/enums';
 import CartPopup from '../CartPopup';
 import { LogoutOutlined, UserAddOutlined, UserOutlined } from '@ant-design/icons';
+// Hooks
+import { useTypedSelector, useUserActions, useWindowDimensions } from '../../hooks';
+// Images
+import LogoImg from '../../assets/images/logo.png';
+// Styles
+import { NavigationMenuMobileImage, NavigationMenuMobileButton, NavigationMenuMobileWrapper } from './NavigationMenuMobile.styles';
+// Types
+import { NavigationItemsLabels } from '../../types/enums';
 
 const NavigationMenuMobile: React.FC = () => {
   const { currentUser } = useTypedSelector((state) => (state.user));

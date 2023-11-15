@@ -1,7 +1,11 @@
+// Components
 import { Select } from 'antd';
-import { countryOptions } from '../../utils';
-import { DefaultOptionType } from 'antd/es/select';
+// Hooks
 import { useWindowDimensions } from '../../hooks';
+// Utils
+import { countryOptions } from '../../utils';
+// Types
+import type { DefaultOptionType } from 'antd/es/select';
 
 interface CountrySearchProps {
   onChange: (value: string) => void;

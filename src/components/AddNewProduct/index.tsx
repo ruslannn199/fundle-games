@@ -2,6 +2,7 @@
 import { Button, ConfigProvider, Modal, Form, Input, Select, FloatButton } from 'antd';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { PlusOutlined } from '@ant-design/icons';
 // Hooks
 import { useEffect, useMemo, useState } from 'react';
 import { useProductsActions, useTypedSelector, useCategoriesActions } from '../../hooks';
@@ -11,7 +12,6 @@ import { blackTheme, orangeTheme } from '../../utils/themes';
 import { ProductFormFields } from '../../types/enums';
 import type { ProductFormData } from '../../types/interfaces';
 import type { SelectProps } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
 
 interface AddNewProductProps {
   float?: boolean;

@@ -1,8 +1,12 @@
-import { SearchProps } from 'antd/es/input';
+// Hooks
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { convertToURLAddress } from '../../utils';
 import { useCategoriesActions } from '../../hooks';
+// Styles
 import { BaseHeaderSearch } from './HeaderSearch.styles';
+// Types
+import type { SearchProps } from 'antd/es/input';
+// Utils
+import { convertToURLAddress } from '../../utils';
 
 const HeaderSearch: React.FC = () => {
   const { updateCategory } = useCategoriesActions();

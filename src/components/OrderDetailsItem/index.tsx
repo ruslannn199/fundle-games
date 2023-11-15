@@ -1,5 +1,6 @@
+// Components
 import { Flex } from 'antd';
-import { ProductMainData } from '../../types/interfaces';
+// Styles
 import {
   OrderDetailsItemAmount,
   OrderDetailsItemBold,
@@ -9,6 +10,8 @@ import {
   OrderDetailsItemLink,
   OrderDetailsItemWrapper
 } from './OrderDetailsItem.styles';
+// Types
+import { ProductMainData } from '../../types/interfaces';
 
 interface OrderDetailsItemProps extends React.RefAttributes<HTMLDivElement> {
   item: ProductMainData;

@@ -1,11 +1,12 @@
 // Components
 import CheckoutItem from '../CheckoutItem';
-import { CheckoutEmpty, CheckoutTotal, CheckoutTotalWrapper, CheckoutWrapper } from './Checkout.styles';
 // Hooks
 import { useTypedSelector } from '../../hooks';
 import { useCartActions, useProductsActions } from '../../hooks/useActions';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+// Styles
+import { CheckoutEmpty, CheckoutTotal, CheckoutTotalWrapper, CheckoutWrapper } from './Checkout.styles';
 
 const Checkout: React.FC = () => {
   const { cartItems, total } = useTypedSelector((state) => (state.cartData));
