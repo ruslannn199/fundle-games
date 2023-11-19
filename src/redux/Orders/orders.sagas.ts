@@ -1,13 +1,15 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
-import OrdersActionsCreators, { ActionType, GetOrderDetailsStartAction, GetUserOrderHistoryStartAction, SaveOrderHistoryStartAction } from './orders.actions';
+import OrdersActionsCreators, { ActionType, GetOrderDetailsStartAction, GetUserOrderHistoryStartAction, PaymentStartAction, SaveOrderHistoryStartAction } from './orders.actions';
 import { handleGetOrderDetails, handleGetUserOrderHistory, handleSaveOrder } from './orders.utils';
 import { auth } from '../../utils/firebase.utils';
 import { convertToMySQLDateTime } from '../../utils';
 import LoadingActionCreators from '../Loading/loading.actions';
 import { Order } from '../../types/interfaces';
+import CartActionCreators from '../Cart/cart.actions';
 
 const { addLoadStart, removeLoadStart } = LoadingActionCreators;
-const { setUserOrderHistory, setOrderDetails } = OrdersActionsCreators;
+const { setUserOrderHistory, setOrderDetails, saveOrderHistoryStart } = OrdersActionsCreators;
+const { clearCartItems } = CartActionCreators;
 
 export function* saveOrderHistory({ payload }: SaveOrderHistoryStartAction) {
   try {
@@ -22,6 +24,31 @@ export function* saveOrderHistory({ payload }: SaveOrderHistoryStartAction) {
   } catch (err) {
     console.error(err);
     yield put(removeLoadStart('saveOrderHistory'));
+  }
+}
+
+export function* makePaymentStart({
+  payload: { cartData, total, success }
+}: PaymentStartAction) {
+  try {
+    yield put(addLoadStart('confirmCardPayment'));
+    if (success) {
+      const configOrder: Order = {
+        orderTotal: total,
+        orderItems: cartData.map((({ id, thumbnail, productName, price, quantity }) => ({
+          id, thumbnail, productName, price, quantity
+        }))),
+        documentId: crypto.randomUUID(),
+      }
+      yield put(saveOrderHistoryStart(configOrder));
+      yield put(clearCartItems());
+    } else {
+      throw new Error('Payment error');
+    }
+  } catch (err) {
+    console.error(err);
+  } finally {
+    yield put(removeLoadStart('confirmCardPayment'));
   }
 }
 
@@ -53,6 +80,10 @@ export function* onSaveOrderHistoryStart() {
   yield takeLatest(ActionType.SAVE_ORDER_HISTORY_START, saveOrderHistory);
 }
 
+export function* onMakePaymentStart() {
+  yield takeLatest(ActionType.MAKE_PAYMENT_START, makePaymentStart);
+}
+
 export function* onGetUserOrderHistoryStart() {
   yield takeLatest(ActionType.GET_USER_ORDER_HISTORY_START, getUserOrderHistory);
 }
@@ -66,5 +97,6 @@ export default function* ordersSagas() {
     call(onSaveOrderHistoryStart),
     call(onGetUserOrderHistoryStart),
     call(onGetOrderDetailsStart),
+    call(onMakePaymentStart),
   ]);
 }

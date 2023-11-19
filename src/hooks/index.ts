@@ -3,7 +3,8 @@ import useAdminAuth from './useAdminAuth';
 import useTypedSelector from './useTypedSelector';
 import useCartItems from './useCartItems';
 import useWindowDimensions from './useWindowDimensions';
-import { useUserActions, useProductsActions, useCategoriesActions, useLoadingActions, useStripeActions } from './useActions';
+import useCreditCard from './useCreditCard';
+import { useUserActions, useProductsActions, useCategoriesActions, useLoadingActions, useOrdersActions } from './useActions';
 
 export {
   useAuth,
@@ -13,7 +14,8 @@ export {
   useProductsActions,
   useCategoriesActions,
   useLoadingActions,
+  useOrdersActions,
   useCartItems,
-  useStripeActions,
   useWindowDimensions,
+  useCreditCard,
 };

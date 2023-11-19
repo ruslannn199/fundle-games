@@ -1,7 +1,8 @@
 import { createAction } from '@reduxjs/toolkit';
-import { Order } from '../../types/interfaces';
+import { Order, PaymentActionPayload } from '../../types/interfaces';
 
 export enum ActionType {
+  MAKE_PAYMENT_START = 'MAKE_PAYMENT_START',
   SAVE_ORDER_HISTORY_START = 'SAVE_ORDER_HISTORY_START',
   GET_USER_ORDER_HISTORY_START = 'GET_USER_ORDER_HISTORY_START',
   SET_USER_ORDER_HISTORY = 'SET_USER_ORDER_HISTORY',
@@ -12,6 +13,11 @@ export enum ActionType {
 export interface SaveOrderHistoryStartAction {
   type: ActionType.SAVE_ORDER_HISTORY_START;
   payload: Order;
+}
+
+export interface PaymentStartAction {
+  type: ActionType.MAKE_PAYMENT_START;
+  payload: PaymentActionPayload;
 }
 
 export interface GetUserOrderHistoryStartAction {
@@ -26,6 +32,7 @@ export interface GetOrderDetailsStartAction {
 
 const OrdersActionsCreators = {
   saveOrderHistoryStart: createAction<Order>(ActionType.SAVE_ORDER_HISTORY_START),
+  makePaymentStart: createAction<PaymentActionPayload>(ActionType.MAKE_PAYMENT_START),
   getOrderDetailsStart: createAction<string>(ActionType.GET_ORDER_DETAILS_START),
   getUserOrderHistoryStart: createAction<string>(ActionType.GET_USER_ORDER_HISTORY_START),
   setOrderDetails: createAction<Order | null>(ActionType.SET_ORDER_DETAILS),

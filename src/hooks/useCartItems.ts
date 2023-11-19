@@ -7,7 +7,7 @@ const useCartItems = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!cartItemsAmount) navigate('/');
+    if (!cartItemsAmount) navigate('/dashboard');
   }, [cartItemsAmount, navigate]);
 
   return cartItemsAmount;

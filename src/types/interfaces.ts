@@ -1,6 +1,6 @@
 import type { User } from 'firebase/auth';
 import type { ProductCategoriesTypes } from './enums';
-import { PaymentIntentConfirmParams, PaymentMethodCreateParams, Stripe, StripeCardElement } from '@stripe/stripe-js';
+import { ReactCreditCardsProps } from 'react-credit-cards-2';
 
 export interface CurrentUser {
   email: string;
@@ -82,34 +82,35 @@ export interface ProductDataToCompare {
   nextCartItem: ProductData;
 }
 
-export interface StripeClientResponse {
-  status: number;
-  clientSecret: string;
-  message: string;
+export interface CreditCardData extends Pick<ReactCreditCardsProps, 'cvc' | 'name' | 'number' | 'expiry' | 'focused'> {}
+
+export interface AddressDetails {
+  name: string;
+  address: {
+    city: string;
+    line1: string;
+    postalCode: string;
+    state: string;
+    country: string;
+    line2?: string;
+  }
 }
 
 interface RequiredPaymentMethodData {
-  card: StripeCardElement;
-  billing_details: PaymentMethodCreateParams.BillingDetails;
+  card: CreditCardData;
+  billingDetails: AddressDetails;
 }
 
 export interface RequiredConfirmCardPaymentData {
-  payment_method: RequiredPaymentMethodData;
-  return_url: string;
-  shipping: PaymentIntentConfirmParams.Shipping;
+  billing: RequiredPaymentMethodData;
+  shipping: AddressDetails;
 }
 
-export interface FetchClientActionPayload {
+export interface PaymentActionPayload {
+  cardPaymentData: RequiredConfirmCardPaymentData;
   cartData: ProductData[];
   total: number;
-}
-
-export interface RetrievePaymentActionPayload extends FetchClientActionPayload {
-  stripe: Stripe | null;
-}
-
-export interface ConfirmCardPaymentActionPayload extends RetrievePaymentActionPayload {
-  cardPaymentData: RequiredConfirmCardPaymentData;
+  success?: boolean;
 }
 
 export interface Order {

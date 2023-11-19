@@ -32,7 +32,7 @@ const CountrySearch: React.FC<CountrySearchProps> = ({ onChange }) => {
       options={countryOptions()}
       onChange={onChange}
       defaultValue="Россия"
-      style={{ width: width > 576 ? "40rem" : "100%" }}
+      style={{ width: width > 576 ? "40rem" : "30rem" }}
     />
   );
 }

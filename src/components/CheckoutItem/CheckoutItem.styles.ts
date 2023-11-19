@@ -13,7 +13,7 @@ export const CheckoutItemWrapper = styled(Flex)`
   }
 
   @media ${devices.sm} {
-    width: 85%;
+    width: 30rem;
   }
 `;
 

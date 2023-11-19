@@ -1,6 +1,7 @@
 // Styles
 import Fonts from './styles/Fonts';
 import GlobalStyle from './styles/Global';
+import 'react-credit-cards-2/dist/es/styles-compiled.css';
 // Components
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
