@@ -17,7 +17,8 @@ import { SignInActionsWrapper, SignInRecoveryWrapper } from './SignIn.styles';
 import { blackTheme, orangeTheme } from '../../utils/themes';
 // Types
 import type { loginFields } from '../../types/types';
-import { NavigationItemsLabels } from '../../types/enums';
+import { NavigationItemsLabels, UserRoles } from '../../types/enums';
+import TestButton from '../TestButton';
 
 const SignIn: React.FC = () => {
   const [, setErrors] = useState<string[]>([]);
@@ -94,6 +95,11 @@ const SignIn: React.FC = () => {
           </FormLink>
         </span>
       </SignInActionsWrapper>
+
+      <Flex justify="center" gap="3rem" style={{ padding: "1rem" }}>
+        <TestButton type={UserRoles.ADMIN} />
+        <TestButton type={UserRoles.USER} />
+      </Flex>
 
       <SignInRecoveryWrapper>
         <Tooltip title="Мы вам отправим письмо с восстановлением пароля" color="orange">

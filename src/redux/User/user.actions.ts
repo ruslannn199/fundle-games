@@ -1,5 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
 import type { CurrentUser, EmailPassword, UserCredentials } from '../../types/interfaces';
+import { UserRoles } from '../../types/enums';
 
 export enum ActionType {
   // Start actions

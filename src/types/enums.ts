@@ -19,3 +19,8 @@ export enum ProductCategoriesTypes {
   PRIMARY = 'primary',
   SECONDARY = 'secondary',
 }
+
+export enum UserRoles {
+  ADMIN = 'admin',
+  USER = 'user',
+}
