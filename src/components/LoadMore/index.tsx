@@ -11,7 +11,7 @@ const LoadMoreButton: React.FC<Record<'onLoadMore', () => void>> = ({
       size="large"
       onClick={() => onLoadMore()}
     >
-      Load more
+      Загрузить ещё
     </Button>
   );
 };

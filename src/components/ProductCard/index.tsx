@@ -26,7 +26,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ productConfig }) => {
   return (thumbnail && productName && typeof price !== 'undefined')
     ? (
       <ProductCardColumn
-        lg={{ span: 5, offset: 1 }} md={{ span: 7, offset: 1 }} sm={{ span: 10, offset: 2 }} xs={{ span: 18, offset: 6 }}
+        lg={{ span: 5, offset: 1 }} md={{ span: 7, offset: 1 }} sm={{ span: 10, offset: 2 }} xs={{ span: 20, offset: 4 }}
       >
         <ProductCardWrapper
           hoverable
@@ -35,7 +35,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ productConfig }) => {
               ? (
                 <Skeleton.Image style={{
                   width: isMobile ? "100%" : "20rem",
-                  height: isMobile ? "20rem" : "20rem",
+                  height: "20rem",
                 }} active />
               )
               : (

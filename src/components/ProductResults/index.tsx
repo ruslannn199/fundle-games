@@ -100,7 +100,7 @@ const ProductResults: React.FC = () => {
           onSelect={handleFilter}
         />
       </ConfigProvider>
-      <ProductCardRow gutter={[0, 32]}>
+      <ProductCardRow gutter={[0, { xs: 8, sm: 16, md: 32 }]}>
         {
           products
             .data
