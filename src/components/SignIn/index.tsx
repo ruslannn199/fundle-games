@@ -1,5 +1,5 @@
 // Components
-import { Form, Input, Button, ConfigProvider, Tooltip, Flex } from 'antd';
+import { Form, Button, ConfigProvider, Tooltip, Flex } from 'antd';
 import {
   MailOutlined,
   LockOutlined,
@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useTypedSelector, useUserActions } from '../../hooks';
 // Styles
-import { FormButton, FormLink, FormTitle } from '../../styles/Form';
+import { FormButton, FormLink, FormTitle, FormInput } from '../../styles/Form';
 import { SignInActionsWrapper, SignInRecoveryWrapper } from './SignIn.styles';
 // Themes
 import { blackTheme, orangeTheme } from '../../utils/themes';
@@ -56,60 +56,58 @@ const SignIn: React.FC = () => {
       initialValues={{ remember: true }}
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 32 }}
-      validateMessages={{ required: "Please, input your ${name}"}}
       onFinish={handleSubmit}
     >
-      <FormTitle level={3}>{NavigationItemsLabels.LOGIN}</FormTitle>
+      <FormTitle level={3}>Вход</FormTitle>
 
       <Form.Item
         name="email"
-        rules={[{ required: true }]}
+        rules={[{ required: true, message: "Пожалуйста, введите вашу почту" }]}
       >
-        <Input
+        <FormInput
           prefix={<MailOutlined className="form__icon" />}
           placeholder="Email"
-          style={{ width: "50rem" }}
         />
       </Form.Item>
 
       <Form.Item
         name="password"
-        rules={[{ required: true }]}
+        rules={[{ required: true, message: "Пожалуйста, введите ваш пароль" }]}
       >
-        <Input
+        <FormInput
           prefix={<LockOutlined />}
           type="password"
-          placeholder="Password"
+          placeholder="Пароль"
         />
       </Form.Item>
 
       <SignInActionsWrapper justify="center" align="center">
         <ConfigProvider theme={blackTheme}>
           <FormButton type="primary" htmlType="submit">
-            Log in
+            Войти
           </FormButton>
         </ConfigProvider>
         <span>
-          Or <FormLink
+          или <FormLink
             to={`/${NavigationItemsLabels.REGISTRATION}`}
-            >register now!
+            >зарегистрироваться!
           </FormLink>
         </span>
       </SignInActionsWrapper>
 
       <SignInRecoveryWrapper>
-        <Tooltip title="We'll send you reset E-mail" color="orange">
+        <Tooltip title="Мы вам отправим письмо с восстановлением пароля" color="orange">
           <QuestionCircleFilled className="form__icon" style={{ marginRight: ".5rem" }} />
         </Tooltip>
         <FormLink to="/recovery">
-          Forgot password?
+          Забыли пароль?
         </FormLink>
       </SignInRecoveryWrapper>
 
       <Flex justify="center">
         <ConfigProvider theme={blackTheme}>
           <Button type="default" onClick={() => googleSignInStart()}>
-            Sign in with Google <GoogleCircleFilled />
+            Войти при помощи Google <GoogleCircleFilled />
           </Button>
         </ConfigProvider>
       </Flex>

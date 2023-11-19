@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useTypedSelector } from '../../hooks';
 // Styles
-import { FormButton, FormTitle } from '../../styles/Form';
+import { FormButton, FormInput, FormTitle } from '../../styles/Form';
 // Themes
 import { blackTheme, orangeTheme } from '../../utils/themes';
 
@@ -49,25 +49,21 @@ const ResetPassword: React.FC = () => {
       wrapperCol={{ span: 32 }}
       onFinish={handleSubmit}
     >
-      <FormTitle level={3}>Reset Password</FormTitle>
+      <FormTitle level={3}>Восстановить пароль</FormTitle>
 
       <Form.Item
         name="email"
         rules={[
-          {
-            type: "email",
-            message: "The input is not valid E-mail!",
-          },
-          { required: true },
+          { type: "email", message: "Ваша почта введена некорректно!" },
+          { required: true, message: "Пожалуйста, введите вашу почту" },
           { validator: async (_): Promise<void> => {
-            if (error) throw new Error("This E-mail do not exist!");
+            if (error) throw new Error("Данная почта не существует!");
           }},
         ]}
       >
-        <Input
+        <FormInput
           prefix={<MailOutlined className="form__icon" />}
           placeholder="Email"
-          style={{ width: "50rem" }}
           onChange={() => setError(false)}
         />
       </Form.Item>
@@ -75,7 +71,7 @@ const ResetPassword: React.FC = () => {
       <Flex justify="center">
         <ConfigProvider theme={blackTheme}>
           <FormButton type="primary" htmlType="submit">
-            Send a password reset E-mail
+            Отправить письмо
           </FormButton>
         </ConfigProvider>
       </Flex>

@@ -1,12 +1,12 @@
 // Components
-import { ConfigProvider, Flex, Form, Input } from 'antd';
+import { ConfigProvider, Flex, Form } from 'antd';
 import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
 // Hooks
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useTypedSelector, useUserActions } from '../../hooks';
 // Styles
-import { FormButton, FormLink, FormTitle } from '../../styles/Form';
+import { FormButton, FormInput, FormLink, FormTitle } from '../../styles/Form';
 // Themes
 import { blackTheme, orangeTheme } from '../../utils/themes';
 // Types
@@ -47,45 +47,38 @@ const SignUp: React.FC = () => {
       initialValues={{ remember: true }}
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 32 }}
-      validateMessages={{ required: "Please, input your ${name}"}}
       onFinish={handleSubmit}
     >
-      <FormTitle level={3}>{NavigationItemsLabels.REGISTRATION}</FormTitle>
+      <FormTitle level={3}>Регистрация</FormTitle>
 
       <Form.Item
         name="displayName"
-        rules={[
-          { required: true },
-        ]}
+        rules={[{ required: true, message: "Пожалуйста, введите ваше имя" }]}
       >
-        <Input
+        <FormInput
           prefix={<UserOutlined className="form__icon" />}
-          placeholder="Username"
-          style={{ width: "50rem" }}
+          placeholder="Имя пользователя"
         />
       </Form.Item>
 
       <Form.Item
         name="email"
         rules={[
-          {
-            type: "email",
-            message: "The input is not valid E-mail!"
-          },
-          { required: true },
+          { type: "email", message: "Ваша почта введена некорректно!" },
+          { required: true, message: "Пожалуйста, введите вашу почту" },
         ]}
       >
-        <Input prefix={<MailOutlined className="form__icon" />} placeholder="E-mail" />
+        <FormInput prefix={<MailOutlined className="form__icon" />} placeholder="E-mail" />
       </Form.Item>
 
       <Form.Item
         name="password"
-        rules={[{ required: true }]}
+        rules={[{ required: true, message: "Пожалуйста, введите пароль" }]}
       >
-        <Input
+        <FormInput
           prefix={<LockOutlined />}
           type="password"
-          placeholder="Password"
+          placeholder="Пароль"
           minLength={6}
         />
       </Form.Item>
@@ -93,21 +86,21 @@ const SignUp: React.FC = () => {
       <Form.Item
         name="confirmPassword"
         rules={[
-          { required: true },
+          { required: true, message: "Пожалуйста, введите пароль снова" },
           ({ getFieldValue }) => ({
             validator(_, value) {
               if (!value || getFieldValue("password") === value) {
                 return Promise.resolve();
               }
-              return Promise.reject(new Error("The new password that you entered do not match!"));
+              return Promise.reject(new Error("Ваши пароли не совпадают!"));
             },
           }),
         ]}
       >
-        <Input
+        <FormInput
           prefix={<LockOutlined />}
           type="password"
-          placeholder="Confirm password"
+          placeholder="Подтверждение пароля"
           minLength={6}
         />
       </Form.Item>
@@ -115,13 +108,13 @@ const SignUp: React.FC = () => {
       <Flex justify="center" align="center">
         <ConfigProvider theme={blackTheme}>
           <FormButton type="primary" htmlType="submit">
-            Register
+            Зарегистрироваться
           </FormButton>
         </ConfigProvider>
         <span>
-          Or <FormLink
+          Или <FormLink
             to={`/${NavigationItemsLabels.LOGIN}`}
-            >log in!
+            >войти!
           </FormLink>
         </span>
       </Flex>
