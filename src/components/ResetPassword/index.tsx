@@ -1,5 +1,5 @@
 // Components
-import { ConfigProvider, Flex, Form, Input } from 'antd';
+import { ConfigProvider, Flex, Form } from 'antd';
 import { MailOutlined } from '@ant-design/icons';
 // Firebase
 import { sendPasswordResetEmail } from 'firebase/auth';

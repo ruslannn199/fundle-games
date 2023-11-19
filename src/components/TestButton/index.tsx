@@ -1,6 +1,10 @@
+// Components
 import { Button } from 'antd';
+// Hooks
 import { useUserActions } from '../../hooks';
+// Types
 import { UserRoles } from '../../types/enums';
+// Utils
 import { handleGetTestUsers } from '../../redux/User/user.utils';
 
 interface TestButtonProps {
