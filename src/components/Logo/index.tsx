@@ -1,5 +1,5 @@
 // Images
-import LogoImg from '../../assets/images/logo.png';
+import LogoImg from '/images/logo.png';
 // Styles
 import { LogoImage, LogoTitle, LogoWrapper } from './Logo.styles';
 

@@ -11,8 +11,8 @@ import {
 } from './CheckoutItem.styles';
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { useCartActions } from '../../hooks/useActions';
-import Trashcan from '../../assets/images/trashcan.svg';
-import TrashcanHovered from '../../assets/images/trashcan-hover.svg';
+import Trashcan from '/images/trashcan.svg';
+import TrashcanHovered from '/images/trashcan-hover.svg';
 import { useState } from 'react';
 import { useWindowDimensions } from '../../hooks';
 

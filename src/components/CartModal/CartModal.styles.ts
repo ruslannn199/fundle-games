@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import EllipseBackground from '../../assets/images/ellipse.png';
+import EllipseBackground from '/images/ellipse.png';
 import { Flex } from 'antd';
 
 export const CartModalWrapper = styled(Flex)`

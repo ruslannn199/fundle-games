@@ -9,8 +9,8 @@ import { NavigationItemsLabels } from '../types/enums';
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <Layout />,
     errorElement: <ErrorPage />,
+    element: <Layout />,
     children: [
       {
         path: '',
@@ -91,10 +91,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'error',
-        lazy: async () => {
-          const ErrorPage = (await import('../pages/ErrorPage')).default;
-          return { Component: ErrorPage };
-        },
+        element: <ErrorPage />,
       },
       {
         path: 'success',

@@ -5,7 +5,7 @@ import { LogoutOutlined, UserAddOutlined, UserOutlined } from '@ant-design/icons
 // Hooks
 import { useTypedSelector, useUserActions, useWindowDimensions } from '../../hooks';
 // Images
-import LogoImg from '../../assets/images/logo.png';
+import LogoImg from '/images/logo.png';
 // Styles
 import { NavigationMenuMobileImage, NavigationMenuMobileButton, NavigationMenuMobileWrapper } from './NavigationMenuMobile.styles';
 // Types

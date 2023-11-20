@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 // Hooks
 import { useCategoriesActions, useLoadingActions } from '../../hooks';
 // Images
-import NewGamesImg from '../../assets/images/new-games.jpg';
-import PopularGamesImg from '../../assets/images/popular-games.webp';
+import NewGamesImg from '/images/new-games.jpg';
+import PopularGamesImg from '/images/popular-games.webp';
 // Styles
 import { DirectoryButton, DirectoryItem, DirectoryTitle, DirectoryWrapper } from './Directory.styles';
 // Themes

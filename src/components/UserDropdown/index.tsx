@@ -1,7 +1,7 @@
 // Hooks
 import { useTypedSelector } from '../../hooks';
 // Images
-import LogoImg from '../../assets/images/logo.png';
+import LogoImg from '/images/logo.png';
 // Styles
 import { UserDropdownImage, UserDropdownTitle } from './UserDropdown.styles';
 

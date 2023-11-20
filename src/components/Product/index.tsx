@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useProductsActions, useTypedSelector, useWindowDimensions } from '../../hooks';
 // Images
-import ImagePlaceholder from '../../assets/images/placeholder.png';
+import ImagePlaceholder from '/images/placeholder.png';
 // Styles
 import { ProductHero, ProductDescription, ProductOfferInfo, ProductContent, ProductWrapper } from './Product.styles';
 
